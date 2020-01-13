@@ -1,0 +1,22 @@
+php bin/magento setup:install -vvv \
+    --admin-firstname="Paul" \
+    --admin-lastname="Hachmang" \
+    --admin-email="paul@h-o.nl" \
+    --admin-user="admin" \
+    --admin-password="welkom1234" \
+    --base-url="http://localhost:8080" \
+    --base-url-secure="https://localhost:8080" \
+    --backend-frontname="admin" \
+    --db-host="127.0.0.1" \
+    --db-name="magento" \
+    --db-user="magento" \
+    --db-password="magento" \
+    --language="nl_NL" \
+    --currency="EUR" \
+    --timezone="Europe/Amsterdam" \
+    --use-rewrites="1" \
+    --use-secure="0" \
+    --use-secure-admin="0" \
+    --admin-use-security-key="1" \
+    --session-save="files" \
+    --cleanup-database
