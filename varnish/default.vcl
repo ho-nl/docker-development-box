@@ -114,6 +114,15 @@ sub vcl_recv {
       unset req.http.cookie;
     }
 
+
+    # Bypass cache when running CMD+SHIFT+R
+    if (req.http.Cache-Control ~ "(?i)no-cache") {
+    #if (req.http.Cache-Control ~ "(?i)no-cache" && client.ip ~ editors) { # create the acl editors if you want to restrict the Ctrl-F5
+      if (! (req.http.Via || req.http.User-Agent ~ "(?i)bot" || req.http.X-Purge)) {
+        ban("req.http.host == " + req.http.host + " && req.url == " + req.url);
+      }
+    }
+
     # Set initial grace period usage status
     set req.http.grace = "none";
 
