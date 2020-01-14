@@ -45,14 +45,8 @@ sub vcl_recv {
           return (pipe);
     }
 
-// TODO redirect everything to https
-//    if (std.port(local.ip) == 80) {
-//        return(synth(301, "https://" + req.http.host + req.url));
-//    }
-
-//    if (std.port(server.ip) == 443) {
-      set req.http.X-Forwarded-Proto = "https";
-//    }
+    # Notify Magento that we're responding from https
+    set req.http.X-Forwarded-Proto = "https";
 
     # We only deal with GET and HEAD by default
     if (req.method != "GET" && req.method != "HEAD") {
