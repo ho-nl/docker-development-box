@@ -4,22 +4,21 @@ services:
   hitch:
     image: zazukoians/hitch
     ports:
-      - '443:443'
+      - 443:443
     volumes:
-      - ./hitch/*.localhost.reachdigital.io.pem:/etc/ssl/hitch/combined.pem
+      - ./hitch/*.localhost.reachdigital.io.pem:/etc/ssl/hitch/combined.pem:ro
     environment:
-      HITCH_PARAMS: '--backend=[varnish]:80 --frontend=[*]:443 --alpn-protos="h2,http/1.1"'
+      HITCH_PARAMS: --backend=[varnish]:80 --frontend=[*]:443 --alpn-protos="h2,http/1.1" --write-proxy
 
   varnish:
     image: hermsi/alpine-varnish
     volumes:
       - ./varnish/default.vcl:/etc/varnish/default.vcl:ro
     ports:
-      - "80:80"
-      - "6082:6082"
+      - 6081:6081 # bin/magento setup:config:set --http-cache-hosts=127.0.0.1:6081
     environment:
-      VARNISH_PORT: 80
-      VARNISHD_ADDITIONAL_OPTS: '-p feature=+http2'
+      VARNISH_PORT: 80,PROXY
+      VARNISHD_ADDITIONAL_OPTS: -p feature=+http2 -a :6081
       VARNISHLOG: 'true'
 
   nginx:
@@ -28,8 +27,6 @@ services:
       - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.template:ro
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ../src:/var/www/data:ro
-    ports:
-      - "8080:80"
     environment:
       FPM_PORT: 9000
       FPM_ROOT: '/Users/paulhachmang/Sites/iosr/src/pub'
