@@ -4,6 +4,9 @@
 
 `brew install php@7.2`
 
-`/usr/local/etc/php/php`
+`vi /usr/local/etc/php/7.2/php.ini`
+- `memory_limit = 4096M`
 
-memory_limit to 4GB
+## Secure certificate
+
+Add [*.localhost.reachdigital.io.pem](./hitch/*.localhost.reachdigital.io.pem) to your keychain.

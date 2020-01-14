@@ -1,0 +1,53 @@
+SHA1 Fingerprint=28:3B:2E:C4:F9:8C:26:37:16:FE:54:1E:20:58:53:3A:94:AB:4D:FC
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 11735779090938659934 (0xa2dddce785db045e)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: CN=*.localhost.reachdigital.io.pem
+        Validity
+            Not Before: Jan 14 12:50:55 2020 GMT
+            Not After : Jan 11 12:50:55 2030 GMT
+        Subject: CN=*.localhost.reachdigital.io.pem
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:d5:c5:44:1b:ee:77:79:a1:29:37:da:13:37:63:
+                    e2:16:8c:e0:6c:5e:b5:18:7c:c5:fd:4c:7e:1f:0e:
+                    c2:61:79:35:84:81:5b:70:86:ac:62:af:6f:58:d3:
+                    66:20:12:6f:5c:02:64:1d:9c:e6:06:10:ff:96:d2:
+                    54:db:13:44:1a:93:4a:a5:29:39:7c:95:81:f6:ee:
+                    a7:3d:93:63:d2:27:3b:f5:c6:33:d0:70:ca:bd:6b:
+                    67:48:51:7b:7a:0d:4d:c4:ef:99:b7:2c:dc:02:36:
+                    17:0b:90:6c:b4:cf:b3:a5:de:ca:1f:2a:9a:a0:2d:
+                    98:53:62:26:b8:39:ff:f5:5a:3b:7c:a7:a4:6d:73:
+                    8a:6e:32:88:9a:3b:55:d3:b0:ee:4d:63:f4:f3:18:
+                    92:ad:54:31:0e:df:75:53:74:33:04:e0:de:08:77:
+                    96:5c:65:be:61:08:53:1b:bc:d8:be:45:24:bb:14:
+                    47:61:a3:26:1f:d1:24:2b:2a:01:bd:0e:96:6d:96:
+                    ec:82:7e:ee:c3:f4:06:6d:11:ba:4e:a2:e2:bd:6f:
+                    c5:6b:ff:d7:ea:ba:6f:07:ee:b9:a0:f5:fd:42:10:
+                    24:2f:13:2e:cb:75:9b:b0:11:1f:4b:09:81:f1:e9:
+                    2f:e4:75:04:cf:fd:63:00:d6:c9:58:9e:18:df:d9:
+                    10:79
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Subject Alternative Name: 
+                DNS:*.localhost.reachdigital.io, IP Address:127.0.0.1
+    Signature Algorithm: sha256WithRSAEncryption
+         47:80:54:3f:a1:66:f7:3d:0a:01:7d:58:5b:2f:55:b2:1b:2c:
+         cc:30:d5:04:43:65:d2:6e:2d:95:a3:ec:db:1c:ef:56:db:e5:
+         9b:7d:ea:8c:d1:f4:8b:34:bd:0c:f9:3e:46:db:d1:26:f4:07:
+         9f:31:8d:06:ac:d6:e4:4e:9e:6d:d1:39:64:74:2d:63:e6:af:
+         5c:cf:bd:cf:a5:68:29:e7:59:61:17:31:57:7a:44:e4:52:aa:
+         bd:49:9f:45:99:b2:50:c2:6d:83:46:00:41:1e:f6:53:43:39:
+         ee:be:a7:7f:5d:0c:1c:15:41:59:28:8c:31:5b:e9:78:00:39:
+         36:35:2c:05:d5:bb:86:ca:87:1f:22:3d:82:35:32:c3:2c:9a:
+         e8:60:b9:52:62:4a:4a:dc:53:d0:24:e7:0a:13:7b:44:47:6c:
+         3e:67:03:83:1b:03:8b:1b:71:7e:5a:fe:8e:90:62:9a:0e:4a:
+         3a:fe:84:24:2f:8e:d1:79:0e:98:25:df:fc:c8:7f:34:82:7c:
+         3b:c7:ca:c6:32:95:54:d4:30:62:67:03:ba:0a:76:1f:87:9a:
+         3b:cc:2f:57:d2:11:bc:6a:6c:e3:e7:5c:91:d6:0c:ab:d5:af:
+         ec:72:30:58:8b:83:65:41:a2:b0:17:96:b5:a7:d5:22:a0:a7:
+         15:67:8e:05
