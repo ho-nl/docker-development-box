@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 
 services:
   hitch:
@@ -35,45 +35,18 @@ services:
   db:
     image: percona:5.7
     ports:
-      - "3306:3306"
+      - 3306:3306
     environment: 
-      - MYSQL_ROOT_PASSWORD=magento
-      - MYSQL_DATABASE=magento
-      - MYSQL_USER=magento
-      - MYSQL_PASSWORD=magento
+      MYSQL_ROOT_PASSWORD: magento
+      MYSQL_DATABASE: magento
+      MYSQL_USER: magento
+      MYSQL_PASSWORD: magento
     volumes:
       - ./.mysql:/var/lib/mysql
+
   redis:
     image: redis:5.0
 
-#  proxy:
-#    image: mage2click/magento-nginx:1.13
-#    environment:
-#      NGINX_TYPE: "proxy"
-#    ports:
-#      - "443:8443"
-#    depends_on:
-#      - varnish
-
-
-#  app:
-#    image: mage2click/magento-nginx:1.13
-#    environment:
-#      NGINX_TYPE: "under-proxy"
-#    ports:
-#      - "8000:8000"
-#    depends_on:
-#      - db
-#      - phpfpm
-#    volumes: &appvolumes
-#      - ~/.composer:/var/www/.composer:delegated
-#      - appdata:/var/www/html
-#      - sockdata:/sock
-
-
-
-
-#
 #  elasticsearch:
 #    image: mage2click/magento-elasticsearch:6.7.2
 #    ports:
