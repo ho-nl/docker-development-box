@@ -66,12 +66,6 @@ services:
     volumes:
       - ./.esdata:/usr/share/elasticsearch/data
 
-#  rabbitmq:
-#    image: rabbitmq:3.7.14-management-alpine
-#    ports:
-#      - "5672:5672"
-#      - "15672:15672"
-#
 #  cron:
 #    image: mage2click/magento-php-versions:7.1-fpm
 #    user: root
@@ -95,3 +89,11 @@ services:
     ports:
       - "1025:1025"
       - "8025:8025"
+
+  # bin/magento setup:config:set --amqp-host=localhost --amqp-port=5672 --amqp-user=guest --amqp-password=guest
+  # http://localhost:15672
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
