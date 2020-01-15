@@ -66,12 +66,6 @@ services:
     volumes:
       - ./.esdata:/usr/share/elasticsearch/data
 
-#  mailhog:
-#    image: mailhog/mailhog:v1.0.0
-#    ports:
-#      - "1025:1025"
-#      - "8025:8025"
-#
 #  rabbitmq:
 #    image: rabbitmq:3.7.14-management-alpine
 #    ports:
@@ -90,3 +84,14 @@ services:
 #  dbdata:
 #  esdata:
 #  sockdata:
+  # composer require mageplaza/module-smtp
+  # php bin/magento setup:upgrade
+  # bin/magento config:set --lock-env system/smtp/disable 0
+  # bin/magento config:set --lock-env system/smtp/host localhost
+  # bin/magento config:set --lock-env system/smtp/port 1025
+  # http://localhost:8025/
+  mailhog:
+    image: mailhog/mailhog:v1.0.0
+    ports:
+      - "1025:1025"
+      - "8025:8025"
