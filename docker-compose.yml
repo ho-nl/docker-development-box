@@ -1,4 +1,5 @@
 version: '3'
+# Reach Digital - Magento 2 Docker development environment
 
 services:
   hitch:
@@ -24,6 +25,7 @@ services:
     depends_on:
       - nginx
 
+  # TODO Replace FPM_ROOT with relative path
   nginx:
     image: nginx:alpine
     volumes:
@@ -66,18 +68,6 @@ services:
     volumes:
       - ./.esdata:/usr/share/elasticsearch/data
 
-#  cron:
-#    image: mage2click/magento-php-versions:7.1-fpm
-#    user: root
-#    command: /usr/local/bin/cronstart
-#    tty: true
-#    volumes: *appvolumes
-#
-#volumes:
-#  appdata:
-#  dbdata:
-#  esdata:
-#  sockdata:
   # composer require mageplaza/module-smtp
   # php bin/magento setup:upgrade
   # bin/magento config:set --lock-env system/smtp/disable 0
