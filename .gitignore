@@ -1,3 +1,5 @@
 .mysqldata
 .esdata
 .idea
+
+/vendor/

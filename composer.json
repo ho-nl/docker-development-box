@@ -1,0 +1,14 @@
+{
+    "name": "reach-digital/docker-devbox",
+    "description": "Reach Digital Docker+local hybrid development environment.",
+    "type": "library",
+    "license": "PROPRIETARY",
+    "authors": [
+        {
+            "name": "Paul Hachmang",
+            "email": "paul@reachdigital.nl"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
