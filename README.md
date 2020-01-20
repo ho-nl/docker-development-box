@@ -48,14 +48,20 @@ Copy the [`install.sh`](./install.sh) and execute to set up PHP locally:
 ### Install docker
 
 1. Install [docker for mac](https://docs.docker.com/docker-for-mac/).
-2. Set docker to 4gb memory
-3. `brew install ctop`: `htop` for docker.
+2. `brew install ctop`: `htop` for docker.
 
 ### Install this package in your project
 
 `composer require reach-digital/docker-devbox`
 
 You probably want to commit the docker-compose.yml file to prevent future accidental changes.
+
+### Install local certificate
+
+Add [vendor/reach-digital/docker-devbox/hitch/*.localhost.reachdigital.io.pem](./hitch/*.localhost.reachdigital.io.pem)
+to your OSX keychain.
+
+- [ ] Create certificate with [mkcert](https://github.com/FiloSottile/mkcert)
 
 ## Usage
 
@@ -64,8 +70,3 @@ You probably want to commit the docker-compose.yml file to prevent future accide
 3. Open up `ctop` to access container cpu/mem/io usage, logs, shell.
 4. Run `docker-compose down` to stop all services.
 
-## Secure certificate
-
-Add [vendor/reach-digital/docker-devbox/hitch/*.localhost.reachdigital.io.pem](./hitch/*.localhost.reachdigital.io.pem) to your OSX keychain.
-
-- [ ] Create certificate with [mkcert](https://github.com/FiloSottile/mkcert)
