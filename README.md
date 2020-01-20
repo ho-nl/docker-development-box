@@ -55,6 +55,15 @@ Copy the [`install.sh`](./install.sh) and execute to set up PHP locally:
 
 `composer require reach-digital/docker-devbox`
 
+You probably want to commit the docker-compose.yml file to prevent future accidental changes.
+
+## Usage
+
+1. Go to the root of your project: `docker-compose up -d` to download and start all containers.
+2. Read the docker-compose.yml for db passwords, etc.
+3. Open up `ctop` to access container cpu/mem/io usage, logs, shell.
+4. Run `docker-compose down` to stop all services.
+
 ## Secure certificate
 
 Add [vendor/reach-digital/docker-devbox/hitch/*.localhost.reachdigital.io.pem](./hitch/*.localhost.reachdigital.io.pem) to your OSX keychain.
