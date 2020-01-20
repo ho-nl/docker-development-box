@@ -27,7 +27,7 @@ services:
       - nginx
 
   nginx:
-    build: ../docker/nginx
+    image: nginx:alpine
     volumes:
       - ./vendor/reach-digital/docker-devbox/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.template:ro
       - ./vendor/reach-digital/docker-devbox/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
