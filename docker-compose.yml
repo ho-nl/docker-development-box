@@ -7,7 +7,7 @@ services:
     ports:
       - 443:443
     volumes:
-      - ../docker/hitch/*.localhost.reachdigital.io.pem:/etc/ssl/hitch/combined.pem:ro
+      - ./vendor/reach-digital/docker-devbox/hitch/*.localhost.reachdigital.io.pem:/etc/ssl/hitch/combined.pem:ro
     environment:
       HITCH_PARAMS: --backend=[varnish]:80 --frontend=[*]:443 --alpn-protos="h2,http/1.1" --write-proxy
 
@@ -15,7 +15,7 @@ services:
   varnish:
     image: hermsi/alpine-varnish
     volumes:
-      - ../docker/varnish/default.vcl:/etc/varnish/default.vcl:ro
+      - ./vendor/reach-digital/docker-devbox/varnish/default.vcl:/etc/varnish/default.vcl:ro
     ports:
       - 6081:6081
     environment:
@@ -28,8 +28,8 @@ services:
   nginx:
     build: ../docker/nginx
     volumes:
-      - ../docker/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.template:ro
-      - ../docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./vendor/reach-digital/docker-devbox/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.template:ro
+      - ./vendor/reach-digital/docker-devbox/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - .:/var/www/data:ro
     environment:
       FPM_PORT: 9072
@@ -60,7 +60,7 @@ services:
   # bin/magento config:set --lock-env catalog/search/elasticsearch6_server_port 9200
   # bin/magento config:set --lock-env catalog/search/elasticsearch6_server_hostname localhost
   elasticsearch:
-    build: ../docker/elasticsearch
+    build: ./vendor/reach-digital/docker-devbox/elasticsearch
     ports:
       - 9200:9200
       - 9300:9300
