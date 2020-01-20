@@ -12,6 +12,7 @@ services:
       HITCH_PARAMS: --backend=[varnish]:80 --frontend=[*]:443 --alpn-protos="h2,http/1.1" --write-proxy
 
   # bin/magento setup:config:set --http-cache-hosts=127.0.0.1:6081
+  # bin/magento config:set --lock-config system/full_page_cache/caching_application 2
   varnish:
     image: hermsi/alpine-varnish
     volumes:
