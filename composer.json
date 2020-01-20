@@ -1,7 +1,7 @@
 {
     "name": "reach-digital/docker-devbox",
     "description": "Reach Digital Docker+local hybrid development environment.",
-    "type": "library",
+    "type": "magento2-component",
     "license": "PROPRIETARY",
     "authors": [
         {
