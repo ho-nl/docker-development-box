@@ -10,6 +10,8 @@ services:
       - ./vendor/reach-digital/docker-devbox/hitch/*.localhost.reachdigital.io.pem:/etc/ssl/hitch/combined.pem:ro
     environment:
       HITCH_PARAMS: --backend=[varnish]:80 --frontend=[*]:443 --alpn-protos="h2,http/1.1" --write-proxy
+    depends_on:
+      - varnish
 
   # bin/magento setup:config:set --http-cache-hosts=127.0.0.1:6081
   # bin/magento config:set --lock-config system/full_page_cache/caching_application 2
@@ -22,10 +24,11 @@ services:
     environment:
       VARNISH_PORT: 80,PROXY
       VARNISHD_ADDITIONAL_OPTS: -p feature=+http2 -a :6081
-      VARNISHLOG: 'true'
+      #VARNISHLOG: 'true'
     depends_on:
       - nginx
 
+  # phplogs: tail -f /usr/local/var/log/php*
   nginx:
     image: nginx:alpine
     volumes:
@@ -34,8 +37,9 @@ services:
       - .:/var/www/data:ro
     environment:
       FPM_PORT: 9072
+      FPM_XDEBUG: 9172
       FPM_ROOT: $PWD/pub
-    command: /bin/sh -c "envsubst '$$FPM_PORT $$FPM_ROOT $$FPM_ROOT_ABS' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
+    command: /bin/sh -c "envsubst '$$FPM_PORT $$FPM_XDEBUG $$FPM_ROOT $$FPM_ROOT_ABS' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
 
   db:
     image: percona:5.7
