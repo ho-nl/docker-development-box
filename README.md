@@ -38,7 +38,7 @@ existing tools: docker / etc. Exception: php runs locally, needs to be set up.
 docker).
 - Minimal: Use as few cpu cycles and memory as possible.
 
-## Installation
+## Global installation (only once)
 
 Since we're running a hybrid docker+local system we need to set up PHP to run locally.
 
@@ -59,8 +59,6 @@ one for each version with xdebug (port: 9172, 9173, 9174).
 1. Install [docker for mac](https://docs.docker.com/docker-for-mac/).
 2. Exclude `~/Library/Containers` from your backups
 3. `brew install ctop`: `htop` for docker.
-4. Install this in the project `composer require reach-digital/docker-devbox`
-5. Commit the `docker-compose.yml` file to prevent future accidental changes.
 
 ### Install local certificate
 
@@ -68,6 +66,12 @@ Add [vendor/reach-digital/docker-devbox/hitch/*.localhost.reachdigital.io.pem](.
 to your OSX keychain.
 
 - [ ] Create certificate with [mkcert](https://github.com/FiloSottile/mkcert)
+
+## Project installation
+
+- Install this in the project `composer require reach-digital/docker-devbox`
+- Install `varnish` and `static-content-deploy` [patches](https://github.com/ho-nl/magento2-ReachDigital_Patches).
+- Commit the `docker-compose.yml` file to prevent future accidental changes.
 
 ## Usage
 
