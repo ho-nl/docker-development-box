@@ -46,7 +46,9 @@ sub vcl_recv {
     }
 
     # Notify Magento that we're responding from https
-    set req.http.X-Forwarded-Proto = "https";
+    if (!req.http.X-Forwarded-Proto) {
+        set req.http.X-Forwarded-Proto = "https";
+    }
 
     # We only deal with GET and HEAD by default
     if (req.method != "GET" && req.method != "HEAD") {
