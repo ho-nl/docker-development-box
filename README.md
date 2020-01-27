@@ -1,4 +1,4 @@
-# Reach Digital Magento 2 Docker+local hybrid development environment.
+# 🐳 Reach Digital Magento 2 Docker+local hybrid development environment. 🐳
 
 Docker for services, php locally. No sync, no mental overhead, not performance penalties.  
 `php`, `nginx`, `https`, `http/2`, `varnish`, `mysql` `elasticsearch`, `rabbitmq`, `mailhog`
