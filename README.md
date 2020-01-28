@@ -45,6 +45,9 @@ cli? Why is my system slow? Sync is bad.
 
 ## Global installation (only once)
 
+- Run `brew doctor` and make sure you don't have errors.
+- Uninstall any remaining php instances from your system: `brew list | grep php`
+
 Since we're running a hybrid docker+local system we need to set up PHP to run
 locally.
 
@@ -62,6 +65,7 @@ curl -s https://raw.githubusercontent.com/ho-nl/docker-development-box/master/in
 - It doesn't clean `./bash_profile`, which can cause issues. `./bash_profile`
   must contain `export PATH="/usr/local/bin/php:$PATH"`, but must not contain
   any references to `/usr/local/Cellar/php*`.
+- Mysql Client:  `brew install mysql-client pv && brew link mysql-client --force`
 
 ### Install docker
 
