@@ -82,6 +82,7 @@ to your OSX keychain.
 - Install this in the project `composer require reach-digital/docker-devbox`
 - Install `varnish` and `static-content-deploy`
   [patches](https://github.com/ho-nl/magento2-ReachDigital_Patches).
+- Disable services you don't need in `docker-compose.yml` (required: `hitch`, `varnish`, `nginx` and `db`).
 - Commit the `docker-compose.yml` file to prevent future accidental changes.
 
 ## Usage
