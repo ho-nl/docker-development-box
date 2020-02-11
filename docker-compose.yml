@@ -51,6 +51,7 @@ services:
       MYSQL_USER: magento
       MYSQL_PASSWORD: magento
     volumes:
+      - ./vendor/reach-digital/docker-devbox/mysql:/etc/my.cnf.d
       - ./var/.mysqldata:/var/lib/mysql
 
   # php bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-db=0 --cache-backend-redis-port=6379
