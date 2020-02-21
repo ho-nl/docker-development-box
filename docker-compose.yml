@@ -2,6 +2,12 @@ version: '3'
 # Reach Digital - Magento 2 Docker development environment
 
 services:
+  # https by default with https://github.com/varnish/hitch
+  #
+  # You can use any domain that points to 127.0.0.1, you can't use https://localhost because Magento can't handle that.
+  #
+  # bin/magento config:set --lock-env web/unsecure/base_url https://blabla.localhost.reachdigital.io/
+  # bin/magento config:set --lock-env web/secure/base_url https://blabla.localhost.reachdigital.io/
   hitch:
     image: zazukoians/hitch
     ports:
@@ -13,8 +19,13 @@ services:
     depends_on:
       - varnish
 
+  # Cache by default with https://www.varnish-software.com/
+  #
   # bin/magento setup:config:set --http-cache-hosts=127.0.0.1:6081
   # bin/magento config:set --lock-config system/full_page_cache/caching_application 2
+  #
+  # You can use bin/magento cache:clean or cache:flush to flush Varnish.
+  # You can use CMD+SHIFT+R to bypass the cache for a page
   varnish:
     image: hermsi/alpine-varnish
     volumes:

@@ -72,7 +72,7 @@ install_php() {
   sed -i '' 's/^;pm.process_idle_timeout = 10s;/pm.process_idle_timeout = 10s;/g' /usr/local/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
 
 
-  echo "[$PHP] 🏗  Installing xdebug"
+  echo "[$PHP] 🐞  Installing xdebug"
   brew link "$PHP" --force >/dev/null
   source ~/.bash_profile
 
@@ -85,7 +85,7 @@ install_php() {
   spinner
 
   cd $XDEBUG_DIR
-  echo "[$PHP] 🏗  Building xdebug"
+  echo "[$PHP] 🐞  Building xdebug"
 
   "$PHPDIR"/bin/phpize >/dev/null &
   spinner
@@ -112,7 +112,7 @@ install_php() {
   [ $PHPVERSION = '7.3' ] && XDEBUG='20180731'
   [ $PHPVERSION = '7.4' ] && XDEBUG='20190902'
 
-  echo "[$PHP] 🏗  Xdebug path: $PHPDIR/pecl/$XDEBUG/xdebug.so"
+  echo "[$PHP] 🐞  Xdebug path: $PHPDIR/pecl/$XDEBUG/xdebug.so"
 
   cp /usr/local/etc/php/"$PHPVERSION"/php.ini /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini
   gsed -i "1 i\zend_extension=\"$PHPDIR/pecl/$XDEBUG/xdebug.so\"" /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini

@@ -72,7 +72,7 @@ locally.
 ```bash
 # Cleans (destructively) + installs php on OSX!
 curl -s https://raw.githubusercontent.com/ho-nl/docker-development-box/master/install.sh?token=AAJP2AECWY7UWCOGGX7EDS26LEH4G | bash -s -- -i
-# Save the `🏗  Xdebug path: ...` somewhere to setup xdebug in PHPStorm.
+# Save the `🐞  Xdebug path: ...` somewhere to setup xdebug in PHPStorm.
 ```
 
 It will (re)install multiple php-fpm services, one for each version (port: 9072,
@@ -133,7 +133,7 @@ to your OSX keychain.
 - Cli: Use
   `XDEBUG_CONFIG="" php -c /usr/local/etc/php/7.2/php-xdebug.ini bin/magento`
 - Tests: Create a local interpreter, the PHP version you're looking for should
-  be suggested and add the `🏗 Xdebug path:` to enable xdebug (you should have
+  be suggested and add the `🐞 Xdebug path:` to enable xdebug (you should have
   seen that with the installation).
 
 ### Setup cron
@@ -142,35 +142,69 @@ to your OSX keychain.
 
 ## FAQ?
 
-### How do I set up Varnish?
+### Where can I find logs?
 
-Setup commands instructions can be found in
-[docker-compose.yml](./docker-compose.yml).
+- For all other services, start `ctop` and press `<-` on your keyboard.
+- phplogs: tail -f /usr/local/var/log/php\* (will probably be empty as it will
+  only output true errors)
 
 ### How do I set up https?
 
-Setup commands instructions can be found in
-[docker-compose.yml](./docker-compose.yml).
+https _only_ with [hitch](https://github.com/varnish/hitch)
 
-### How do I set up redis?
+```
+bin/magento config:set --lock-env web/unsecure/base_url https://blabla.localhost.reachdigital.io/
+bin/magento config:set --lock-env web/secure/base_url https://blabla.localhost.reachdigital.io/
+# You can use any domain that points to 127.0.0.1, you can't use https://localhost because Magento can't handle that.
+# *.localhost.reachdigital.io always resolves to 127.0.0.1
+```
 
-Setup commands instructions can be found in
-[docker-compose.yml](./docker-compose.yml).
+The docker container does _not_ support http, _only_ https.
 
-### How do I set up elasticsearch?
+### How do I set up Varnish?
 
-Setup commands instructions can be found in
-[docker-compose.yml](./docker-compose.yml).
+Cache by default with https://www.varnish-software.com/
+
+```
+bin/magento setup:config:set --http-cache-hosts=127.0.0.1:6081
+bin/magento config:set --lock-config system/full_page_cache/caching_application 2
+```
+
+- You can use `bin/magento cache:clean` or `cache:flush` to flush Varnish.
+- You can use `CMD+SHIFT+R` to bypass Varnish for any page.
+
+### How do I set up Redis?
+
+```
+php bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-db=0 --cache-backend-redis-port=6379
+php bin/magento setup:config:set --session-save=redis --session-save-redis-db=2 --session-save-redis-port=6379
+```
+
+### How do I set up Elastic Search?
+
+```
+bin/magento config:set --lock-config catalog/search/enable_eav_indexer 0
+bin/magento config:set --lock-config catalog/search/engine [elasticsearch6 OR  elasticsuite]
+bin/magento config:set --lock-env catalog/search/elasticsearch6_server_port 9200
+bin/magento config:set --lock-env catalog/search/elasticsearch6_server_hostname localhost
+```
 
 ### How do I set up mailhog?
 
-Setup commands instructions can be found in
-[docker-compose.yml](./docker-compose.yml).
+```
+composer require mageplaza/module-smtp
+php bin/magento setup:upgrade
+bin/magento config:set --lock-env system/smtp/disable 0
+bin/magento config:set --lock-env system/smtp/host localhost
+bin/magento config:set --lock-env system/smtp/port 1025
+```
 
 ### How do I set up RabbitMQ?
 
-Setup commands instructions can be found in
-[docker-compose.yml](./docker-compose.yml).
+```
+bin/magento setup:config:set --amqp-host=localhost --amqp-port=5672 --amqp-user=guest --amqp-password=guest
+http://localhost:15672
+```
 
 ### How do I set up Sphinx?
 
