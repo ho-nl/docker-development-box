@@ -9,13 +9,6 @@ backend default {
     .host = "nginx";
     .port = "80";
     .first_byte_timeout = 600s;
-    .probe = {
-        .url = "/health_check.php";
-        .timeout = 2s;
-        .interval = 5s;
-        .window = 10;
-        .threshold = 5;
-   }
 }
 sub vcl_recv {
     if (req.method == "PURGE") {
@@ -58,11 +51,6 @@ sub vcl_recv {
 
     # Bypass shopping cart, checkout and search requests
     if (req.url ~ "/checkout" || req.url ~ "/catalogsearch") {
-        return (pass);
-    }
-
-    # Bypass health check requests
-    if (req.url ~ "/health_check.php") {
         return (pass);
     }
 
