@@ -45,27 +45,51 @@ cli? Why is my system slow? Sync is bad.
 
 ## Global installation (only once)
 
-- Run `brew doctor` and make sure you don't have errors.
-- Uninstall any remaining php instances from your system: `brew list | grep php`
+### Cleanup your system
+
+Since we're running some things locally it probably is a good time to clean some
+stuff up.
+
+Run `brew doctor` and make sure you don't have errors.
+
+You should not have any services running like.
+
+- `php`: find them with `brew list | grep php`, uninstall them.
+- `httpd`: disable apache with something like
+  https://apple.stackexchange.com/questions/119674/disable-apache-autostart/119678
+- `mysql`: uninstall or disable mysql, or at least make sure it doesnt run on
+  the default MySQL port.
+- `nginx`: uninstall
+
+Take a look at `./bash_profile` and make sure it doesn't contain any references
+to `/usr/local/Cellar/php*`.
+
+### Installing services
 
 Since we're running a hybrid docker+local system we need to set up PHP to run
 locally.
 
 ```bash
 # Cleans (destructively) + installs php on OSX!
-curl -s https://raw.githubusercontent.com/ho-nl/docker-development-box/master/install.sh?token=AAJP2AGUXJ5PPIULPDG76CK6GH7YS | bash -s -- -i
+curl -s https://raw.githubusercontent.com/ho-nl/docker-development-box/master/install.sh?token=AAJP2AECWY7UWCOGGX7EDS26LEH4G | bash -s -- -i
 # Save the `🏗  Xdebug path: ...` somewhere to setup xdebug in PHPStorm.
 ```
 
-- It will (re)install multiple php-fpm services, one for each version (port:
-  9072, 9073, 9074) and one for each version with xdebug (port: 9172, 9173,
-  9174).
-- It doesn't clean `valet-php@xx/nginx/apache/mysql` etc, but those should
-  probably be uninstalled.
-- It doesn't clean `./bash_profile`, which can cause issues. `./bash_profile`
-  must contain `export PATH="/usr/local/bin/php:$PATH"`, but must not contain
-  any references to `/usr/local/Cellar/php*`.
-- Mysql Client:  `brew install mysql-client pv && brew link mysql-client --force`
+It will (re)install multiple php-fpm services, one for each version (port: 9072,
+9073, 9074) and one for each version with xdebug (port: 9172, 9173, 9174).
+
+#### Switch PHP versions
+
+```bash
+brew unlink php@7.3
+brew link php@7.2 --force
+php -v
+```
+
+Should now show the right version. If it doesn't there might be still be a
+version linked or your ~/.bash_profile should be cleaned up.
+
+[auto switcher](https://github.com/ho-nl/docker-development-box/issues/12)
 
 ### Install docker
 
@@ -79,60 +103,75 @@ Add
 [vendor/reach-digital/docker-devbox/hitch/\*.localhost.reachdigital.io.pem](./hitch/*.localhost.reachdigital.io.pem)
 to your OSX keychain.
 
-- [ ] Create certificate with [mkcert](https://github.com/FiloSottile/mkcert)
-
 ## Project installation
 
 - Install this in the project `composer require reach-digital/docker-devbox`
-- Install `varnish` and `static-content-deploy`
+- Install `static-content-deploy`
   [patches](https://github.com/ho-nl/magento2-ReachDigital_Patches).
-- Disable services you don't need in `docker-compose.yml` (required: `hitch`, `varnish`, `nginx` and `db`).
+- Disable services you don't need in `docker-compose.yml` (required: `hitch`,
+  `varnish`, `nginx` and `db`).
 - Commit the `docker-compose.yml` file to prevent future accidental changes.
 
 ## Usage
 
-**Start with logging:**
-
-- Start: `docker-compose up`
-- Stop: `Ctrl+C`
-
-**Start in background:**
-
 - Start: `docker-compose up -d`
-- Loggin: `ctop`
-- Stop: `docker-compose stop`
+- Logging: `ctop`
+- Stop: `docker-compose down`
 
-**Delete images:**
-
-- `docker-compose down`
-
-**Delete mysql/elasticsearch database:**
+**Delete data (mysql/elasticsearch):**
 
 - `rm -rf var/.esdata`
 - `rm -rf var/.mysqldata`
 
 ### Settings for `mysql` `elasticsearch`, `rabbitmq`, `mailhog`
 
-Everything can be found in [docker-compose.yml](./docker-compose.yml).
-
-### Switch PHP versions
-
-Since automatic php switching isn't implemented yet, you can switch to a
-different php version by running:
-
-```bash
-brew unlink php@7.3
-brew link php@7.2 --force
-php -v
-```
-
-Should now show the right version. If it doesn't there might be still be a
-version linked or your ~/.bash_profile should be cleaned up.
-
 ### Setup xdebug
 
-1. Create a local interpreter, the PHP version you're looking for should be
-   suggested.
-2. Add the `🏗 Xdebug path:` to enable xdebug.
+- Web: Xdebug should work by default when you have the
+  [Xdebug helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc)
+  installed + PHPStorm is listening to connections.
+- Cli: Use
+  `XDEBUG_CONFIG="" php -c /usr/local/etc/php/7.2/php-xdebug.ini bin/magento`
+- Tests: Create a local interpreter, the PHP version you're looking for should
+  be suggested and add the `🏗 Xdebug path:` to enable xdebug (you should have
+  seen that with the installation).
 
-### [Cron](https://devdocs.magento.com/guides/v2.3/config-guide/cli/config-cli-subcommands-cron.html#create-the-magento-crontab)
+### Setup cron
+
+[default setup](https://devdocs.magento.com/guides/v2.3/config-guide/cli/config-cli-subcommands-cron.html#create-the-magento-crontab)
+
+## FAQ?
+
+### How do I set up Varnish?
+
+Setup commands instructions can be found in
+[docker-compose.yml](./docker-compose.yml).
+
+### How do I set up https?
+
+Setup commands instructions can be found in
+[docker-compose.yml](./docker-compose.yml).
+
+### How do I set up redis?
+
+Setup commands instructions can be found in
+[docker-compose.yml](./docker-compose.yml).
+
+### How do I set up elasticsearch?
+
+Setup commands instructions can be found in
+[docker-compose.yml](./docker-compose.yml).
+
+### How do I set up mailhog?
+
+Setup commands instructions can be found in
+[docker-compose.yml](./docker-compose.yml).
+
+### How do I set up RabbitMQ?
+
+Setup commands instructions can be found in
+[docker-compose.yml](./docker-compose.yml).
+
+### How do I set up Sphinx?
+
+No support yet.

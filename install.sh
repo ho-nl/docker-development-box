@@ -215,14 +215,18 @@ echo "
 🧼 Cleaning MacOS
 "
 
-brew install gnu-sed &>/dev/null &
-spinner
-brew install jq &>/dev/null &
-spinner
-
 for PHP in $PHPS; do
   remove_php "$PHP"
 done
+
+echo "
+Installing mysql-client, gnu-sed, pv, jq
+"
+brew install gnu-sed mysql-client pv jq &>/dev/null &
+spinner
+
+brew link mysql-client --force &
+spinner
 
 echo "
 🐘 Installing php services
