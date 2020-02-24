@@ -50,19 +50,21 @@ cli? Why is my system slow? Sync is bad.
 Since we're running some things locally it probably is a good time to clean some
 stuff up.
 
-Run `brew doctor` and make sure you don't have errors.
+- Run `brew doctor` and make sure you don't have errors.
+- Run `brew update` to update to the latest version.
 
 You should not have any services running like.
 
 - `php`: find them with `brew list | grep php`, uninstall them.
-- `httpd`: disable apache with something like
-  https://apple.stackexchange.com/questions/119674/disable-apache-autostart/119678
+- `httpd`:
+  [Disable apache](https://apple.stackexchange.com/questions/119674/disable-apache-autostart/119678)
+  that is OSX native. http://localhost/ should not return anything.
 - `mysql`: uninstall or disable mysql, or at least make sure it doesnt run on
   the default MySQL port.
 - `nginx`: uninstall
 
-Take a look at `./bash_profile` and make sure it doesn't contain any references
-to `/usr/local/Cellar/php*`.
+Take a look at `~/.bash_profile` or `~/.zshrc` and make sure it doesn't contain
+any references to `/usr/local/Cellar/php*`.
 
 ### Installing services
 
@@ -72,11 +74,13 @@ locally.
 ```bash
 # Cleans (destructively) + installs php on OSX!
 curl -s https://raw.githubusercontent.com/ho-nl/docker-development-box/master/install.sh?token=AAJP2AECWY7UWCOGGX7EDS26LEH4G | bash -s -- -i
-# Save the `🐞  Xdebug path: ...` somewhere to setup xdebug in PHPStorm.
 ```
 
 It will (re)install multiple php-fpm services, one for each version (port: 9072,
 9073, 9074) and one for each version with xdebug (port: 9172, 9173, 9174).
+
+Save the `🐞 Xdebug path: ...` somewhere to setup integration tests with xdebug
+support in PHPStorm.
 
 #### Switch PHP versions
 
@@ -96,18 +100,24 @@ version linked or your ~/.bash_profile should be cleaned up.
 1. Install [docker for mac](https://docs.docker.com/docker-for-mac/).
 2. Exclude `~/Library/Containers` from your backups
 3. `brew install ctop`: `htop` for docker.
+4. Set CPU's to 6 and memory to 8GB (should me _more_ than enough)
 
 ### Install local certificate
 
-Add
-[vendor/reach-digital/docker-devbox/hitch/\*.localhost.reachdigital.io.pem](./hitch/*.localhost.reachdigital.io.pem)
-to your OSX keychain.
+- Download the raw .pem file (Open Raw, then CMD + S):
+- [./hitch/\*.localhost.reachdigital.io.pem](./hitch/*.localhost.reachdigital.io.pem)
+- Open keychain.app, add this file.
+- Open certificate and trust the certificate.
+
+You are now done with the global installation 🎉
 
 ## Project installation
 
-- Install this in the project `composer require reach-digital/docker-devbox`
+- Install this in the project
+  `composer require --dev reach-digital/docker-devbox`
 - Install `static-content-deploy`
-  [patches](https://github.com/ho-nl/magento2-ReachDigital_Patches).
+  [patches](https://github.com/ho-nl/magento2-ReachDigital_Patches) and remove
+  `pub/static/frontend/*`.
 - Disable services you don't need in `docker-compose.yml` (required: `hitch`,
   `varnish`, `nginx` and `db`).
 - Commit the `docker-compose.yml` file to prevent future accidental changes.
@@ -123,7 +133,10 @@ to your OSX keychain.
 - `rm -rf var/.esdata`
 - `rm -rf var/.mysqldata`
 
-### Settings for `mysql` `elasticsearch`, `rabbitmq`, `mailhog`
+You now have all services set up 🎉. See individual services below to set urls,
+caches, etc.
+
+### Settings for `mysql` `elasticsearch`, `rabbitmq`, `mailhog`, ...
 
 ### Setup xdebug
 
@@ -140,17 +153,16 @@ to your OSX keychain.
 
 [default setup](https://devdocs.magento.com/guides/v2.3/config-guide/cli/config-cli-subcommands-cron.html#create-the-magento-crontab)
 
-## FAQ?
-
 ### Where can I find logs?
 
 - For all other services, start `ctop` and press `<-` on your keyboard.
 - phplogs: tail -f /usr/local/var/log/php\* (will probably be empty as it will
   only output true errors)
 
-### How do I set up https?
+### How do I set up urls/https?
 
-https _only_ with [hitch](https://github.com/varnish/hitch)
+https _only_ with [hitch](https://github.com/varnish/hitch). The docker
+container does _not_ support http, _only_ https.
 
 ```
 bin/magento config:set --lock-env web/unsecure/base_url https://blabla.localhost.reachdigital.io/
@@ -158,8 +170,6 @@ bin/magento config:set --lock-env web/secure/base_url https://blabla.localhost.r
 # You can use any domain that points to 127.0.0.1, you can't use https://localhost because Magento can't handle that.
 # *.localhost.reachdigital.io always resolves to 127.0.0.1
 ```
-
-The docker container does _not_ support http, _only_ https.
 
 ### How do I set up Varnish?
 
