@@ -72,7 +72,7 @@ Since we're running a hybrid docker+local system we need to set up PHP to run
 locally.
 
 ```bash
-# Cleans (destructively) + installs php on OSX!
+# Cleans existing brew php (will not remove Valet stuff) + installs php on OSX!
 curl -s https://raw.githubusercontent.com/ho-nl/docker-development-box/master/install.sh?token=AAJP2AECWY7UWCOGGX7EDS26LEH4G | bash -s -- -i
 ```
 
