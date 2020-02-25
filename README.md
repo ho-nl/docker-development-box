@@ -93,8 +93,6 @@ php -v
 Should now show the right version. If it doesn't there might be still be a
 version linked or your ~/.bash_profile should be cleaned up.
 
-[auto switcher](https://github.com/ho-nl/docker-development-box/issues/12)
-
 ### Install docker
 
 1. Install [docker for mac](https://docs.docker.com/docker-for-mac/).
@@ -136,9 +134,9 @@ You are now done with the global installation 🎉
 You now have all services set up 🎉. See individual services below to set urls,
 caches, etc.
 
-### Settings for `mysql` `elasticsearch`, `rabbitmq`, `mailhog`, ...
+## Settings for `mysql` `elasticsearch`, `rabbitmq`, `mailhog`, etc.
 
-### Setup xdebug
+### How do I use xdebug?
 
 - Web: Xdebug should work by default when you have the
   [Xdebug helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc)
@@ -149,7 +147,7 @@ caches, etc.
   be suggested and add the `🐞 Xdebug path:` to enable xdebug (you should have
   seen that with the installation).
 
-### Setup cron
+### How do I set up my cron?
 
 [default setup](https://devdocs.magento.com/guides/v2.3/config-guide/cli/config-cli-subcommands-cron.html#create-the-magento-crontab)
 
@@ -171,7 +169,7 @@ bin/magento config:set --lock-env web/secure/base_url https://blabla.localhost.r
 # *.localhost.reachdigital.io always resolves to 127.0.0.1
 ```
 
-### How do I set up Varnish?
+### How do I use and set up Varnish?
 
 Cache by default with https://www.varnish-software.com/
 
@@ -190,6 +188,9 @@ php bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-db=
 php bin/magento setup:config:set --session-save=redis --session-save-redis-db=2 --session-save-redis-port=6379
 ```
 
+How do I flush Redis directly when `bin/magento` is broken?
+`composer down && composer up -d`
+
 ### How do I set up Elastic Search?
 
 ```
@@ -199,7 +200,7 @@ bin/magento config:set --lock-env catalog/search/elasticsearch6_server_port 9200
 bin/magento config:set --lock-env catalog/search/elasticsearch6_server_hostname localhost
 ```
 
-### How do I set up mailhog?
+### How do I set up MailHog?
 
 ```
 composer require mageplaza/module-smtp
@@ -219,3 +220,21 @@ http://localhost:15672
 ### How do I set up Sphinx?
 
 No support yet.
+
+## How do I connect to my container over SSH directly?
+
+1. Open up `ctop`
+2. <key>⮐</key> on your service
+3. `exec shell`
+
+Please note that the containers are as minimal as possible, so not all common
+tools are available, but you should be able to get around.
+
+## I want to create a custom configuration for a service.
+
+Everything is set up via the docker-compose.yml file. You see paths to the
+configuration file there.
+
+1. Change the path to your custom configuration file.
+2. Run `docker-compose down && docker-compose up -d`
+3. Changes should be applied, check `ctop` if your container is able to start.
