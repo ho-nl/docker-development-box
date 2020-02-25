@@ -43,6 +43,10 @@ cli? Why is my system slow? Sync is bad.
   upgrade scripts (hence, docker).
 - Minimal: Use as few cpu cycles and memory as possible.
 
+## Requirements
+
+- Recent OSX
+
 ## Global installation (only once)
 
 ### Cleanup your system
