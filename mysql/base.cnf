@@ -1,3 +1,5 @@
+# Configuration provided by https://magehost.pro/
+
 [mysqld]
 back_log                        = 2000
 # bind-address                    = ::

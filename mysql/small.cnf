@@ -1,3 +1,5 @@
+# Configuration provided by https://magehost.pro/
+
 [mysqld]
 #server_id                       = ##SERVERID## # Last 2 quads of main server IP without dots
 #report_host                     = ##SERVERNAME##
