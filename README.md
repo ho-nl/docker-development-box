@@ -115,7 +115,7 @@ You are now done with the global installation 🎉
 - Install this in the project
   `composer require --dev reach-digital/docker-devbox`
 - Install `static-content-deploy`
-  [patches](https://github.com/ho-nl/magento2-ReachDigital_Patches) and remove
+  [patch](patch/static-content-deploy.md) and remove
   `pub/static/frontend/*`.
 - Disable services you don't need in `docker-compose.yml` (required: `hitch`,
   `varnish`, `nginx` and `db`).

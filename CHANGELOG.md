@@ -13,6 +13,7 @@ and this project adheres to
 
 - Varnish bypass for blackfire.io
 - Install: Added zsh support
+- Magento: Added static-content-deploy relative symlink patch.
 
 ### Changed
 
