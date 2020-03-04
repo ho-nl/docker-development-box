@@ -232,8 +232,7 @@ for PHP in $PHPS; do
 done
 
 echo "
-Installing mysql-client, gnu-sed, pv, jq
-"
+Installing mysql-client, gnu-sed, pv, jq"
 brew install gnu-sed mysql-client pv jq &>/dev/null &
 spinner
 
@@ -257,9 +256,9 @@ for PHP in $PHPS; do
 done
 
 echo "
-If everything went well the 'err' should be 0
+If everything went well the 'err' column should be 0. You can now see these processes in activity monitor. 🎉
 
-pid     err    name
+pid     err     name
 "
 launchctl list | grep reach
 

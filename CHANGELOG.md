@@ -12,10 +12,14 @@ and this project adheres to
 ### Added
 
 - Varnish bypass for blackfire.io
+- Install: Added zsh support
 
 ### Changed
 
 - Revert: Mysql: Disable stats for SHOW TABLE STATUS to improve performance.
+- Install: Cleaned output of install script
+- Install: Hide launchctl unload warning
+- Install: Better success message
 
 ## [1.0.0-preview.1] - 2020-02-25
 
