@@ -42,6 +42,19 @@ remove_php() {
   rm -rf /usr/local/etc/php/"$PHPVERSION"
 }
 
+source_shell() {
+  if [ -n "`$SHELL -c 'echo $ZSH_VERSION'`" ]; then
+    # assume Zsh
+    source ~/.zshrc
+  elif [ -n "`$SHELL -c 'echo $BASH_VERSION'`" ]; then
+    # assume Bash
+    source ~/.bash_profile
+  else
+    # assume something else
+    echo "Your shell $SHELL is currently not supported"
+  fi
+}
+
 install_php() {
   PHP=$1
 
@@ -74,8 +87,7 @@ install_php() {
 
   echo "[$PHP] 🐞  Installing xdebug"
   brew link "$PHP" --force >/dev/null
-  source ~/.bash_profile
-
+  source_shell ""
 
   # todo(paales) We can probably migrate to a simple pecl install xdebug
   CURRENT_DIR=$PWD
@@ -106,7 +118,7 @@ install_php() {
 
   brew unlink "$PHP" >/dev/null &
   spinner
-  source ~/.bash_profile
+  source_shell ""
 
   [ $PHPVERSION = '7.2' ] && XDEBUG='20170718'
   [ $PHPVERSION = '7.3' ] && XDEBUG='20180731'
