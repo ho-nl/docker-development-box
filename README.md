@@ -83,9 +83,6 @@ curl -s https://raw.githubusercontent.com/ho-nl/docker-development-box/master/in
 It will (re)install multiple php-fpm services, one for each version (port: 9072,
 9073, 9074) and one for each version with xdebug (port: 9172, 9173, 9174).
 
-Save the `🐞 Xdebug path: ...` somewhere to setup integration tests with xdebug
-support in PHPStorm.
-
 #### Switch PHP versions
 
 ```bash
@@ -149,7 +146,8 @@ caches, etc.
   `XDEBUG_CONFIG="" php -c /usr/local/etc/php/7.2/php-xdebug.ini bin/magento`
 - Tests: Create a local interpreter, the PHP version you're looking for should
   be suggested and add the `🐞 Xdebug path:` to enable xdebug (you should have
-  seen that with the installation).
+  seen that with the installation). The path is something like
+  `/usr/local/Cellar/php/7.4.3/pecl/20190902/xdebug.so` (lookup your exact path)
 
 ### How do I set up my cron?
 
