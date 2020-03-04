@@ -215,11 +215,11 @@ start_php() {
   echo $XPLIST >$XPLIST_PATH
 
   #echo "[$PHP]  🚀 Starting + registering on localhost:$PHPFPM"
-  launchctl unload -w $PLIST_PATH
+  launchctl unload -w $PLIST_PATH &>/dev/null
   launchctl load -w $PLIST_PATH
 
   #echo "[$PHP]  🚀 Starting + registering on localhost:$XPHPFPM with xdebug"
-  launchctl unload -w $XPLIST_PATH
+  launchctl unload -w $XPLIST_PATH &>/dev/null
   launchctl load -w $XPLIST_PATH
 }
 
