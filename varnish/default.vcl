@@ -49,6 +49,11 @@ sub vcl_recv {
         return (pass);
     }
 
+    # Let blackfire.io profiles pass
+    if (req.http.X-Blackfire-Query) {
+        return (pass);
+    }
+
     # Bypass shopping cart, checkout and search requests
     if (req.url ~ "/checkout" || req.url ~ "/catalogsearch") {
         return (pass);
