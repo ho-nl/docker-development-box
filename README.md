@@ -240,3 +240,7 @@ configuration file there.
 1. Change the path to your custom configuration file.
 2. Run `docker-compose down && docker-compose up -d`
 3. Changes should be applied, check `ctop` if your container is able to start.
+
+## How do I restart php-fpm?
+
+`pkill php-fpm`
