@@ -1,0 +1,20 @@
+version: "2"
+
+options:
+  verbose: true
+  compose-file-path: 'docker-compose.yml'
+  cli_mode: 'auto'
+  max_attempt: 3000
+
+syncs:
+  nginx-sync:
+    notify_terminal: true
+    watch_args: '-v' # optional: use this to switch to fswatch verbose mode
+    src: '.' # path to the source code of the project
+    sync_strategy: 'unison'
+    sync_excludes: [
+      'README.md',
+      'patch',
+    ]
+    sync_userid: '1000'
+    max_attempt: 10

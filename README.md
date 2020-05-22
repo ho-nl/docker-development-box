@@ -219,6 +219,22 @@ bin/magento setup:config:set --amqp-host=localhost --amqp-port=5672 --amqp-user=
 http://localhost:15672
 ```
 
+### How do I set up Docker-sync? 
+
+- Follow this guide: https://docker-sync.readthedocs.io/en/latest/getting-started/installation.html#dependencies
+
+- Take a look at the ```docker-sync.yml``` file and update it to fit your requirements.
+Try to exclude the files that your project does not need to run.
+
+- Usage:
+```
+docker-sync clean: stop and clean up all sync endpoints
+docker-sync start: start all sync configurations
+docker-sync stop: stop docker-sync daemon
+docker-sync list: list all sync-points of the project configuration path
+docker-sync logs: prints last 100 lines of daemon log. Only if docker-sync started in the background.
+```
+
 ### How do I set up Sphinx?
 
 No support yet.
