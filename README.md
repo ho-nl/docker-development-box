@@ -101,6 +101,14 @@ version linked or your ~/.bash_profile should be cleaned up.
 3. `brew install ctop`: `htop` for docker.
 4. Set CPU's to 6 and memory to 8GB (should me _more_ than enough)
 
+### Install nfs
+
+1. `sudo nano /etc/exports` add: `/System/Volumes/Data -alldirs -mapall=501:20 localhost`
+2. `sudo nano /etc/nfs.conf` add: `nfs.server.mount.require_resv_port = 0`
+3. `sudo nfsd restart`
+
+[Based on this article](https://www.jeffgeerling.com/blog/2020/revisiting-docker-macs-performance-nfs-volumes)
+
 ### Install local certificate
 
 - Download the raw .pem file (Open Raw, then CMD + S):
