@@ -7,21 +7,20 @@ penalties.
 
 ## Reasoning
 
-Docker is easy, docker scales, we love docker, but docker's volume mounting is
+Docker is easy, docker scales, we love Docker, but docker's volume mounting is
 slow, we can't have slow.
 
 The problem with all the docker devboxes is that they require running php inside
-a vm. The problem with php in a vm is that files need to be available in the vm,
-but it also also need to have files outside the vm, because programs like
+a vm. The problem with php in a VM is that files need to be available in the VM,
+but it also needs to have files outside the VM, because programs like
 PHPStorm and others do not accept network drives.
 
 Sync is slower than no sync. [docker-sync](http://docker-sync.io/),
-[nfs](https://docs.docker.com/v17.12/datacenter/dtr/2.1/guides/configure/use-nfs/),
 [unison](https://www.cis.upenn.edu/~bcpierce/unison/),
 [mutagen](https://mutagen.io/) offer good sync solutions, but always slower than
 no sync.
 
-Also syncs require additional HDD space and additional mental overhead: Are my
+Hovever, syncs require additional HDD space and additional mental overhead: Are my
 files synced?, Is my sync broken? Are there sync conflicts? Why did that file
 appear here? Where should I execute my php cli scripts? Where should I run node
 cli? Why is my system slow? Sync is bad.
@@ -244,3 +243,10 @@ configuration file there.
 ## How do I restart php-fpm?
 
 `pkill php-fpm`
+
+## Commits
+
+Commits are validated with https://github.com/conventional-changelog/commitlint
+
+Gittower: Gittower doesn't properly read your PATH variable and thus commit
+validation doesn't work. Use `gittower .` to open this repo.
