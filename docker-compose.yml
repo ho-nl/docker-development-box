@@ -107,8 +107,7 @@ services:
       - 5672:5672
       - 15672:15672
 
-# Create an nfs mount for nginx
-# Required
+# Create NFS mounts for the containers to access files on the host.
 volumes:
   nginx-mount:
     driver: local
