@@ -1,6 +1,6 @@
 {
   "name": "@reachdigital/docker-devbox",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "🐳 Reach Digital Magento 2 Docker+local hybrid devbox 🐳",
   "repository": "git@github.com:ho-nl/docker-development-box.git",
   "author": "Paul Hachmang <paul@reachdigital.nl>",
