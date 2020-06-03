@@ -45,7 +45,7 @@ services:
     volumes:
       - ./vendor/reach-digital/docker-devbox/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.template:ro
       - ./vendor/reach-digital/docker-devbox/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - .:/var/www/data:ro
+      - nginx-mount:/var/www/data
     environment:
       FPM_PORT: 9072
       FPM_XDEBUG: 9172
@@ -106,3 +106,13 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+
+# Create an nfs mount for nginx
+# Required
+volumes:
+  nginx-mount:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+      device: ":${PWD}"
