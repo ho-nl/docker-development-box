@@ -136,6 +136,9 @@ install_php() {
   cp -rp /usr/local/etc/php/"$PHPVERSION"/php-fpm.d /usr/local/etc/php/"$PHPVERSION"/php-fpm-xdebug.d
   sed -i '' "s/^listen = 127.0.0.1:$PHPFPM/listen = 127.0.0.1:$XPHPFPM/g" /usr/local/etc/php/"$PHPVERSION"/php-fpm-xdebug.d/www.conf
 
+  echo "Installing Imagick for PHP"
+  pecl install imagick
+
   echo "[$PHP] ✅ Installed"
   echo ""
 }
