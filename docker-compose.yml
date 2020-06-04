@@ -63,7 +63,7 @@ services:
       MYSQL_PASSWORD: magento
     volumes:
       - ./vendor/reach-digital/docker-devbox/mysql:/etc/my.cnf.d
-      - ./var/.mysqldata:/var/lib/mysql
+      - mysql-mount:/var/lib/mysql
 
   # php bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-db=0 --cache-backend-redis-port=6379
   # php bin/magento setup:config:set --session-save=redis --session-save-redis-db=2 --session-save-redis-port=6379
@@ -85,7 +85,7 @@ services:
     environment:
       - discovery.type=single-node
     volumes:
-      - ./var/.esdata:/usr/share/elasticsearch/data
+      - elasticsearch-mount:/usr/share/elasticsearch/data
 
   # composer require mageplaza/module-smtp
   # php bin/magento setup:upgrade
@@ -107,8 +107,7 @@ services:
       - 5672:5672
       - 15672:15672
 
-# Create an nfs mount for nginx
-# Required
+# Create NFS mounts for the containers to access files on the host.
 volumes:
   nginx-mount:
     driver: local
@@ -116,3 +115,15 @@ volumes:
       type: nfs
       o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
       device: ":${PWD}"
+  mysql-mount:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+      device: ":${PWD}/var/.mysqldata"
+  elasticsearch-mount:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+      device: ":${PWD}/var/.esdata"
