@@ -98,7 +98,7 @@ version linked or your ~/.bash_profile should be cleaned up.
 1. Install [docker for mac 2.1.0.1](https://docs.docker.com/docker-for-mac/release-notes/#docker-desktop-community-2101).
 2. Exclude `~/Library/Containers` from your backups
 3. `brew install ctop`: `htop` for Docker.
-4. Set CPU's to 6 and memory to 8 GB (should me _more_ than enough)
+4. Set memory to 3-4 GB
 
 Note: Newer versions of Docker for Mac have network latency issues, see
 [#10](https://github.com/ho-nl/docker-development-box/issues/10#issuecomment-639371400)
