@@ -4,7 +4,7 @@
   "description": "🐳 Reach Digital Magento 2 Docker+local hybrid devbox 🐳",
   "repository": "git@github.com:ho-nl/docker-development-box.git",
   "author": "Paul Hachmang <paul@reachdigital.nl>",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "private": true,
   "scripts": {
     "semantic-release": "semantic-release"

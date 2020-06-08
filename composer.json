@@ -2,7 +2,7 @@
     "name": "reach-digital/docker-devbox",
     "description": "Reach Digital Docker+local hybrid development environment.",
     "type": "magento2-component",
-    "license": "PROPRIETARY",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Paul Hachmang",

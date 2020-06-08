@@ -76,7 +76,7 @@ locally.
 
 ```bash
 # Cleans existing brew php (will not remove Valet stuff) + installs php on OSX!
-curl -s https://raw.githubusercontent.com/ho-nl/docker-development-box/master/install.sh?token=AAJP2AECWY7UWCOGGX7EDS26LEH4G | bash -s -- -i
+curl -s https://raw.githubusercontent.com/ho-nl/docker-development-box/master/install.sh | bash -s -- -i
 ```
 
 It will (re)install multiple php-fpm services, one for each version (port: 9072,
