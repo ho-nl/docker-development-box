@@ -93,7 +93,7 @@ install_php() {
   CURRENT_DIR=$PWD
   XDEBUG_DIR="$HOME/.xdebug$PHP"
   rm -rf $XDEBUG_DIR
-  git clone git://github.com/xdebug/xdebug.git $XDEBUG_DIR 2>/dev/null &
+  git clone -b 2.9.6 git://github.com/xdebug/xdebug.git $XDEBUG_DIR 2>/dev/null &
   spinner
 
   cd $XDEBUG_DIR
