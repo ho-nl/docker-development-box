@@ -98,7 +98,7 @@ version linked or your ~/.bash_profile should be cleaned up or you need to reope
 1. Install [docker for mac 2.1.0.1](https://docs.docker.com/docker-for-mac/release-notes/#docker-desktop-community-2101).
 2. Start Docker
 3. Exclude `~/Library/Containers` from your backups
-4. `brew install ctop`: `htop` for Docker.
+4. `brew install ctop`: can be used to show container metrics.
 5. Open Docker -> Preferences  
 6. Set memory to 3-4 GB 
 
