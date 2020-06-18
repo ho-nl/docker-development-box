@@ -91,14 +91,16 @@ php -v
 ```
 
 Should now show the right version. If it doesn't there might be still be a
-version linked or your ~/.bash_profile should be cleaned up.
+version linked or your ~/.bash_profile should be cleaned up or you need to reopen your CLI. 
 
 ### Install docker
 
 1. Install [docker for mac 2.1.0.1](https://docs.docker.com/docker-for-mac/release-notes/#docker-desktop-community-2101).
-2. Exclude `~/Library/Containers` from your backups
-3. `brew install ctop`: `htop` for Docker.
-4. Set memory to 3-4 GB
+2. Start Docker
+3. Exclude `~/Library/Containers` from your backups
+4. `brew install ctop`: `htop` for Docker.
+5. Open Docker -> Preferences  
+6. Set memory to 3-4 GB 
 
 Note: Newer versions of Docker for Mac have network latency issues, see
 [#10](https://github.com/ho-nl/docker-development-box/issues/10#issuecomment-639371400)
@@ -115,7 +117,7 @@ Note: Newer versions of Docker for Mac have network latency issues, see
 
 - Download the raw .pem file (Open Raw, then CMD + S):
 - [./hitch/\*.localhost.reachdigital.io.pem](./hitch/*.localhost.reachdigital.io.pem)
-- Open keychain.app, add this file.
+- Open keychain.app, add this file (you can drag and drop files in the keychain app).
 - Open certificate and trust the certificate.
 
 You are now done with the global installation 🎉
