@@ -132,6 +132,15 @@ You are now done with the global installation 🎉
 - Disable services you don't need in `docker-compose.yml` (required: `hitch`,
   `varnish`, `nginx` and `db`).
 - Commit the `docker-compose.yml` file to prevent future accidental changes.
+- Update or create an env.php file and with the following info
+    `'host' => '127.0.0.1',
+     'dbname' => 'magento',
+     'username' => 'magento',
+     'password' => 'magento',
+    `
+- Create a setup script for the base-urls. See the following commit for example.
+    `https://github.com/ho-nl/project-grandvision/commit/c8e7395a6630d5ee1c635480fe785fc439ef8bdf `
+
 
 ## Usage
 
