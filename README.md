@@ -125,7 +125,7 @@ You are now done with the global installation 🎉
 ## Project installation
 
 - Install this in the project
-  `composer require --dev reach-digital/docker-devbox`
+  `composer require reach-digital/docker-devbox`
 - Install `static-content-deploy`
   [patch](patch/static-content-deploy.md) and remove
   `pub/static/frontend/*`.
