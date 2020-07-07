@@ -138,8 +138,20 @@ You are now done with the global installation 🎉
      'username' => 'magento',
      'password' => 'magento',
     `
-- Create a setup script for the base-urls. See the following commit for example.
-    `https://github.com/ho-nl/project-grandvision/commit/c8e7395a6630d5ee1c635480fe785fc439ef8bdf `
+- Create a setup script for the base-urls. See the following for example:
+    `       <url>
+                <use_store>0</use_store>
+            </url>
+            <unsecure>
+                <base_url>https://foreyes.localhost.reachdigital.io/</base_url>
+                <base_static_url>https://foreyes.localhost.reachdigital.io/static/</base_static_url>
+                <base_media_url>https://foreyes.localhost.reachdigital.io/media/</base_media_url>
+            </unsecure>
+            <secure>
+                <base_url>https://foreyes.localhost.reachdigital.io/</base_url>
+                <base_static_url>https://foreyes.localhost.reachdigital.io/static/</base_static_url>
+                <base_media_url>https://foreyes.localhost.reachdigital.io/media/</base_media_url>
+            </secure>`
 
 
 ## Usage
