@@ -138,20 +138,7 @@ You are now done with the global installation 🎉
      'username' => 'magento',
      'password' => 'magento',
     `
-- Create a setup script for the base-urls. See the following for example:
-    `       <url>
-                <use_store>0</use_store>
-            </url>
-            <unsecure>
-                <base_url>https://foreyes.localhost.reachdigital.io/</base_url>
-                <base_static_url>https://foreyes.localhost.reachdigital.io/static/</base_static_url>
-                <base_media_url>https://foreyes.localhost.reachdigital.io/media/</base_media_url>
-            </unsecure>
-            <secure>
-                <base_url>https://foreyes.localhost.reachdigital.io/</base_url>
-                <base_static_url>https://foreyes.localhost.reachdigital.io/static/</base_static_url>
-                <base_media_url>https://foreyes.localhost.reachdigital.io/media/</base_media_url>
-            </secure>`
+- Create a setup script for the base-urls and run it.
 
 
 ## Usage
