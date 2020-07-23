@@ -233,10 +233,10 @@ done
 
 echo "
 Installing mysql-client, gnu-sed, pv, jq"
-brew install gnu-sed mysql-client pv jq &>/dev/null &
+brew install gnu-sed mysql-client@5.7 pv jq &>/dev/null &
 spinner
 
-brew link mysql-client --force &>/dev/null &
+brew link mysql-client@5.7 --force &>/dev/null &
 spinner
 
 echo "
