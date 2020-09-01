@@ -58,7 +58,7 @@ stuff up.
 
 You should not have any services running like.
 
-- `php`: find them with `brew list | grep php`, uninstall them.
+- `php`: find them with `brew list | grep php`, uninstall them using `brew uninstall —f <packages>`. With the force flag you'll delete all installed versions of formula.
 - `httpd`:
   [Disable apache](https://apple.stackexchange.com/questions/119674/disable-apache-autostart/119678)
   that is OSX native. http://localhost/ should not return anything.
