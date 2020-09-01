@@ -10,10 +10,11 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
     "extra": {
         "map": [
-            ["docker-compose.yml", "docker-compose.yml"]
+            ["docker-compose.yml", "docker-compose.yml"],
+            ["README.md", "var/.mysqldata/README.md"],
+            ["README.md", "var/.esdata/README.md"]
         ]
     }
 }
