@@ -9,6 +9,9 @@
             "email": "paul@reachdigital.nl"
         }
     ],
+    "require": {
+        "magento/magento-composer-installer": "*"
+    },
     "minimum-stability": "dev",
     "extra": {
         "map": [
