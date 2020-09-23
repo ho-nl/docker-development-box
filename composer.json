@@ -1,23 +1,32 @@
 {
-    "name": "reach-digital/docker-devbox",
-    "description": "Reach Digital Docker+local hybrid development environment.",
-    "type": "magento2-component",
-    "license": "Apache-2.0",
-    "authors": [
-        {
-            "name": "Paul Hachmang",
-            "email": "paul@reachdigital.nl"
-        }
-    ],
-    "require": {
-        "magento/magento-composer-installer": "*"
-    },
-    "minimum-stability": "dev",
-    "extra": {
-        "map": [
-            ["docker-compose.yml", "docker-compose.yml"],
-            ["README.md", "var/.mysqldata/README.md"],
-            ["README.md", "var/.esdata/README.md"]
-        ]
+  "name": "reach-digital/docker-devbox",
+  "description": "Reach Digital Docker+local hybrid development environment.",
+  "type": "magento2-component",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Paul Hachmang",
+      "email": "paul@reachdigital.nl"
     }
+  ],
+  "require": {
+    "magento/magento-composer-installer": "*"
+  },
+  "minimum-stability": "dev",
+  "extra": {
+    "map": [
+      [
+        "docker-compose.yml",
+        "docker-compose.yml"
+      ],
+      [
+        ".gitignore",
+        "var/.mysqldata/.gitignore"
+      ],
+      [
+        ".gitignore",
+        "var/.esdata/.gitignore"
+      ]
+    ]
+  }
 }
