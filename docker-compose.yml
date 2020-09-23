@@ -53,7 +53,7 @@ services:
     command: /bin/sh -c "envsubst '$$FPM_PORT $$FPM_XDEBUG $$FPM_ROOT $$FPM_ROOT_ABS' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
 
   mysql:
-    image: percona:5.7
+    image: percona:8.0
     ports:
       - 3306:3306
     environment:
