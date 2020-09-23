@@ -86,7 +86,7 @@ It will (re)install multiple php-fpm services, one for each version (port: 9072,
 
 ```bash
 brew unlink php@7.3
-brew link php@7.2 --force
+brew link php@7.4 --force
 php -v
 ```
 
@@ -163,7 +163,7 @@ caches, etc.
   [Xdebug helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc)
   installed + PHPStorm is listening to connections.
 - Cli: Use
-  `XDEBUG_CONFIG="" php -c /usr/local/etc/php/7.2/php-xdebug.ini bin/magento`
+  `XDEBUG_CONFIG="" php -c /usr/local/etc/php/7.4/php-xdebug.ini bin/magento`
 - Tests: Create a local interpreter, the PHP version you're looking for should
   be suggested and add the `🐞 Xdebug path:` to enable xdebug (you should have
   seen that with the installation). The path is something like
