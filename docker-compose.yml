@@ -65,13 +65,13 @@ services:
       - ./vendor/reach-digital/docker-devbox/mysql:/etc/my.cnf.d
       - mysql-mount:/var/lib/mysql
 
-  #  # bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-db=0 --cache-backend-redis-port=6379
-  #  # bin/magento setup:config:set --session-save=redis --session-save-redis-db=2 --session-save-redis-port=6379
-  #  redis:
-  #    image: redis:5-alpine
-  #    command: ["redis-server", "--appendonly", "yes"]
-  #    ports:
-  #      - 6379:6379
+  # bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-db=0 --cache-backend-redis-port=6379
+  # bin/magento setup:config:set --session-save=redis --session-save-redis-db=2 --session-save-redis-port=6379
+  redis:
+    image: redis:5-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - 6379:6379
 
   # bin/magento config:set --lock-config catalog/search/enable_eav_indexer 0
   # bin/magento config:set --lock-config catalog/search/engine elasticsearch7
