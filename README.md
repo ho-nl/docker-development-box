@@ -1,4 +1,4 @@
-# 🐳 Reach Digital Magento 2 Docker+local hybrid development environment. 🐳
+# 🐳 Reach Digital Magento 2.3 Docker+local hybrid development environment. 🐳
 
 Docker for services, php locally. No sync, no mental overhead, no performance
 penalties.  
@@ -125,7 +125,7 @@ You are now done with the global installation 🎉
 ## Project installation
 
 - Install this in the project
-  `composer require reach-digital/docker-devbox`
+  `composer require reach-digital/docker-devbox ^2.0.6`
 - Install `static-content-deploy`
   [patch](patch/static-content-deploy.md) and remove
   `pub/static/frontend/*`.
