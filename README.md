@@ -1,4 +1,7 @@
-# 🐳 Reach Digital Magento 2.3 Docker+local hybrid development environment. 🐳
+# 🐳 Reach Digital Magento 2.4 Docker+local hybrid development environment. 🐳
+
+_For Magento 2.3, see the
+[2.x branch](https://github.com/ho-nl/docker-development-box/tree/2.x)._
 
 Docker for services, php locally. No sync, no mental overhead, no performance
 penalties.  
@@ -12,16 +15,16 @@ slow, we can't have slow.
 
 The problem with all the docker devboxes is that they require running php inside
 a vm. The problem with php in a VM is that files need to be available in the VM,
-but it also needs to have files outside the VM, because programs like
-PHPStorm and others do not accept network drives.
+but it also needs to have files outside the VM, because programs like PHPStorm
+and others do not accept network drives.
 
 Sync is slower than no sync. [docker-sync](http://docker-sync.io/),
 [unison](https://www.cis.upenn.edu/~bcpierce/unison/),
 [mutagen](https://mutagen.io/) offer good sync solutions, but always slower than
 no sync.
 
-Hovever, syncs require additional HDD space and additional mental overhead: Are my
-files synced?, Is my sync broken? Are there sync conflicts? Why did that file
+Hovever, syncs require additional HDD space and additional mental overhead: Are
+my files synced?, Is my sync broken? Are there sync conflicts? Why did that file
 appear here? Where should I execute my php cli scripts? Where should I run node
 cli? Why is my system slow? Sync is bad.
 
@@ -58,7 +61,9 @@ stuff up.
 
 You should not have any services running like.
 
-- `php`: find them with `brew list | grep php`, uninstall them using `brew uninstall —f <packages>`. With the force flag you'll delete all installed versions of formula.
+- `php`: find them with `brew list | grep php`, uninstall them using
+  `brew uninstall —f <packages>`. With the force flag you'll delete all
+  installed versions of formula.
 - `httpd`:
   [Disable apache](https://apple.stackexchange.com/questions/119674/disable-apache-autostart/119678)
   that is OSX native. http://localhost/ should not return anything.
@@ -91,23 +96,26 @@ php -v
 ```
 
 Should now show the right version. If it doesn't there might be still be a
-version linked or your ~/.bash_profile should be cleaned up or you need to reopen your CLI. 
+version linked, or your ~/.bash_profile should be cleaned up, or you need to
+reopen your CLI.
 
 ### Install docker
 
-1. Install [docker for mac 2.1.0.1](https://docs.docker.com/docker-for-mac/release-notes/#docker-desktop-community-2101).
+1. Install
+   [docker for mac 2.1.0.1](https://docs.docker.com/docker-for-mac/release-notes/#docker-desktop-community-2101).
 2. Start Docker
 3. Exclude `~/Library/Containers` from your backups
 4. `brew install ctop`: can be used to show container metrics.
-5. Open Docker -> Preferences  
-6. Set memory to 3-4 GB 
+5. Open Docker -> Preferences
+6. Set memory to 3-4 GB
 
 Note: Newer versions of Docker for Mac have network latency issues, see
 [#10](https://github.com/ho-nl/docker-development-box/issues/10#issuecomment-639371400)
 
 ### Install nfs
 
-1. `sudo nano /etc/exports` add: `/System/Volumes/Data -alldirs -mapall=501:20 localhost`
+1. `sudo nano /etc/exports` add:
+   `/System/Volumes/Data -alldirs -mapall=501:20 localhost`
 2. `sudo nano /etc/nfs.conf` add: `nfs.server.mount.require_resv_port = 0`
 3. `sudo nfsd restart`
 
@@ -117,7 +125,8 @@ Note: Newer versions of Docker for Mac have network latency issues, see
 
 - Download the raw .pem file (Open Raw, then CMD + S):
 - [./hitch/\*.localhost.reachdigital.io.pem](./hitch/*.localhost.reachdigital.io.pem)
-- Open keychain.app, add this file (you can drag and drop files in the keychain app).
+- Open keychain.app, add this file (you can drag and drop files in the keychain
+  app).
 - Open certificate and trust the certificate.
 
 You are now done with the global installation 🎉
@@ -125,21 +134,20 @@ You are now done with the global installation 🎉
 ## Project installation
 
 - Install this in the project
-  `composer require reach-digital/docker-devbox ^2.0.6`
-- Install `static-content-deploy`
-  [patch](patch/static-content-deploy.md) and remove
-  `pub/static/frontend/*`.
+  `composer require reach-digital/docker-devbox ^3.0.0`
+- Install `static-content-deploy` [patch](patch/static-content-deploy.md) and
+  remove `pub/static/frontend/*`.
 - Disable services you don't need in `docker-compose.yml` (required: `hitch`,
-  `varnish`, `nginx` and `db`).
+  `varnish`, `nginx`, `db` and `elasticsearch`).
 - Commit the `docker-compose.yml` file to prevent future accidental changes.
 - Update or create an env.php file and with the following info
-    `'host' => '127.0.0.1',
-     'dbname' => 'magento',
-     'username' => 'magento',
-     'password' => 'magento',
-    `
+  ```
+    'host' => '127.0.0.1',
+    'dbname' => 'magento',
+    'username' => 'magento',
+    'password' => 'magento',
+  ```
 - Create a setup script for the base-urls and run it.
-
 
 ## Usage
 
