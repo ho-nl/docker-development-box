@@ -1,4 +1,4 @@
-FROM elasticsearch:6.8.6
+FROM elasticsearch:7.6.2
 
 RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch analysis-icu
 RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch analysis-phonetic

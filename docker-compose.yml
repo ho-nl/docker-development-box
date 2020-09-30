@@ -47,13 +47,13 @@ services:
       - ./vendor/reach-digital/docker-devbox/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - nginx-mount:/var/www/data
     environment:
-      FPM_PORT: 9072
-      FPM_XDEBUG: 9172
+      FPM_PORT: 9074
+      FPM_XDEBUG: 9174
       FPM_ROOT: $PWD/pub
     command: /bin/sh -c "envsubst '$$FPM_PORT $$FPM_XDEBUG $$FPM_ROOT $$FPM_ROOT_ABS' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
 
   mysql:
-    image: percona:5.7
+    image: percona:8.0
     ports:
       - 3306:3306
     environment:
@@ -65,8 +65,8 @@ services:
       - ./vendor/reach-digital/docker-devbox/mysql:/etc/my.cnf.d
       - mysql-mount:/var/lib/mysql
 
-  # php bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-db=0 --cache-backend-redis-port=6379
-  # php bin/magento setup:config:set --session-save=redis --session-save-redis-db=2 --session-save-redis-port=6379
+  # bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-db=0 --cache-backend-redis-port=6379
+  # bin/magento setup:config:set --session-save=redis --session-save-redis-db=2 --session-save-redis-port=6379
   redis:
     image: redis:5-alpine
     command: ["redis-server", "--appendonly", "yes"]
@@ -74,7 +74,7 @@ services:
       - 6379:6379
 
   # bin/magento config:set --lock-config catalog/search/enable_eav_indexer 0
-  # bin/magento config:set --lock-config catalog/search/engine [elasticsearch6 OR  elasticsuite]
+  # bin/magento config:set --lock-config catalog/search/engine elasticsearch7
   # bin/magento config:set --lock-env catalog/search/elasticsearch6_server_port 9200
   # bin/magento config:set --lock-env catalog/search/elasticsearch6_server_hostname localhost
   elasticsearch:
