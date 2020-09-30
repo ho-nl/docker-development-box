@@ -1,6 +1,6 @@
 # 🐳 Reach Digital Magento 2.4 Docker+local hybrid development environment. 🐳
 
-_For Magento 2.3, see the
+⚠  _For Magento 2.3, see the
 [2.x branch](https://github.com/ho-nl/docker-development-box/tree/2.x)._
 
 Docker for services, php locally. No sync, no mental overhead, no performance
@@ -74,12 +74,13 @@ You should not have any services running like.
 Take a look at `~/.bash_profile` or `~/.zshrc` and make sure it doesn't contain
 any references to `/usr/local/Cellar/php*`.
 
-### Installing services
+### Installing services for Magento 2.4
 
 Since we're running a hybrid docker+local system we need to set up PHP to run
 locally.
 
 ```bash
+# Magento 2.4 (for 2.3, see the 2.x branch)
 # Cleans existing brew php (will not remove Valet stuff) + installs php on OSX!
 curl -s https://raw.githubusercontent.com/ho-nl/docker-development-box/master/install.sh | bash -s -- -i
 ```
@@ -133,8 +134,9 @@ You are now done with the global installation 🎉
 
 ## Project installation
 
-- Install this in the project
-  `composer require reach-digital/docker-devbox ^3.0.0`
+- Install this in the project:
+  - Magento 2.3: [2.x branch](https://github.com/ho-nl/docker-development-box/tree/2.x)
+  - Magento 2.4: `composer require reach-digital/docker-devbox ^3.0.0`  
 - Install `static-content-deploy` [patch](patch/static-content-deploy.md) and
   remove `pub/static/frontend/*`.
 - Disable services you don't need in `docker-compose.yml` (required: `hitch`,
