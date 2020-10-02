@@ -27,6 +27,16 @@
         ".gitignore",
         "var/.esdata/.gitignore"
       ]
+    ],
+    "chmod": [
+      {
+        "mask": "0775",
+        "path": "var/.mysqldata"
+      },
+      {
+        "mask": "0775",
+        "path": "var/.esdata"
+      },
     ]
   }
 }
