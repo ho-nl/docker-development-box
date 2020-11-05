@@ -227,7 +227,7 @@ How do I flush Redis directly when `bin/magento` is broken?
 
 ```
 bin/magento config:set --lock-config catalog/search/enable_eav_indexer 0
-bin/magento config:set --lock-config catalog/search/engine [elasticsearch6 OR  elasticsuite]
+bin/magento config:set --lock-config catalog/search/engine [elasticsearch7 OR  elasticsuite]
 bin/magento config:set --lock-env catalog/search/elasticsearch6_server_port 9200
 bin/magento config:set --lock-env catalog/search/elasticsearch6_server_hostname localhost
 ```
