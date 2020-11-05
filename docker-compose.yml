@@ -86,6 +86,11 @@ services:
       - 9300:9300
     environment:
       - discovery.type=single-node
+      - http.port=9200
+      - http.cors.enabled=true
+      - http.cors.allow-origin=http://localhost:9100
+      - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+      - http.cors.allow-credentials=true
     volumes:
       - elasticsearch-mount:/usr/share/elasticsearch/data
 
