@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # If you're adding a new version, you need an additional XDEBUG version, not retrieved dynamically.
-PHPS='php@7.2 php@7.3 php'
+PHPS='php@7.2 php@7.3 php7.4'
 
 spinner() {
   local pid=$!
