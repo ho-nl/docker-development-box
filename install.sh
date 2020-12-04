@@ -74,6 +74,7 @@ install_php() {
 
   echo "[$PHP] ⚡️ Configuring memory_limit, opcache"
   sed -i '' 's/^memory_limit.*/memory_limit = 4096M/g' /usr/local/etc/php/"$PHPVERSION"/php.ini
+  sed -i '' 's/^max_input_vars.*/max_input_vars = 10000/g' /usr/local/etc/php/"$PHPVERSION"/php.ini
   sed -i '' 's/^;opcache.memory_consumption=128/opcache.memory_consumption=512/g' /usr/local/etc/php/"$PHPVERSION"/php.ini
   sed -i '' 's/^;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=24/g' /usr/local/etc/php/"$PHPVERSION"/php.ini
   sed -i '' 's/^;opcache.revalidate_freq=2/opcache.revalidate_freq=0/g' /usr/local/etc/php/"$PHPVERSION"/php.ini
