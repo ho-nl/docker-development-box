@@ -11,6 +11,10 @@ backend default {
     .first_byte_timeout = 600s;
 }
 sub vcl_recv {
+    if (req.restarts > 0) {
+        set req.hash_always_miss = true;
+    }
+
     if (req.method == "PURGE") {
         # To use the X-Pool header for purging varnish during automated deployments, make sure the X-Pool header
         # has been added to the response in your backend server config. This is used, for example, by the
