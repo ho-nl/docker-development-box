@@ -63,6 +63,11 @@ sub vcl_recv {
         return (pass);
     }
 
+    # Bypass health check requests
+    if (req.url ~ "^/(pub/)?(health_check.php)$") {
+        return (pass);
+    }
+
     # Sort queries + remove parameters.
     set req.url = std.querysort(req.url);
 
@@ -162,6 +167,11 @@ sub vcl_recv {
         #unset req.http.Https;
         #unset req.http.X-Forwarded-Proto;
         #unset req.http.Cookie;
+    }
+
+    # Authenticated GraphQL requests should not be cached by default
+    if (req.url ~ "/graphql" && req.http.Authorization ~ "^Bearer") {
+        return (pass);
     }
 
     return (hash);
