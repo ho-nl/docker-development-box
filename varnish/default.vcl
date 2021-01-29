@@ -11,6 +11,10 @@ backend default {
     .first_byte_timeout = 600s;
 }
 sub vcl_recv {
+    if (req.restarts > 0) {
+        set req.hash_always_miss = true;
+    }
+
     if (req.method == "PURGE") {
         # To use the X-Pool header for purging varnish during automated deployments, make sure the X-Pool header
         # has been added to the response in your backend server config. This is used, for example, by the
@@ -54,8 +58,13 @@ sub vcl_recv {
         return (pass);
     }
 
-    # Bypass shopping cart, checkout and search requests
-    if (req.url ~ "/checkout" || req.url ~ "/catalogsearch") {
+    # Bypass customer, shopping cart, checkout
+    if (req.url ~ "/customer" || req.url ~ "/checkout") {
+        return (pass);
+    }
+
+    # Bypass health check requests
+    if (req.url ~ "^/(pub/)?(health_check.php)$") {
         return (pass);
     }
 
@@ -160,19 +169,17 @@ sub vcl_recv {
         #unset req.http.Cookie;
     }
 
+    # Authenticated GraphQL requests should not be cached by default
+    if (req.url ~ "/graphql" && req.http.Authorization ~ "^Bearer") {
+        return (pass);
+    }
+
     return (hash);
 }
 
 sub vcl_hash {
     if (req.http.cookie ~ "X-Magento-Vary=") {
         hash_data(regsub(req.http.cookie, "^.*?X-Magento-Vary=([^;]+);*.*$", "\1"));
-    }
-
-    # For multi site configurations to not cache each other's content
-    if (req.http.host) {
-        hash_data(req.http.host);
-    } else {
-        hash_data(server.ip);
     }
 
     # To make sure http users don't see ssl warning
@@ -261,7 +268,9 @@ sub vcl_deliver {
     }
 
     # Not letting browser to cache non-static files.
-    if (resp.http.Cache-Control !~ "private" && resp.http.Cache-Control !~ "public" && req.url !~ "^/(pub/)?(media|static)/") {
+    if (resp.http.Cache-Control !~ "private" && req.url !~ "^/(pub/)?(media|static)/") {
+        set resp.http.Pragma = "no-cache";
+        set resp.http.Expires = "-1";
         set resp.http.Cache-Control = "no-store, no-cache, must-revalidate, max-age=0";
     }
 }
