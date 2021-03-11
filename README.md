@@ -249,6 +249,19 @@ bin/magento setup:config:set --amqp-host=localhost --amqp-port=5672 --amqp-user=
 http://localhost:15672
 ```
 
+### How do I set up Ngrok?
+Ngrok exposes local servers to the public internet over secure tunnels.
+
+```
+http://localhost:4551
+Update base urls with tunnel url shown on webpage.
+```
+
+By default an unregistered session is started, this will limit the connections per minute. Adding your authtoken using environment parameters will grant you access to more features and longer session times.
+```
+  - PARAMS=http -region=eu --authtoken=<token> nginx:80
+```
+
 ### How do I set up Sphinx?
 
 No support yet.
