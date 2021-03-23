@@ -8,6 +8,8 @@ Makes the static content deploy use relative symlinks in developer mode. Does no
 
 2. Add the following to the patches area of your `composer.json`
 
+  ⚠  For Magento >=2.4.2, use `./vendor/reach-digital/docker-devbox/patch/2.4.2-static-content-deploy.diff`
+
 ```
 {
   "extra": {
@@ -21,3 +23,6 @@ Makes the static content deploy use relative symlinks in developer mode. Does no
   }
 }
 ```
+
+
+
