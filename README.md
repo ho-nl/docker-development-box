@@ -241,6 +241,7 @@ bin/magento config:set --lock-env system/smtp/disable 0
 bin/magento config:set --lock-env system/smtp/host localhost
 bin/magento config:set --lock-env system/smtp/port 1025
 ```
+⚠ You will need to activate the module under Stores > Configuration before e-mail actually ends up in MailHog
 
 ### How do I set up RabbitMQ?
 
