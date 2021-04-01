@@ -1,6 +1,6 @@
 {
   "name": "@reachdigital/docker-devbox",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "private": true,
   "description": "🐳 Reach Digital Magento 2 Docker+local hybrid devbox 🐳",
   "license": "Apache-2.0",
