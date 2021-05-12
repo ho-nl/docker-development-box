@@ -221,7 +221,7 @@ php bin/magento setup:config:set --session-save=redis --session-save-redis-db=2 
 ```
 
 How do I flush Redis directly when `bin/magento` is broken?
-`docker-compose down && docker-compose up -d`
+`docker-compose exec redis redis-cli flushall`
 
 ### How do I set up Elastic Search?
 
