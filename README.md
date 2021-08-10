@@ -235,19 +235,17 @@ bin/magento config:set --lock-env catalog/search/elasticsearch6_server_hostname 
 ### How do I set up MailHog?
 
 ```
-composer require mageplaza/module-smtp
+composer require magepal/magento2-gmailsmtpapp
 php bin/magento setup:upgrade
 bin/magento config:set --lock-env system/smtp/disable 0
-bin/magento config:set --lock-env smtp/general/enabled 1
-bin/magento config:set --lock-env smtp/configuration_option/host localhost
-bin/magento config:set --lock-env smtp/configuration_option/port 1025
+bin/magento config:set --lock-env system/gmailsmtpapp/active 1
+bin/magento config:set --lock-env system/gmailsmtpapp/auth NONE
+bin/magento config:set --lock-env system/gmailsmtpapp/ssl none
+bin/magento config:set --lock-env system/gmailsmtpapp/smtphost localhost
+bin/magento config:set --lock-env system/gmailsmtpapp/smtpport 1025
 ```
 
-Please note that this module needs **manual activation** by entering a (bogus) name and email address at:
-
-Stores > Configuration > MagePlaza Extensions > SMTP > Module Information
-
-Also note that when trying to visit MailHog via your browser, use `http` instead of `https`.
+Note that when trying to visit MailHog via your browser, use `http` instead of `https`.
 
 ### How do I set up RabbitMQ?
 
