@@ -106,12 +106,14 @@ services:
     volumes:
       - elasticsearch-mount:/usr/share/elasticsearch/data
 
-  # composer require mageplaza/module-smtp
+  # composer require magepal/magento2-gmailsmtpapp
   # php bin/magento setup:upgrade
   # bin/magento config:set --lock-env system/smtp/disable 0
-  # bin/magento config:set --lock-env system/smtp/host localhost
-  # bin/magento config:set --lock-env system/smtp/port 1025
-  # http://localhost:8025/
+  # bin/magento config:set --lock-env system/gmailsmtpapp/active 1
+  # bin/magento config:set --lock-env system/gmailsmtpapp/auth NONE
+  # bin/magento config:set --lock-env system/gmailsmtpapp/ssl none
+  # bin/magento config:set --lock-env system/gmailsmtpapp/smtphost localhost
+  # bin/magento config:set --lock-env system/gmailsmtpapp/smtpport 1025
   mailhog:
     image: mailhog/mailhog:v1.0.0
     ports:
