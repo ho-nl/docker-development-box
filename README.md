@@ -157,13 +157,18 @@ You are now done with the global installation 🎉
 - Logging: `ctop`
 - Stop: `docker-compose down`
 
-**Delete data (mysql/elasticsearch):**
-
-- `rm -rf var/.esdata`
-- `rm -rf var/.mysqldata`
-
 You now have all services set up 🎉. See individual services below to set urls,
 caches, etc.
+
+**Deleting data (mysql/elasticsearch):**
+
+- `docker-compose down`
+- `rm -rf var/.esdata/*`
+- `rm -rf var/.mysqldata/*`
+- `docker-compose up -d`
+
+Be sure to give MySQL a minute or two to re-initialize the data directory - during
+this time it will not accept connections.
 
 ## Settings for `mysql` `elasticsearch`, `rabbitmq`, `mailhog`, etc.
 
