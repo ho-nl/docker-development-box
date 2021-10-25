@@ -146,7 +146,7 @@ You are now done with the global installation 🎉
   ```
     'host' => '127.0.0.1',
     'dbname' => 'magento',
-    'username' => 'magento',
+    'username' => 'root',
     'password' => 'magento',
   ```
 - Create a setup script for the base-urls and run it.
