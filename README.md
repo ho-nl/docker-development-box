@@ -108,7 +108,7 @@ reopen your CLI.
 3. Exclude `~/Library/Containers` from your backups
 4. `brew install ctop`: can be used to show container metrics.
 5. Open Docker -> Preferences
-6. Set memory to 3-4 GB
+6. Set memory to 6-8 GB
 
 Note: Newer versions of Docker for Mac have network latency issues, see
 [#10](https://github.com/ho-nl/docker-development-box/issues/10#issuecomment-639371400)
