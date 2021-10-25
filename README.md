@@ -88,6 +88,14 @@ curl -s https://raw.githubusercontent.com/ho-nl/docker-development-box/master/in
 It will (re)install multiple php-fpm services, one for each version (port: 9072,
 9073, 9074) and one for each version with xdebug (port: 9172, 9173, 9174).
 
+In case the PHP 7.2 services are not started correctly after running the `install.sh` script above,
+you may be running into https://github.com/shivammathur/homebrew-php/issues/404. To work around this,
+reinstall `tidy-html5`:
+
+```bash
+brew reinstall tidy-html5
+```
+
 #### Switch PHP versions
 
 ```bash
