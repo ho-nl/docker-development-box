@@ -217,7 +217,7 @@ bin/magento config:set --lock-config system/full_page_cache/caching_application 
 
 - You can use `bin/magento cache:clean` or `cache:flush` to flush Varnish.
 - You can use `CMD+SHIFT+R` to bypass Varnish for any page.
-- You can use `docker-devbox-varnish-secret` as shared secret to authenticate with Varnish.
+- You can use port 6082 and `docker-devbox-varnish-secret` as shared secret to connect with the Varnish management interface.
 
 ### How do I set up Redis?
 
