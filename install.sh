@@ -137,6 +137,9 @@ install_php() {
   cp -rp /usr/local/etc/php/"$PHPVERSION"/php-fpm.d /usr/local/etc/php/"$PHPVERSION"/php-fpm-xdebug.d
   sed -i '' "s/^listen = 127.0.0.1:$PHPFPM/listen = 127.0.0.1:$XPHPFPM/g" /usr/local/etc/php/"$PHPVERSION"/php-fpm-xdebug.d/www.conf
 
+  echo "Installing Imagick for PHP"
+  pecl install imagick
+
   echo "[$PHP] ✅ Installed"
   echo ""
 }
@@ -233,8 +236,8 @@ for PHP in $PHPS; do
 done
 
 echo "
-Installing mysql-client, gnu-sed, pv, jq"
-brew install gnu-sed mysql-client pv jq &>/dev/null &
+Installing mysql-client, gnu-sed, pv, jq, imagemagick, pkg-config"
+brew install gnu-sed mysql-client pv jq imagemagick pkg-config &>/dev/null &
 spinner
 
 brew link mysql-client --force &>/dev/null &
