@@ -236,8 +236,8 @@ for PHP in $PHPS; do
 done
 
 echo "
-Installing mysql-client, gnu-sed, pv, jq, imagemagick"
-brew install gnu-sed mysql-client pv jq imagemagick &>/dev/null &
+Installing mysql-client, gnu-sed, pv, jq, imagemagick, pkg-config"
+brew install gnu-sed mysql-client pv jq imagemagick pkg-config &>/dev/null &
 spinner
 
 brew link mysql-client --force &>/dev/null &
