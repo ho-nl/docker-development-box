@@ -1,6 +1,7 @@
 .mysqldata
 .esdata
 .idea
+*~
 
 /vendor/
 /node_modules/

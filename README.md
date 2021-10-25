@@ -83,11 +83,18 @@ locally.
 # Magento 2.4 (for 2.3, see the 2.x branch)
 # Cleans existing brew php (will not remove Valet stuff) + installs php on OSX!
 curl -s https://raw.githubusercontent.com/ho-nl/docker-development-box/master/install.sh | bash -s -- -i
-brew reinstall tidy-html5
 ```
 
 It will (re)install multiple php-fpm services, one for each version (port: 9072,
 9073, 9074) and one for each version with xdebug (port: 9172, 9173, 9174).
+
+In case the PHP 7.2 services are not started correctly after running the `install.sh` script above,
+you may be running into https://github.com/shivammathur/homebrew-php/issues/404. To work around this,
+reinstall `tidy-html5`:
+
+```bash
+brew reinstall tidy-html5
+```
 
 #### Switch PHP versions
 
