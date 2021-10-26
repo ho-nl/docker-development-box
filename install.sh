@@ -263,6 +263,9 @@ done
 echo "
 If everything went well the 'err' column should be 0. You can now see these processes in activity monitor. 🎉
 
+In case the PHP 7.2 services failed to start, this may be due to a known issue, refer to the README for a possible
+workaround.
+
 pid     err     name
 "
 launchctl list | grep reachdigital
