@@ -265,7 +265,7 @@ If everything went well the 'err' column should be 0. You can now see these proc
 
 pid     err     name
 "
-launchctl list | grep reach
+launchctl list | grep reachdigital
 
 echo "
 🎉 Done"
