@@ -139,7 +139,7 @@ install_php() {
 
   echo "Installing Imagick for PHP"
   # We pipe `yes ''` into pecl, as imagick asks for input during compilation and would otherwise get stuck.
-  yes '' | $PHPDIR/bin/pecl install imagick
+  yes '' | $PHPDIR/bin/pecl upgrade imagick
 
   echo "[$PHP] ✅ Installed"
   echo ""
