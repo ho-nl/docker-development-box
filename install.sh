@@ -138,7 +138,8 @@ install_php() {
   sed -i '' "s/^listen = 127.0.0.1:$PHPFPM/listen = 127.0.0.1:$XPHPFPM/g" /usr/local/etc/php/"$PHPVERSION"/php-fpm-xdebug.d/www.conf
 
   echo "Installing Imagick for PHP"
-  pecl install imagick
+  # We pipe `yes ''` into pecl, as imagick asks for input during compilation and would otherwise get stuck.
+  yes '' | $PHPDIR/bin/pecl upgrade imagick
 
   echo "[$PHP] ✅ Installed"
   echo ""
@@ -262,9 +263,12 @@ done
 echo "
 If everything went well the 'err' column should be 0. You can now see these processes in activity monitor. 🎉
 
+In case the PHP 7.2 services failed to start, this may be due to a known issue, refer to the README for a possible
+workaround.
+
 pid     err     name
 "
-launchctl list | grep reach
+launchctl list | grep reachdigital
 
 echo "
 🎉 Done"
