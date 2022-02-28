@@ -66,7 +66,7 @@ install_php() {
   XPHPFPM=91${PHPVERSION//./}
 
   echo "[$PHP] 👷‍ Installing"
-  brew install "$PHP" >/dev/null &
+  brew install  shivammathur/php/"$PHP" >/dev/null &
   spinner
 
   PHPDIR=$(brew --cellar "$PHP")/$(brew info --json "$PHP" | jq -r '.[0].installed[0].version')
