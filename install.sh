@@ -245,7 +245,7 @@ brew link mysql-client --force &>/dev/null &
 spinner
 
 echo "
-🚰 Adding shivammathur/php tap for legacy PHP suport" 
+🚰 Adding shivammathur/php tap for legacy PHP suport
 "
 brew tap shivammathur/php &
 spinner
