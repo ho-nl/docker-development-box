@@ -66,7 +66,7 @@ install_php() {
   XPHPFPM=91${PHPVERSION//./}
 
   echo "[$PHP] 👷‍ Installing"
-  brew install "$PHP" >/dev/null &
+  brew install  shivammathur/php/"$PHP" >/dev/null &
   spinner
 
   PHPDIR=$(brew --cellar "$PHP")/$(brew info --json "$PHP" | jq -r '.[0].installed[0].version')
@@ -242,6 +242,12 @@ brew install gnu-sed mysql-client pv jq imagemagick pkg-config &>/dev/null &
 spinner
 
 brew link mysql-client --force &>/dev/null &
+spinner
+
+echo "
+🚰 Adding shivammathur/php tap for legacy PHP suport
+"
+brew tap shivammathur/php &
 spinner
 
 echo "
