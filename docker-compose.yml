@@ -112,6 +112,15 @@ services:
     volumes:
       - elasticsearch-mount:/usr/share/elasticsearch/data
 
+  kibana:
+    image: kibana:7.6.2
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+    depends_on:
+      - elasticsearch
+
   # composer require magepal/magento2-gmailsmtpapp
   # php bin/magento setup:upgrade
   # bin/magento config:set --lock-env system/smtp/disable 0
