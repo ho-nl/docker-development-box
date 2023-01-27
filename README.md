@@ -88,14 +88,6 @@ curl -s https://raw.githubusercontent.com/ho-nl/docker-development-box/master/in
 It will (re)install multiple php-fpm services, one for each version (port: 9072,
 9073, 9074) and one for each version with xdebug (port: 9172, 9173, 9174).
 
-In case the PHP 7.2 services are not started correctly after running the `install.sh` script above,
-you may be running into https://github.com/shivammathur/homebrew-php/issues/404. To work around this,
-reinstall `tidy-html5`:
-
-```bash
-brew reinstall tidy-html5
-```
-
 #### Switch PHP versions
 
 ```bash
@@ -110,16 +102,13 @@ reopen your CLI.
 
 ### Install docker
 
-1. Install
-   [docker for mac 2.1.0.1](https://docs.docker.com/docker-for-mac/release-notes/#docker-desktop-community-2101).
+1. Install latest version of 
+   [docker for mac]([https://docs.docker.com/desktop/release-notes/]).
 2. Start Docker
 3. Exclude `~/Library/Containers` from your backups
 4. `brew install ctop`: can be used to show container metrics.
 5. Open Docker -> Preferences
 6. Set memory to 6-8 GB
-
-Note: Newer versions of Docker for Mac have network latency issues, see
-[#10](https://github.com/ho-nl/docker-development-box/issues/10#issuecomment-639371400)
 
 ### Install nfs
 
@@ -135,7 +124,7 @@ Note: Newer versions of Docker for Mac have network latency issues, see
 - Download the raw .pem file (Open Raw, then CMD + S):
 - [./hitch/\*.localhost.reachdigital.io.pem](./hitch/*.localhost.reachdigital.io.pem)
 - Open keychain.app, add this file (you can drag and drop this file in the keychain
-  app, under the Login tab).
+  app, under the `Login` tab).
 - Open certificate and trust the certificate (do this by right clicking on the entry, choosing 'Get Info', and choose 'Always trust' under the 'Trust' section)
 
 You are now done with the global installation 🎉
