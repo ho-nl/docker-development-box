@@ -134,8 +134,8 @@ Note: Newer versions of Docker for Mac have network latency issues, see
 
 - Download the raw .pem file (Open Raw, then CMD + S):
 - [./hitch/\*.localhost.reachdigital.io.pem](./hitch/*.localhost.reachdigital.io.pem)
-- Open keychain.app, add this file (you can drag and drop files in the keychain
-  app).
+- Open keychain.app, add this file (you can drag and drop this file in the keychain
+  app, under the Login tab).
 - Open certificate and trust the certificate (do this by right clicking on the entry, choosing 'Get Info', and choose 'Always trust' under the 'Trust' section)
 
 You are now done with the global installation 🎉
