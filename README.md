@@ -187,6 +187,8 @@ this time it will not accept connections.
   installed + PHPStorm is listening to connections.
 - Cli: Use
   `XDEBUG_CONFIG="" php -c /usr/local/etc/php/7.4/php-xdebug.ini bin/magento`
+- Cli `php@8.1`: Use
+    `XDEBUG_SESSION=1 php -c /usr/local/etc/php/8.1/php-xdebug.ini bin/magento`
 - Tests: Create a local interpreter, the PHP version you're looking for should
   be suggested and add the `🐞 Xdebug path:` to enable xdebug (you should have
   seen that with the installation). The path is something like
