@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # If you're adding a new version, you need an additional XDEBUG version, not retrieved dynamically.
-PHPS='php@7.2 php@7.3 php@7.4'
+PHPS='php@7.2 php@7.3 php@7.4 php@8.1'
 
 spinner() {
   local pid=$!
@@ -94,7 +94,11 @@ install_php() {
   CURRENT_DIR=$PWD
   XDEBUG_DIR="$HOME/.xdebug$PHP"
   rm -rf $XDEBUG_DIR
-  git clone -b 2.9.6 git://github.com/xdebug/xdebug.git $XDEBUG_DIR 2>/dev/null &
+
+  XDEBUG_VERSION='2.9.6'
+  [ $PHPVERSION == '8.1' ] && XDEBUG_VERSION='3.1.6'
+
+  git clone -b $XDEBUG_VERSION git@github.com:xdebug/xdebug.git $XDEBUG_DIR 2>/dev/null &
   spinner
 
   cd $XDEBUG_DIR
@@ -124,6 +128,7 @@ install_php() {
   [ $PHPVERSION = '7.2' ] && XDEBUG='20170718'
   [ $PHPVERSION = '7.3' ] && XDEBUG='20180731'
   [ $PHPVERSION = '7.4' ] && XDEBUG='20190902'
+  [ $PHPVERSION = '8.1' ] && XDEBUG='20210902'
 
   echo "[$PHP] 🐞 Xdebug path: $PHPDIR/pecl/$XDEBUG/xdebug.so"
 
