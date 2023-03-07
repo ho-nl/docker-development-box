@@ -269,14 +269,15 @@ bin/magento config:set --lock-env catalog/search/elasticsearch6_server_hostname 
 ### How do I set up MailHog?
 
 ```
-composer require magepal/magento2-gmailsmtpapp
+composer require fruitcake/magento2-email-advanced-config
+php bin/magento module:enable Fruitcake_EmailAdvancedConfig
 php bin/magento setup:upgrade
 bin/magento config:set --lock-env system/smtp/disable 0
-bin/magento config:set --lock-env system/gmailsmtpapp/active 1
-bin/magento config:set --lock-env system/gmailsmtpapp/auth NONE
-bin/magento config:set --lock-env system/gmailsmtpapp/ssl none
-bin/magento config:set --lock-env system/gmailsmtpapp/smtphost localhost
-bin/magento config:set --lock-env system/gmailsmtpapp/smtpport 1025
+bin/magento config:set --lock-env fruitcake_email_advanced/smtp/transport smtp
+bin/magento config:set --lock-env fruitcake_email_advanced/smtp/auth none
+bin/magento config:set --lock-env fruitcake_email_advanced/smtp/ssl none
+bin/magento config:set --lock-env fruitcake_email_advanced/smtp/host localhost
+bin/magento config:set --lock-env fruitcake_email_advanced/smtp/port 1025
 ```
 
 Note that when trying to visit MailHog via your browser, use `http` instead of `https`.
