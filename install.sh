@@ -134,7 +134,11 @@ install_php() {
 
   cp /usr/local/etc/php/"$PHPVERSION"/php.ini /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini
   gsed -i "1 i\zend_extension=\"$PHPDIR/pecl/$XDEBUG/xdebug.so\"" /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini
-  gsed -i "1 i\xdebug.remote_enable=1" /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini
+  if [ $PHPVERSION = '8.1' ]; then
+    gsed -i "1 i\xdebug.mode=debug" /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini
+  else
+    gsed -i "1 i\xdebug.remote_enable=1" /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini
+  fi
   gsed -i "1 i\xdebug.max_nesting_level=2000" /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini
 
   cp /usr/local/etc/php/"$PHPVERSION"/php-fpm.conf /usr/local/etc/php/"$PHPVERSION"/php-fpm-xdebug.conf
