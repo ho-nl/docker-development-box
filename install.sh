@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # If you're adding a new version, you need an additional XDEBUG version, not retrieved dynamically.
-PHPS='php@7.2 php@7.3 php@7.4 php@8.1'
+PHPS=' php@7.3 php@7.4 php@8.1 php@8.2'
 
 spinner() {
   local pid=$!
@@ -97,6 +97,7 @@ install_php() {
 
   XDEBUG_VERSION='2.9.6'
   [ $PHPVERSION == '8.1' ] && XDEBUG_VERSION='3.1.6'
+  [ $PHPVERSION == '8.2' ] && XDEBUG_VERSION='3.2.1'
 
   git clone -b $XDEBUG_VERSION git@github.com:xdebug/xdebug.git $XDEBUG_DIR 2>/dev/null &
   spinner
@@ -125,16 +126,16 @@ install_php() {
   spinner
   source_shell ""
 
-  [ $PHPVERSION = '7.2' ] && XDEBUG='20170718'
   [ $PHPVERSION = '7.3' ] && XDEBUG='20180731'
   [ $PHPVERSION = '7.4' ] && XDEBUG='20190902'
   [ $PHPVERSION = '8.1' ] && XDEBUG='20210902'
+  [ $PHPVERSION = '8.2' ] && XDEBUG='20220829'
 
   echo "[$PHP] 🐞 Xdebug path: $PHPDIR/pecl/$XDEBUG/xdebug.so"
 
   cp /usr/local/etc/php/"$PHPVERSION"/php.ini /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini
   gsed -i "1 i\zend_extension=\"$PHPDIR/pecl/$XDEBUG/xdebug.so\"" /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini
-  if [ $PHPVERSION = '8.1' ]; then
+  if [ $PHPVERSION = '8.1' ]  || [ $PHPVERSION = '8.2' ] ; then
     gsed -i "1 i\xdebug.mode=debug" /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini
   else
     gsed -i "1 i\xdebug.remote_enable=1" /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini
@@ -277,9 +278,6 @@ done
 
 echo "
 If everything went well the 'err' column should be 0. You can now see these processes in activity monitor. 🎉
-
-In case the PHP 7.2 services failed to start, this may be due to a known issue, refer to the README for a possible
-workaround.
 
 pid     err     name
 "
