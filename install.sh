@@ -70,6 +70,8 @@ install_php() {
   PHPFPM=90${PHPVERSION//./}
   XPHPFPM=91${PHPVERSION//./}
 
+  BREW_PREFIX=`brew --prefix`
+
   echo "[$PHP] 👷‍ Installing"
   brew install  shivammathur/php/"$PHP" >/dev/null &
   spinner
@@ -78,17 +80,17 @@ install_php() {
   echo "[$PHP] 👷 Php path: $PHPDIR"
 
   echo "[$PHP] ⚡️ Configuring memory_limit, opcache"
-  sed -i '' 's/^memory_limit.*/memory_limit = 4096M/g' /usr/local/etc/php/"$PHPVERSION"/php.ini
-  sed -i '' 's/^max_input_vars.*/max_input_vars = 10000/g' /usr/local/etc/php/"$PHPVERSION"/php.ini
-  sed -i '' 's/^;opcache.memory_consumption=128/opcache.memory_consumption=512/g' /usr/local/etc/php/"$PHPVERSION"/php.ini
-  sed -i '' 's/^;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=24/g' /usr/local/etc/php/"$PHPVERSION"/php.ini
-  sed -i '' 's/^;opcache.revalidate_freq=2/opcache.revalidate_freq=0/g' /usr/local/etc/php/"$PHPVERSION"/php.ini
-  sed -i '' 's/^;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=130986/g' /usr/local/etc/php/"$PHPVERSION"/php.ini
+  sed -i '' 's/^memory_limit.*/memory_limit = 4096M/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php.ini
+  sed -i '' 's/^max_input_vars.*/max_input_vars = 10000/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php.ini
+  sed -i '' 's/^;opcache.memory_consumption=128/opcache.memory_consumption=512/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php.ini
+  sed -i '' 's/^;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=24/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php.ini
+  sed -i '' 's/^;opcache.revalidate_freq=2/opcache.revalidate_freq=0/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php.ini
+  sed -i '' 's/^;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=130986/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php.ini
 
-  sed -i '' "s/^listen = 127.0.0.1:9000/listen = 127.0.0.1:$PHPFPM/g" /usr/local/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
-  sed -i '' 's/^pm = dynamic/pm = ondemand/g' /usr/local/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
-  sed -i '' 's/^pm.max_children = 5/pm.max_children = 20/g' /usr/local/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
-  sed -i '' 's/^;pm.process_idle_timeout = 10s;/pm.process_idle_timeout = 10s;/g' /usr/local/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
+  sed -i '' "s/^listen = 127.0.0.1:9000/listen = 127.0.0.1:$PHPFPM/g" $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
+  sed -i '' 's/^pm = dynamic/pm = ondemand/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
+  sed -i '' 's/^pm.max_children = 5/pm.max_children = 20/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
+  sed -i '' 's/^;pm.process_idle_timeout = 10s;/pm.process_idle_timeout = 10s;/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
 
 
   echo "[$PHP] 🐞 Installing xdebug"
@@ -137,19 +139,19 @@ install_php() {
 
   echo "[$PHP] 🐞 Xdebug path: $PHPDIR/pecl/$XDEBUG/xdebug.so"
 
-  cp /usr/local/etc/php/"$PHPVERSION"/php.ini /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini
-  gsed -i "1 i\zend_extension=\"$PHPDIR/pecl/$XDEBUG/xdebug.so\"" /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini
+  cp $BREW_PREFIX/etc/php/"$PHPVERSION"/php.ini $BREW_PREFIX/etc/php/"$PHPVERSION"/php-xdebug.ini
+  gsed -i "1 i\zend_extension=\"$PHPDIR/pecl/$XDEBUG/xdebug.so\"" $BREW_PREFIX/etc/php/"$PHPVERSION"/php-xdebug.ini
   if [ $PHPVERSION = '8.1' ]; then
-    gsed -i "1 i\xdebug.mode=debug" /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini
+    gsed -i "1 i\xdebug.mode=debug" $BREW_PREFIX/etc/php/"$PHPVERSION"/php-xdebug.ini
   else
-    gsed -i "1 i\xdebug.remote_enable=1" /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini
+    gsed -i "1 i\xdebug.remote_enable=1" $BREW_PREFIX/etc/php/"$PHPVERSION"/php-xdebug.ini
   fi
-  gsed -i "1 i\xdebug.max_nesting_level=2000" /usr/local/etc/php/"$PHPVERSION"/php-xdebug.ini
+  gsed -i "1 i\xdebug.max_nesting_level=2000" $BREW_PREFIX/etc/php/"$PHPVERSION"/php-xdebug.ini
 
-  cp /usr/local/etc/php/"$PHPVERSION"/php-fpm.conf /usr/local/etc/php/"$PHPVERSION"/php-fpm-xdebug.conf
-  sed -i '' "s~^include=/usr/local/etc/.*~include=/usr/local/etc/php/$PHPVERSION/php-fpm-xdebug.d/*.conf~g" /usr/local/etc/php/"$PHPVERSION"/php-fpm-xdebug.conf
-  cp -rp /usr/local/etc/php/"$PHPVERSION"/php-fpm.d /usr/local/etc/php/"$PHPVERSION"/php-fpm-xdebug.d
-  sed -i '' "s/^listen = 127.0.0.1:$PHPFPM/listen = 127.0.0.1:$XPHPFPM/g" /usr/local/etc/php/"$PHPVERSION"/php-fpm-xdebug.d/www.conf
+  cp $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.conf $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm-xdebug.conf
+  sed -i '' "s~^include=$BREW_PREFIX/etc/.*~include=$BREW_PREFIX/etc/php/$PHPVERSION/php-fpm-xdebug.d/*.conf~g" $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm-xdebug.conf
+  cp -rp $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.d $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm-xdebug.d
+  sed -i '' "s/^listen = 127.0.0.1:$PHPFPM/listen = 127.0.0.1:$XPHPFPM/g" $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm-xdebug.d/www.conf
 
   echo "Installing Imagick for PHP"
   # We pipe `yes ''` into pecl, as imagick asks for input during compilation and would otherwise get stuck.
@@ -168,6 +170,8 @@ start_php() {
 
   PHPFPM=90${PHPVERSION//./}
   XPHPFPM=91${PHPVERSION//./}
+
+  BREW_PREFIX=`brew --prefix`
 
   PHPDIR=$(brew --cellar "$PHP")/$(brew info --json "$PHP" | jq -r '.[0].installed[0].version')
 
@@ -190,16 +194,16 @@ start_php() {
             <string>$PHPDIR/sbin/php-fpm</string>
             <string>--nodaemonize</string>
             <string>--fpm-config</string>
-            <string>/usr/local/etc/php/$PHPVERSION/php-fpm.conf</string>
+            <string>$BREW_PREFIX/etc/php/$PHPVERSION/php-fpm.conf</string>
             <string>--php-ini</string>
-            <string>/usr/local/etc/php/$PHPVERSION/php.ini</string>
+            <string>$BREW_PREFIX/etc/php/$PHPVERSION/php.ini</string>
         </array>
         <key>RunAtLoad</key>
         <true/>
         <key>WorkingDirectory</key>
-        <string>/usr/local/var</string>
+        <string>$BREW_PREFIX/var</string>
         <key>StandardErrorPath</key>
-        <string>/usr/local/var/log/php@$PHPVERSION-fpm.log</string>
+        <string>$BREW_PREFIX/var/log/php@$PHPVERSION-fpm.log</string>
     </dict>
 </plist>
 "
@@ -218,16 +222,16 @@ start_php() {
             <string>$PHPDIR/sbin/php-fpm</string>
             <string>--nodaemonize</string>
             <string>--fpm-config</string>
-            <string>/usr/local/etc/php/$PHPVERSION/php-fpm-xdebug.conf</string>
+            <string>$BREW_PREFIX/etc/php/$PHPVERSION/php-fpm-xdebug.conf</string>
             <string>--php-ini</string>
-            <string>/usr/local/etc/php/$PHPVERSION/php-xdebug.ini</string>
+            <string>$BREW_PREFIX/etc/php/$PHPVERSION/php-xdebug.ini</string>
         </array>
         <key>RunAtLoad</key>
         <true/>
         <key>WorkingDirectory</key>
-        <string>/usr/local/var</string>
+        <string>$BREW_PREFIX/var</string>
         <key>StandardErrorPath</key>
-        <string>/usr/local/var/log/php@$PHPVERSION-xdebug-fpm.log</string>
+        <string>$BREW_PREFIX/var/log/php@$PHPVERSION-xdebug-fpm.log</string>
     </dict>
 </plist>
 "
