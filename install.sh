@@ -203,7 +203,9 @@ start_php() {
         <key>WorkingDirectory</key>
         <string>$BREW_PREFIX/var</string>
         <key>StandardErrorPath</key>
-        <string>$BREW_PREFIX/var/log/php@$PHPVERSION-fpm.log</string>
+        <string>$BREW_PREFIX/var/log/php@$PHPVERSION-fpm-stderr.log</string>
+        <key>StandardOutPath</key>
+        <string>$BREW_PREFIX/var/log/php@$PHPVERSION-fpm-stdout.log</string>
     </dict>
 </plist>
 "
@@ -231,7 +233,9 @@ start_php() {
         <key>WorkingDirectory</key>
         <string>$BREW_PREFIX/var</string>
         <key>StandardErrorPath</key>
-        <string>$BREW_PREFIX/var/log/php@$PHPVERSION-xdebug-fpm.log</string>
+        <string>$BREW_PREFIX/var/log/php@$PHPVERSION-xdebug-fpm-stderr.log</string>
+        <key>StandardOutPath</key>
+        <string>$BREW_PREFIX/var/log/php@$PHPVERSION-xdebug-fpm-stdout.log</string>
     </dict>
 </plist>
 "
