@@ -22,7 +22,6 @@ remove_php() {
 
   PHPVERSION=${PHP//php/}
   PHPVERSION=${PHPVERSION//@/}
-  [ -z $PHPVERSION ] && PHPVERSION='7.4'
 
   PHPFPM=90${PHPVERSION//./}
   XPHPFPM=91${PHPVERSION//./}
