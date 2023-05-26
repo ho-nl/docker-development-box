@@ -23,10 +23,17 @@ remove_php() {
   PHPVERSION=${PHP//php/}
   PHPVERSION=${PHPVERSION//@/}
 
+  PLIST_PATH="$HOME/Library/LaunchAgents/nl.reachdigital.io.$PHP.plist"
+  PLIST_PATH_LEGACY="$HOME/Library/LaunchAgents/homebrew.mxcl.$PHP.plist"
+  XPLIST_PATH="$HOME/Library/LaunchAgents/nl.reachdigital.io.$PHP-xdebug.plist"
+  XPLIST_PATH_LEGACY="$HOME/Library/LaunchAgents/homebrew.mxcl.$PHP-xdebug.plist"
+
   echo "[$PHP] 🛑 Stopping fpm"
-  launchctl unload "$HOME/Library/LaunchAgents/homebrew.mxcl.$PHP.plist" &>/dev/null &
+  launchctl unload $PLIST_PATH &>/dev/null &
+  launchctl unload $PLIST_PATH_LEGACY &>/dev/null &
   spinner
-  launchctl unload "$HOME/Library/LaunchAgents/homebrew.mxcl.$PHP-xdebug.plist" &>/dev/null &
+  launchctl unload $XPLIST_PATH &>/dev/null &
+  launchctl unload $XPLIST_PATH_LEGACY &>/dev/null &
   spinner
 
   brew unlink "$PHP" &>/dev/null &
