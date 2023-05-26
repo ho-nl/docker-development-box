@@ -23,9 +23,6 @@ remove_php() {
   PHPVERSION=${PHP//php/}
   PHPVERSION=${PHPVERSION//@/}
 
-  PHPFPM=90${PHPVERSION//./}
-  XPHPFPM=91${PHPVERSION//./}
-
   echo "[$PHP] 🛑 Stopping fpm"
   launchctl unload "$HOME/Library/LaunchAgents/homebrew.mxcl.$PHP.plist" &>/dev/null &
   spinner
