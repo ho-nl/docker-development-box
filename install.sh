@@ -23,6 +23,8 @@ remove_php() {
   PHPVERSION=${PHP//php/}
   PHPVERSION=${PHPVERSION//@/}
 
+  BREW_PREFIX=`brew --prefix`
+
   PLIST_PATH="$HOME/Library/LaunchAgents/nl.reachdigital.io.$PHP.plist"
   PLIST_PATH_LEGACY="$HOME/Library/LaunchAgents/homebrew.mxcl.$PHP.plist"
   XPLIST_PATH="$HOME/Library/LaunchAgents/nl.reachdigital.io.$PHP-xdebug.plist"
@@ -42,7 +44,7 @@ remove_php() {
   echo "[$PHP] 🗑  Uninstalling"
   brew uninstall "$PHP" &>/dev/null &
   spinner
-  rm -rf /usr/local/etc/php/"$PHPVERSION"
+  rm -rf $BREW_PREFIX/etc/php/"$PHPVERSION"
 }
 
 source_shell() {
