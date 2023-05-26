@@ -112,6 +112,10 @@ reopen your CLI.
 
 ### Install nfs
 
+Note that the `-mapall=501:20` part below refers to your user ID (`501`) and
+the `staff` (`20`) user group ID. You may need to adjust your user ID if isn't
+`501`. You can check this by running `id`.
+
 1. `sudo nano /etc/exports` add:
    `/System/Volumes/Data -alldirs -mapall=501:20 localhost`
 2. `sudo nano /etc/nfs.conf` add: `nfs.server.mount.require_resv_port = 0`
