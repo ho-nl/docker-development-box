@@ -135,6 +135,9 @@ You are now done with the global installation 🎉
 
 ## Project installation
 
+This covers adding docker-devbox support to a new Magento project; if your project
+already has docker-devbox support added, please refer to the projects' own README.md.
+
 - Install this in the project:
   - Magento 2.3: [2.x branch](https://github.com/ho-nl/docker-development-box/tree/2.x)
   - Magento 2.4: `composer require reach-digital/docker-devbox ^3.0.0`  
