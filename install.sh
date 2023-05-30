@@ -72,6 +72,9 @@ install_php() {
 
   BREW_PREFIX=`brew --prefix`
 
+  PATH_INI=$BREW_PREFIX/etc/php/$PHPVERSION/php.ini
+  PATH_INI_XDEBUG=$BREW_PREFIX/etc/php/$PHPVERSION/php-xdebug.ini
+
   echo "[$PHP] 👷‍ Installing"
   brew install  shivammathur/php/"$PHP" >/dev/null &
   spinner
@@ -80,12 +83,12 @@ install_php() {
   echo "[$PHP] 👷 Php path: $PHPDIR"
 
   echo "[$PHP] ⚡️ Configuring memory_limit, opcache"
-  sed -i '' 's/^memory_limit.*/memory_limit = 4096M/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php.ini
-  sed -i '' 's/^max_input_vars.*/max_input_vars = 10000/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php.ini
-  sed -i '' 's/^;opcache.memory_consumption=128/opcache.memory_consumption=512/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php.ini
-  sed -i '' 's/^;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=24/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php.ini
-  sed -i '' 's/^;opcache.revalidate_freq=2/opcache.revalidate_freq=0/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php.ini
-  sed -i '' 's/^;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=130986/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php.ini
+  sed -i '' 's/^memory_limit.*/memory_limit = 4096M/g' $PATH_INI
+  sed -i '' 's/^max_input_vars.*/max_input_vars = 10000/g' $PATH_INI
+  sed -i '' 's/^;opcache.memory_consumption=128/opcache.memory_consumption=512/g' $PATH_INI
+  sed -i '' 's/^;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=24/g' $PATH_INI
+  sed -i '' 's/^;opcache.revalidate_freq=2/opcache.revalidate_freq=0/g' $PATH_INI
+  sed -i '' 's/^;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=130986/g' $PATH_INI
 
   sed -i '' "s/^listen = 127.0.0.1:9000/listen = 127.0.0.1:$PHPFPM/g" $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
   sed -i '' 's/^pm = dynamic/pm = ondemand/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
@@ -139,14 +142,14 @@ install_php() {
 
   echo "[$PHP] 🐞 Xdebug path: $PHPDIR/pecl/$XDEBUG/xdebug.so"
 
-  cp $BREW_PREFIX/etc/php/"$PHPVERSION"/php.ini $BREW_PREFIX/etc/php/"$PHPVERSION"/php-xdebug.ini
-  gsed -i "1 i\zend_extension=\"$PHPDIR/pecl/$XDEBUG/xdebug.so\"" $BREW_PREFIX/etc/php/"$PHPVERSION"/php-xdebug.ini
+  cp $PATH_INI $PATH_INI_XDEBUG
+  gsed -i "1 i\zend_extension=\"$PHPDIR/pecl/$XDEBUG/xdebug.so\"" $PATH_INI_XDEBUG
   if [ $PHPVERSION = '8.1' ]; then
-    gsed -i "1 i\xdebug.mode=debug" $BREW_PREFIX/etc/php/"$PHPVERSION"/php-xdebug.ini
+    gsed -i "1 i\xdebug.mode=debug" $PATH_INI_XDEBUG
   else
-    gsed -i "1 i\xdebug.remote_enable=1" $BREW_PREFIX/etc/php/"$PHPVERSION"/php-xdebug.ini
+    gsed -i "1 i\xdebug.remote_enable=1" $PATH_INI_XDEBUG
   fi
-  gsed -i "1 i\xdebug.max_nesting_level=2000" $BREW_PREFIX/etc/php/"$PHPVERSION"/php-xdebug.ini
+  gsed -i "1 i\xdebug.max_nesting_level=2000" $PATH_INI_XDEBUG
 
   cp $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.conf $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm-xdebug.conf
   sed -i '' "s~^include=$BREW_PREFIX/etc/.*~include=$BREW_PREFIX/etc/php/$PHPVERSION/php-fpm-xdebug.d/*.conf~g" $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm-xdebug.conf
