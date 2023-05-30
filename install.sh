@@ -17,15 +17,15 @@ remove_php() {
   XPLIST_PATH_LEGACY="$HOME/Library/LaunchAgents/homebrew.mxcl.$PHP-xdebug.plist"
 
   echo "[$PHP] 🛑 Stopping fpm"
-  launchctl unload $PLIST_PATH &>/dev/null &
-  launchctl unload $PLIST_PATH_LEGACY &>/dev/null &
-  launchctl unload $XPLIST_PATH &>/dev/null &
-  launchctl unload $XPLIST_PATH_LEGACY &>/dev/null &
+  launchctl unload $PLIST_PATH &>/dev/null
+  launchctl unload $PLIST_PATH_LEGACY &>/dev/null
+  launchctl unload $XPLIST_PATH &>/dev/null
+  launchctl unload $XPLIST_PATH_LEGACY &>/dev/null
 
-  brew unlink "$PHP" &>/dev/null &
+  brew unlink "$PHP" &>/dev/null
 
   echo "[$PHP] 🗑  Uninstalling"
-  brew uninstall "$PHP" &>/dev/null &
+  brew uninstall "$PHP" &>/dev/null
   rm -rf $BREW_PREFIX/etc/php/"$PHPVERSION"
 }
 
@@ -58,7 +58,7 @@ install_php() {
   PATH_INI_XDEBUG=$BREW_PREFIX/etc/php/$PHPVERSION/php-xdebug.ini
 
   echo "[$PHP] 👷‍ Installing"
-  brew install  shivammathur/php/"$PHP" >/dev/null &
+  brew install  shivammathur/php/"$PHP" >/dev/null
 
   PHPDIR=$(brew --cellar "$PHP")/$(brew info --json "$PHP" | jq -r '.[0].installed[0].version')
   echo "[$PHP] 👷 Php path: $PHPDIR"
@@ -70,7 +70,7 @@ install_php() {
   sed -i '' 's/^;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=24/g' $PATH_INI
   sed -i '' 's/^;opcache.revalidate_freq=2/opcache.revalidate_freq=0/g' $PATH_INI
   sed -i '' 's/^;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=130986/g' $PATH_INI
-  sed -i '' "s/^;error_log = php_errors.log/;error_log = $BREW_PREFIX/var/log/php@$PHPVERSION-errors.log/g" $PATH_INI
+  sed -i '' "s/^;error_log = php_errors.log/;error_log = $BREW_PREFIX\/var\/log\/php@$PHPVERSION-errors.log/g" $PATH_INI
 
   sed -i '' "s/^listen = 127.0.0.1:9000/listen = 127.0.0.1:$PHPFPM/g" $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
   sed -i '' 's/^pm = dynamic/pm = ondemand/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
@@ -90,20 +90,20 @@ install_php() {
   XDEBUG_VERSION='2.9.6'
   [ $PHPVERSION == '8.1' ] && XDEBUG_VERSION='3.1.6'
 
-  git clone -b $XDEBUG_VERSION git@github.com:xdebug/xdebug.git $XDEBUG_DIR 2>/dev/null &
+  git clone -b $XDEBUG_VERSION git@github.com:xdebug/xdebug.git $XDEBUG_DIR 2>/dev/null
 
   cd $XDEBUG_DIR
   echo "[$PHP] 🐞 Building xdebug"
 
-  "$PHPDIR"/bin/phpize >/dev/null &
-  ./configure --enable-xdebug --enable-shared --with-php-config="$PHPDIR"/bin/php-config >/dev/null &
-  make clean >/dev/null &
-  make &>/dev/null &
-  make install &>/dev/null &
+  "$PHPDIR"/bin/phpize >/dev/null
+  ./configure --enable-xdebug --enable-shared --with-php-config="$PHPDIR"/bin/php-config >/dev/null
+  make clean >/dev/null
+  make &>/dev/null
+  make install &>/dev/null
 
   cd $CURRENT_DIR
 
-  brew unlink "$PHP" >/dev/null &
+  brew unlink "$PHP" >/dev/null
   source_shell ""
 
   [ $PHPVERSION = '7.2' ] && XDEBUG='20170718'
@@ -234,14 +234,14 @@ done
 
 echo "
 Installing mysql-client, gnu-sed, pv, jq, imagemagick, pkg-config"
-brew install gnu-sed mysql-client pv jq imagemagick pkg-config &>/dev/null &
+brew install gnu-sed mysql-client pv jq imagemagick pkg-config &>/dev/null
 
-brew link mysql-client --force &>/dev/null &
+brew link mysql-client --force &>/dev/null
 
 echo "
 🚰 Adding shivammathur/php tap for legacy PHP support
 "
-brew tap shivammathur/php &
+brew tap shivammathur/php
 
 echo "
 🐘 Installing php services
