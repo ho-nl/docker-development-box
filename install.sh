@@ -89,6 +89,7 @@ install_php() {
   sed -i '' 's/^;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=24/g' $PATH_INI
   sed -i '' 's/^;opcache.revalidate_freq=2/opcache.revalidate_freq=0/g' $PATH_INI
   sed -i '' 's/^;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=130986/g' $PATH_INI
+  sed -i '' "s/^;error_log = php_errors.log/;error_log = $BREW_PREFIX/var/log/php@$PHPVERSION-errors.log/g" $PATH_INI
 
   sed -i '' "s/^listen = 127.0.0.1:9000/listen = 127.0.0.1:$PHPFPM/g" $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
   sed -i '' 's/^pm = dynamic/pm = ondemand/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
