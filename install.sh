@@ -3,20 +3,6 @@
 # If you're adding a new version, you need an additional XDEBUG version, not retrieved dynamically.
 PHPS='php@7.2 php@7.3 php@7.4 php@8.1'
 
-spinner() {
-  local pid=$!
-  local delay=0.1
-  local spinstr='|/-\'
-  while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
-    local temp=${spinstr#?}
-    printf "%c   " "$spinstr"
-    local spinstr=$temp${spinstr%"$temp"}
-    sleep $delay
-    printf "\b\b\b\b\b\b"
-  done
-  printf "    \b\b\b\b"
-}
-
 remove_php() {
   PHP=$1
 
@@ -33,17 +19,13 @@ remove_php() {
   echo "[$PHP] 🛑 Stopping fpm"
   launchctl unload $PLIST_PATH &>/dev/null &
   launchctl unload $PLIST_PATH_LEGACY &>/dev/null &
-  spinner
   launchctl unload $XPLIST_PATH &>/dev/null &
   launchctl unload $XPLIST_PATH_LEGACY &>/dev/null &
-  spinner
 
   brew unlink "$PHP" &>/dev/null &
-  spinner
 
   echo "[$PHP] 🗑  Uninstalling"
   brew uninstall "$PHP" &>/dev/null &
-  spinner
   rm -rf $BREW_PREFIX/etc/php/"$PHPVERSION"
 }
 
@@ -77,7 +59,6 @@ install_php() {
 
   echo "[$PHP] 👷‍ Installing"
   brew install  shivammathur/php/"$PHP" >/dev/null &
-  spinner
 
   PHPDIR=$(brew --cellar "$PHP")/$(brew info --json "$PHP" | jq -r '.[0].installed[0].version')
   echo "[$PHP] 👷 Php path: $PHPDIR"
@@ -110,30 +91,19 @@ install_php() {
   [ $PHPVERSION == '8.1' ] && XDEBUG_VERSION='3.1.6'
 
   git clone -b $XDEBUG_VERSION git@github.com:xdebug/xdebug.git $XDEBUG_DIR 2>/dev/null &
-  spinner
 
   cd $XDEBUG_DIR
   echo "[$PHP] 🐞 Building xdebug"
 
   "$PHPDIR"/bin/phpize >/dev/null &
-  spinner
-
   ./configure --enable-xdebug --enable-shared --with-php-config="$PHPDIR"/bin/php-config >/dev/null &
-  spinner
-
   make clean >/dev/null &
-  spinner
-
   make &>/dev/null &
-  spinner
-
   make install &>/dev/null &
-  spinner
 
   cd $CURRENT_DIR
 
   brew unlink "$PHP" >/dev/null &
-  spinner
   source_shell ""
 
   [ $PHPVERSION = '7.2' ] && XDEBUG='20170718'
@@ -265,16 +235,13 @@ done
 echo "
 Installing mysql-client, gnu-sed, pv, jq, imagemagick, pkg-config"
 brew install gnu-sed mysql-client pv jq imagemagick pkg-config &>/dev/null &
-spinner
 
 brew link mysql-client --force &>/dev/null &
-spinner
 
 echo "
-🚰 Adding shivammathur/php tap for legacy PHP suport
+🚰 Adding shivammathur/php tap for legacy PHP support
 "
 brew tap shivammathur/php &
-spinner
 
 echo "
 🐘 Installing php services
