@@ -72,7 +72,7 @@ You should not have any services running like.
 - `nginx`: uninstall
 
 Take a look at `~/.bash_profile` or `~/.zshrc` and make sure it doesn't contain
-any references to `/usr/local/Cellar/php*`.
+any references to `$BREW_PREFIX/Cellar/php*`.
 
 ### Installing services for Magento 2.4
 
@@ -179,9 +179,9 @@ this time it will not accept connections.
   [Xdebug helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc)
   installed + PHPStorm is listening to connections.
 - Cli: Use
-  `XDEBUG_CONFIG="" php -c /usr/local/etc/php/7.4/php-xdebug.ini bin/magento`
+  ``XDEBUG_CONFIG="" php -c `brew --prefix`/etc/php/7.4/php-xdebug.ini bin/magento``
 - Cli `php@8.1`: Use
-    `XDEBUG_SESSION=1 php -c /usr/local/etc/php/8.1/php-xdebug.ini bin/magento`
+  ``XDEBUG_SESSION=1 php -c `brew --prefix`/etc/php/8.1/php-xdebug.ini bin/magento``
 - Tests: Create a local interpreter, the PHP version you're looking for should
   be suggested and add the `🐞 Xdebug path:` to enable xdebug (you should have
   seen that with the installation). The path is something like
@@ -194,7 +194,7 @@ this time it will not accept connections.
 ### Where can I find logs?
 
 - For all other services, start `ctop` and press `<-` on your keyboard.
-- phplogs: tail -f /usr/local/var/log/php\* (will probably be empty as it will
+- phplogs: ``tail -f `brew --prefix`/var/log/php*`` (will probably be empty as it will
   only output true errors)
 
 ### How do I set up urls/https?
