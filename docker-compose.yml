@@ -9,13 +9,12 @@ services:
   # bin/magento config:set --lock-env web/unsecure/base_url https://blabla.localhost.reachdigital.io/
   # bin/magento config:set --lock-env web/secure/base_url https://blabla.localhost.reachdigital.io/
   hitch:
-    image: zazukoians/hitch
+    image: hitch
     ports:
       - 443:443
     volumes:
-      - ./vendor/reach-digital/docker-devbox/hitch/*.localhost.reachdigital.io.pem:/etc/ssl/hitch/combined.pem:ro
-    environment:
-      HITCH_PARAMS: --backend=[varnish]:80 --frontend=[*]:443 --alpn-protos="h2,http/1.1" --write-proxy
+      - ./vendor/reach-digital/docker-devbox/hitch/*.localhost.reachdigital.io.pem:/etc/hitch/certs/*.localhost.reachdigital.io:ro
+    command: --backend=[varnish]:8443 /etc/hitch/certs/*.localhost.reachdigital.io
     depends_on:
       - varnish
 
@@ -27,7 +26,7 @@ services:
   # You can use bin/magento cache:clean or cache:flush to flush Varnish.
   # You can use CMD+SHIFT+R to bypass the cache for a page
   varnish:
-    image: hermsi/alpine-varnish
+    image: varnish:alpine
     volumes:
       - ./vendor/reach-digital/docker-devbox/varnish/default.vcl:/etc/varnish/default.vcl:ro
       - ./vendor/reach-digital/docker-devbox/varnish/secret:/etc/varnish/secret:ro
@@ -57,6 +56,7 @@ services:
   # http://localhost:4551/
   # Adding your authtoken will grant you access to more features and longer session times.
   ngrok:
+    platform: linux/x86_64
     image: shkoliar/ngrok:latest
     ports:
       - 4551:4551
@@ -67,7 +67,7 @@ services:
 #      - PARAMS=http -region=eu --authtoken=<token> nginx:80
 
   mysql:
-    image: percona:8.0
+    image: perconalab/percona-server:8.0.33-25.1-multi
     ports:
       - 3306:3306
     environment:
@@ -78,6 +78,7 @@ services:
     volumes:
       - ./vendor/reach-digital/docker-devbox/mysql:/etc/my.cnf.d
       - mysql-mount:/var/lib/mysql
+      - mysql-logs-mount:/var/log/mysql
     security_opt:
       - seccomp:unconfined
 
@@ -86,6 +87,8 @@ services:
   redis:
     image: redis:5-alpine
     command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-mount:/data
     ports:
       - 6379:6379
 
@@ -105,7 +108,7 @@ services:
       - http.cors.allow-origin=http://localhost:9100
       - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
       - http.cors.allow-credentials=true
-      - cluster.routing.allocation.disk.threshold_enabled=false 
+      - cluster.routing.allocation.disk.threshold_enabled=false
       - cluster.routing.allocation.disk.watermark.flood_stage=200mb
       - cluster.routing.allocation.disk.watermark.low=500mb
       - cluster.routing.allocation.disk.watermark.high=300mb
@@ -113,7 +116,7 @@ services:
       - elasticsearch-mount:/usr/share/elasticsearch/data
 
   kibana:
-    image: kibana:7.6.2
+    image: kibana:7.17.9
     ports:
       - 5601:5601
     environment:
@@ -130,6 +133,7 @@ services:
   # bin/magento config:set --lock-env system/gmailsmtpapp/smtphost localhost
   # bin/magento config:set --lock-env system/gmailsmtpapp/smtpport 1025
   mailhog:
+    platform: linux/x86_64
     image: mailhog/mailhog:v1.0.0
     ports:
       - 1025:1025
@@ -142,6 +146,8 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+    volumes:
+      - rabbitmq-mount:/var/lib/rabbitmq
 
 # Create NFS mounts for the containers to access files on the host.
 volumes:
@@ -163,3 +169,6 @@ volumes:
       type: nfs
       o: addr=host.docker.internal,rw,nolock,hard,nointr,wsize=32768,rsize=32768,nfsvers=3
       device: ":${PWD}/var/.esdata"
+  rabbitmq-mount:
+  redis-mount:
+  mysql-logs-mount:
