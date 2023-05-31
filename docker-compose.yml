@@ -67,8 +67,7 @@ services:
 #      - PARAMS=http -region=eu --authtoken=<token> nginx:80
 
   mysql:
-    platform: linux/x86_64
-    image: percona:8.0
+    image: perconalab/percona-server:8.0.33-25.1-multi
     ports:
       - 3306:3306
     environment:
@@ -109,7 +108,7 @@ services:
       - http.cors.allow-origin=http://localhost:9100
       - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
       - http.cors.allow-credentials=true
-      - cluster.routing.allocation.disk.threshold_enabled=false 
+      - cluster.routing.allocation.disk.threshold_enabled=false
       - cluster.routing.allocation.disk.watermark.flood_stage=200mb
       - cluster.routing.allocation.disk.watermark.low=500mb
       - cluster.routing.allocation.disk.watermark.high=300mb
@@ -148,7 +147,7 @@ services:
       - 5672:5672
       - 15672:15672
     volumes:
-      - rabbitMQ-mount:/var/lib/rabbitmq
+      - rabbitmq-mount:/var/lib/rabbitmq
 
 # Create NFS mounts for the containers to access files on the host.
 volumes:
@@ -170,6 +169,6 @@ volumes:
       type: nfs
       o: addr=host.docker.internal,rw,nolock,hard,nointr,wsize=32768,rsize=32768,nfsvers=3
       device: ":${PWD}/var/.esdata"
-  rabbitMQ-mount:
+  rabbitmq-mount:
   redis-mount:
   mysql-logs-mount:
