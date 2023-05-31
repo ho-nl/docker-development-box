@@ -79,6 +79,7 @@ services:
     volumes:
       - ./vendor/reach-digital/docker-devbox/mysql:/etc/my.cnf.d
       - mysql-mount:/var/lib/mysql
+      - mysql-logs-mount:/var/log/mysql
     security_opt:
       - seccomp:unconfined
 
@@ -87,6 +88,8 @@ services:
   redis:
     image: redis:5-alpine
     command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-mount:/data
     ports:
       - 6379:6379
 
@@ -144,6 +147,8 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+    volumes:
+      - rabbitMQ-mount:/var/lib/rabbitmq
 
 # Create NFS mounts for the containers to access files on the host.
 volumes:
@@ -165,3 +170,6 @@ volumes:
       type: nfs
       o: addr=host.docker.internal,rw,nolock,hard,nointr,wsize=32768,rsize=32768,nfsvers=3
       device: ":${PWD}/var/.esdata"
+  rabbitMQ-mount:
+  redis-mount:
+  mysql-logs-mount:
