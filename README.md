@@ -142,7 +142,7 @@ already has docker-devbox support added, please refer to the projects' own READM
   - Magento 2.3: [2.x branch](https://github.com/ho-nl/docker-development-box/tree/2.x)
   - Magento 2.4: `composer require reach-digital/docker-devbox ^3.0.0`  
 - Install `static-content-deploy` [patch](patch/static-content-deploy.md) and
-  remove `pub/static/frontend/*`.
+  remove existing static symlinked content: `rm -rf pub/static/*/*`.
 - Disable services you don't need in `docker-compose.yml` (required: `hitch`,
   `varnish`, `nginx`, `db` and `elasticsearch`).
 - Commit the `docker-compose.yml` file to prevent future accidental changes.
