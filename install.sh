@@ -84,10 +84,10 @@ install_php() {
   echo "[$PHP] 🐞 Xdebug path: $PHPDIR/pecl/$PHP_EXTENSION_API/xdebug.so"
 
   # Set up separate ini, so we only load xdebug through the xdebug fpm-php instance
-  cp $PATH_INI $PATH_INI_XDEBUG
-  gsed -i "1 i\zend_extension=\"$PHPDIR/pecl/$PHP_EXTENSION_API/xdebug.so\"" $PATH_INI_XDEBUG
   # On initial installs, the extension line is added to the base php.ini, so remove it
   sed -i '' "s/^zend_extension=\"xdebug.so\"//" $PATH_INI
+  cp $PATH_INI $PATH_INI_XDEBUG
+  gsed -i "1 i\zend_extension=\"$PHPDIR/pecl/$PHP_EXTENSION_API/xdebug.so\"" $PATH_INI_XDEBUG
   gsed -i "1 i\xdebug.mode=debug" $PATH_INI_XDEBUG
   gsed -i "1 i\xdebug.max_nesting_level=2000" $PATH_INI_XDEBUG
 
