@@ -29,19 +29,6 @@ remove_php() {
   rm -rf $BREW_PREFIX/etc/php/"$PHPVERSION"
 }
 
-source_shell() {
-  if [ -n "`$SHELL -c 'echo $ZSH_VERSION'`" ]; then
-    # assume Zsh
-    source ~/.zshrc
-  elif [ -n "`$SHELL -c 'echo $BASH_VERSION'`" ]; then
-    # assume Bash
-    source ~/.bash_profile
-  else
-    # assume something else
-    echo "Your shell $SHELL is currently not supported"
-  fi
-}
-
 install_php() {
   PHP=$1
 
