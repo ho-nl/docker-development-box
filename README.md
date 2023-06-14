@@ -182,13 +182,10 @@ this time it will not accept connections.
   [Xdebug helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc)
   installed + PHPStorm is listening to connections.
 - Cli: Use
-  ``XDEBUG_CONFIG="" php -c `brew --prefix`/etc/php/7.4/php-xdebug.ini bin/magento``
-- Cli `php@8.1`: Use
-  ``XDEBUG_SESSION=1 php -c `brew --prefix`/etc/php/8.1/php-xdebug.ini bin/magento``
-- Tests: Create a local interpreter, the PHP version you're looking for should
-  be suggested and add the `🐞 Xdebug path:` to enable xdebug (you should have
-  seen that with the installation). The path is something like
-  `/usr/local/Cellar/php/7.4.3/pecl/20190902/xdebug.so` (lookup your exact path)
+  ``XDEBUG_SESSION=1 php -c `brew --prefix`/etc/php/8.1/php-xdebug.ini bin/magento`` (adjust your PHP version as needed)
+- Tests: Create a local interprete in PhpStorm, the PHP version you're looking for should
+  be suggested. Configure the `🐞 Xdebug path:` to enable xdebug (from the output of the installation script). The path
+  is something like `/usr/local/Cellar/php/7.4.3/pecl/20190902/xdebug.so`. You can look up your exact path in your `php-xdebug.ini`.
 
 ### How do I set up my cron?
 
