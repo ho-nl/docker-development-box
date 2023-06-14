@@ -29,19 +29,6 @@ remove_php() {
   rm -rf $BREW_PREFIX/etc/php/"$PHPVERSION"
 }
 
-source_shell() {
-  if [ -n "`$SHELL -c 'echo $ZSH_VERSION'`" ]; then
-    # assume Zsh
-    source ~/.zshrc
-  elif [ -n "`$SHELL -c 'echo $BASH_VERSION'`" ]; then
-    # assume Bash
-    source ~/.bash_profile
-  else
-    # assume something else
-    echo "Your shell $SHELL is currently not supported"
-  fi
-}
-
 install_php() {
   PHP=$1
 
@@ -79,51 +66,32 @@ install_php() {
   sed -i '' 's/^pm.max_children = 5/pm.max_children = 20/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
   sed -i '' 's/^;pm.process_idle_timeout = 10s;/pm.process_idle_timeout = 10s;/g' $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.d/www.conf
 
-
   echo "[$PHP] 🐞 Installing xdebug"
+
+  # Set correct xdebug version depending on PHP version. For PHP 8.2 and up, xdebug 3.2 is needed
+  XDEBUG_VERSION='3.1.6'
+  [ $PHPVERSION == '8.2' ] && XDEBUG_VERSION='3.2.1'
+
   brew link "$PHP" --force >/dev/null
-  source_shell ""
 
-  # todo(paales) We can probably migrate to a simple pecl install xdebug
-  CURRENT_DIR=$PWD
-  XDEBUG_DIR="$HOME/.xdebug$PHP"
-  rm -rf $XDEBUG_DIR
+  # Use pecl upgrade, so it fails gracefully if already installed.
+  $PHPDIR/bin/pecl upgrade xdebug-$XDEBUG_VERSION
 
-  XDEBUG_VERSION='2.9.6'
-  [ $PHPVERSION == '8.1' ] && XDEBUG_VERSION='3.1.6'
+  [ $PHPVERSION = '7.2' ] && PHP_EXTENSION_API='20170718'
+  [ $PHPVERSION = '7.3' ] && PHP_EXTENSION_API='20180731'
+  [ $PHPVERSION = '7.4' ] && PHP_EXTENSION_API='20190902'
+  [ $PHPVERSION = '8.1' ] && PHP_EXTENSION_API='20210902'
+  echo "[$PHP] 🐞 Xdebug path: $PHPDIR/pecl/$PHP_EXTENSION_API/xdebug.so"
 
-  git clone -b $XDEBUG_VERSION git@github.com:xdebug/xdebug.git $XDEBUG_DIR 2>/dev/null
-
-  cd $XDEBUG_DIR
-  echo "[$PHP] 🐞 Building xdebug"
-
-  "$PHPDIR"/bin/phpize >/dev/null
-  ./configure --enable-xdebug --enable-shared --with-php-config="$PHPDIR"/bin/php-config >/dev/null
-  make clean >/dev/null
-  make &>/dev/null
-  make install &>/dev/null
-
-  cd $CURRENT_DIR
-
-  brew unlink "$PHP" >/dev/null
-  source_shell ""
-
-  [ $PHPVERSION = '7.2' ] && XDEBUG='20170718'
-  [ $PHPVERSION = '7.3' ] && XDEBUG='20180731'
-  [ $PHPVERSION = '7.4' ] && XDEBUG='20190902'
-  [ $PHPVERSION = '8.1' ] && XDEBUG='20210902'
-
-  echo "[$PHP] 🐞 Xdebug path: $PHPDIR/pecl/$XDEBUG/xdebug.so"
-
+  # Set up separate ini, so we only load xdebug through the xdebug fpm-php instance
+  # On initial installs, the extension line is added to the base php.ini, so remove it
+  sed -i '' "s/^zend_extension=\"xdebug.so\"//" $PATH_INI
   cp $PATH_INI $PATH_INI_XDEBUG
-  gsed -i "1 i\zend_extension=\"$PHPDIR/pecl/$XDEBUG/xdebug.so\"" $PATH_INI_XDEBUG
-  if [ $PHPVERSION = '8.1' ]; then
-    gsed -i "1 i\xdebug.mode=debug" $PATH_INI_XDEBUG
-  else
-    gsed -i "1 i\xdebug.remote_enable=1" $PATH_INI_XDEBUG
-  fi
+  gsed -i "1 i\zend_extension=\"$PHPDIR/pecl/$PHP_EXTENSION_API/xdebug.so\"" $PATH_INI_XDEBUG
+  gsed -i "1 i\xdebug.mode=debug" $PATH_INI_XDEBUG
   gsed -i "1 i\xdebug.max_nesting_level=2000" $PATH_INI_XDEBUG
 
+  # Set up separate php-fpm ini
   cp $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.conf $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm-xdebug.conf
   sed -i '' "s~^include=$BREW_PREFIX/etc/.*~include=$BREW_PREFIX/etc/php/$PHPVERSION/php-fpm-xdebug.d/*.conf~g" $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm-xdebug.conf
   cp -rp $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm.d $BREW_PREFIX/etc/php/"$PHPVERSION"/php-fpm-xdebug.d
