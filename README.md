@@ -181,10 +181,10 @@ this time it will not accept connections.
 - Web: Xdebug should work by default when you have the
   [Xdebug helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc)
   installed + PHPStorm is listening to connections.
-- Command line: you can add the following alias to your `~/.bashrc` or `~/.zshrc`, this will auto-detect
+- Command line: you can add the following alias to your `~/.bash_profile` or `~/.zshrc`, this will auto-detect
   your active PHP version, and let you debug using something like `phpd bin/magento ...`:
   ```
-  alias phpd="XDEBUG_SESSION=1 php -c `brew --prefix`/etc/php/\`readlink `which php` | sed -nE 's/^.*@([^\/]*).*$/\1/p'\`/php-xdebug.ini"
+  alias phpd="XDEBUG_SESSION=1 php -c \`brew --prefix\`/etc/php/\`php -v | head -n1 | cut -c 5-7\`/php-xdebug.ini"
   ```
 - Tests: Create a local interpreter in PhpStorm, the PHP version you're looking for should
   be suggested. Configure the `🐞 Xdebug path:` to enable xdebug (from the output of the installation script). The path
