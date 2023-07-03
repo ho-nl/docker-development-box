@@ -26,7 +26,7 @@ services:
   # You can use bin/magento cache:clean or cache:flush to flush Varnish.
   # You can use CMD+SHIFT+R to bypass the cache for a page
   varnish:
-    image: varnish:alpine
+    image: varnish:6.6-alpine
     volumes:
       - ./vendor/reach-digital/docker-devbox/varnish/default.vcl:/etc/varnish/default.vcl:ro
       - ./vendor/reach-digital/docker-devbox/varnish/secret:/etc/varnish/secret:ro
