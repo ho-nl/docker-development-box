@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # If you're adding a new version, you need an additional XDEBUG version, not retrieved dynamically.
-PHPS='php@7.2 php@7.3 php@7.4 php@8.1'
+PHPS='php@7.2 php@7.3 php@7.4 php@8.1 php@8.2'
 
 remove_php() {
   PHP=$1
@@ -81,6 +81,7 @@ install_php() {
   [ $PHPVERSION = '7.3' ] && PHP_EXTENSION_API='20180731'
   [ $PHPVERSION = '7.4' ] && PHP_EXTENSION_API='20190902'
   [ $PHPVERSION = '8.1' ] && PHP_EXTENSION_API='20210902'
+  [ $PHPVERSION = '8.2' ] && PHP_EXTENSION_API='20220829'
   echo "[$PHP] 🐞 Xdebug path: $PHPDIR/pecl/$PHP_EXTENSION_API/xdebug.so"
 
   # Set up separate ini, so we only load xdebug through the xdebug fpm-php instance
