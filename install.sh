@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # If you're adding a new version, you need an additional XDEBUG version, not retrieved dynamically.
-PHPS='php@7.3 php@7.4 php@8.1 php@8.2'
+PHPS='php@8.2 php@8.1 php@7.4 php@7.3 php@7.2'
 
 remove_php() {
   PHP=$1
@@ -72,7 +72,7 @@ install_php() {
   XDEBUG_VERSION='3.1.6'
   [ $PHPVERSION == '8.2' ] && XDEBUG_VERSION='3.2.1'
 
-  brew link "$PHP" --force >/dev/null
+  brew link "$PHP" --overwrite >/dev/null
 
   # Use pecl upgrade, so it fails gracefully if already installed.
   $PHPDIR/bin/pecl upgrade xdebug-$XDEBUG_VERSION
