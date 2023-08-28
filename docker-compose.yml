@@ -112,6 +112,7 @@ services:
       - cluster.routing.allocation.disk.watermark.flood_stage=200mb
       - cluster.routing.allocation.disk.watermark.low=500mb
       - cluster.routing.allocation.disk.watermark.high=300mb
+      - "ES_JAVA_OPTS=-Xmx1g -Xms1g"
     volumes:
       - elasticsearch-mount:/usr/share/elasticsearch/data
 
