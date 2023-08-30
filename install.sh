@@ -72,7 +72,7 @@ install_php() {
   XDEBUG_VERSION='3.1.6'
   [ $PHPVERSION == '8.2' ] && XDEBUG_VERSION='3.2.1'
 
-  brew link "$PHP" --overwrite >/dev/null
+  brew unlink $PHP && brew link --force --overwrite $PHP > /dev/null
 
   # Use pecl upgrade, so it fails gracefully if already installed.
   $PHPDIR/bin/pecl upgrade xdebug-$XDEBUG_VERSION
