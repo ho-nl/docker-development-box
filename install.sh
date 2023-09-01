@@ -45,7 +45,7 @@ install_php() {
   PATH_INI_XDEBUG=$BREW_PREFIX/etc/php/$PHPVERSION/php-xdebug.ini
 
   echo "[$PHP] 👷‍ Installing"
-  brew install  shivammathur/php/"$PHP" >/dev/null
+  brew reinstall shivammathur/php/"$PHP" >/dev/null
 
   PHPDIR=$(brew --cellar "$PHP")/$(brew info --json "$PHP" | jq -r '.[0].installed[0].version')
   echo "[$PHP] 👷 Php path: $PHPDIR"
