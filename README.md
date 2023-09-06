@@ -311,3 +311,32 @@ Commits are validated with https://github.com/conventional-changelog/commitlint
 
 Gittower: Gittower doesn't properly read your PATH variable and thus commit
 validation doesn't work. Use `gittower .` to open this repo.
+
+## Troubleshooting
+
+### The Compose file './docker-compose.yml' is invalid
+
+`ERROR: The Compose file './docker-compose.yml' is invalid because: Unsupported config option for services.mailhog: 'platform'`
+
+Please update Docker to fix this error. This error happens because your Docker version
+is too low and does not support the `platform` option. This option is used in recent
+versions of docker-development-devbox to enable support for both Intel and Apple
+Silicon macbooks.
+
+### docker-composer and/or ctop are not able to connect to the Docker daemon
+
+`ERROR: Couldn't connect to Docker daemon. You might need to start Docker for Mac.`
+
+This may happen if you've upgraded from an old version of Docker. In more recent
+versions of docker, the socket file through which one can connect with the deamon
+was moved to `~/.docker/run/docker.sock`. Programs like `ctop` and
+`docker-composer` use the symlink at `/var/run/docker.sock` which may still point
+to the old path.
+
+To correct this, run the following:
+
+```sh
+sudo ln -sf ~/.docker/run/docker.sock /var/run/docker.sock
+```
+
+
