@@ -31,14 +31,12 @@ services:
       - ./vendor/reach-digital/docker-devbox/varnish/default.vcl:/etc/varnish/default.vcl:ro
       - ./vendor/reach-digital/docker-devbox/varnish/secret:/etc/varnish/secret:ro
     ports:
-      - 6081:6081
+      - 6081:80
       - 6082:6082
-    environment:
-      VARNISH_HTTP_PORT: 6081
-      VARNISH_PROXY_PORT: 8443
     command: "-p feature=+http2 -T :6082 -S /etc/varnish/secret"
     depends_on:
       - nginx
+
 
   # phplogs: tail -f /usr/local/var/log/php*
   nginx:
