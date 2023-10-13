@@ -135,7 +135,7 @@ You are now done with the global installation 🎉
 
 ## Project installation
 
-This covers adding docker-devbox support to a new Magento project; if your project
+This covers initially adding docker-devbox support to a Magento project; if your project
 already has docker-devbox support added, please refer to the projects' own README.md.
 
 - Install this in the project:
