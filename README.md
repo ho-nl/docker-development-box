@@ -213,22 +213,19 @@ bin/magento config:set --lock-env web/secure/base_url https://blabla.localhost.r
 ```
 ### How do I set up multiple websites?
 
-To allow our nginx setup to work with multiple websites we need to make some changes to our docker-compose.yml
-We've already defined the needed nginx params as environment parameters for nginx.
-These should be uncommented. 
+To allow our nginx setup to work with multiple websites we need change the nginx environment parameter `MAGE_RUN_TYPE` from `store` to `website`
 
-Nginx won't start without a mapping for the `mage_run_code` param.
-We have to add a new conf file, for example `nginx-map.conf`
+To define our website or storeview codes we have to add a new conf file, for example `nginx-map.conf`
 `$MAGE_RUN_CODE` is the relevant `website_code` or `storeview_code`
 
 ```
 map $http_host $MAGE_RUN_CODE {
     default '';
-    blabla-dutch.localhost.reachdigital.io 'blabla_dutch';
-    blabla-german.localhost.reachdigital.io 'blabla_german';
+    example-dutch.localhost.reachdigital.io 'example_dutch';
+    example-german.localhost.reachdigital.io 'example_german';
 }
 ```
-Add the file path to the nginx volumes, for exmaple:
+Add the file path to the nginx volumes, for example:
 ```dockerfile
     volumes:
       - ./nginx-map.conf:/etc/nginx/conf.d/map.conf:ro
