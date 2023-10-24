@@ -211,6 +211,28 @@ bin/magento config:set --lock-env web/secure/base_url https://blabla.localhost.r
 # You can use any domain that points to 127.0.0.1, you can't use https://localhost because Magento can't handle that.
 # *.localhost.reachdigital.io always resolves to 127.0.0.1
 ```
+### How do I set up multiple websites?
+
+To allow our nginx setup to work with multiple websites we need change the nginx environment parameter `MAGE_RUN_TYPE` from `store` to `website`
+
+To define our website or storeview codes we have to add a new conf file, for example `nginx-map.conf`
+`$MAGE_RUN_CODE` is the relevant `website_code` or `storeview_code`
+
+```
+map $http_host $MAGE_RUN_CODE {
+    default '';
+    example-dutch.localhost.reachdigital.io 'example_dutch';
+    example-german.localhost.reachdigital.io 'example_german';
+}
+```
+Add the file path to the nginx volumes, for example:
+```dockerfile
+    volumes:
+      - ./nginx-map.conf:/etc/nginx/conf.d/map.conf:ro
+```
+Your website or storeview should now be available.
+
+For more information check the magento docs: https://experienceleague.adobe.com/docs/commerce-operations/configuration-guide/multi-sites/ms-nginx.html
 
 ### How do I use and set up Varnish?
 
