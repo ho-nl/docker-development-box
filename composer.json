@@ -26,6 +26,10 @@
       [
         ".gitignore",
         "var/.esdata/.gitignore"
+      ],
+      [
+        "nginx/conf.d/frontend.conf",
+        "nginx-frontend.conf"
       ]
     ],
     "chmod": [
