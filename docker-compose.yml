@@ -39,7 +39,6 @@ services:
 
 
   # phplogs: tail -f /usr/local/var/log/php*
-  # Uncomment variables MAGE_RUN_TYPE and MAGE_RUN_CODE to allow multistore setup
   nginx:
     image: nginx:alpine
     volumes:
