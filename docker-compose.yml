@@ -126,14 +126,14 @@ services:
     depends_on:
       - elasticsearch
 
-  # composer require magepal/magento2-gmailsmtpapp
-  # php bin/magento setup:upgrade
+  # Magento >=2.4.6 supports custom SMTP config uit of the box:
+  #
   # bin/magento config:set --lock-env system/smtp/disable 0
-  # bin/magento config:set --lock-env system/gmailsmtpapp/active 1
-  # bin/magento config:set --lock-env system/gmailsmtpapp/auth NONE
-  # bin/magento config:set --lock-env system/gmailsmtpapp/ssl none
-  # bin/magento config:set --lock-env system/gmailsmtpapp/smtphost localhost
-  # bin/magento config:set --lock-env system/gmailsmtpapp/smtpport 1025
+  # bin/magento config:set --lock-env system/smtp/transport smtp
+  # bin/magento config:set --lock-env system/smtp/host localhost
+  # bin/magento config:set --lock-env system/smtp/port 1025
+  #
+  # For Magento <2.4.6 refer to https://github.com/ho-nl/docker-development-box/blob/dc9b236695/docker-compose.yml#L129-L137
   mailhog:
     platform: linux/x86_64
     image: mailhog/mailhog:v1.0.0
