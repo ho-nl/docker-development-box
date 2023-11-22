@@ -126,15 +126,14 @@ services:
     depends_on:
       - elasticsearch
 
-  # composer require fruitcake/magento2-email-advanced-config
-  # bin/magento module:enable Fruitcake_EmailAdvancedConfig
-  # bin/magento setup:upgrade
+  # Magento >=2.4.6 supports custom SMTP config uit of the box:
+  #
   # bin/magento config:set --lock-env system/smtp/disable 0
-  # bin/magento config:set --lock-env fruitcake_email_advanced/smtp/transport smtp
-  # bin/magento config:set --lock-env fruitcake_email_advanced/smtp/auth none
-  # bin/magento config:set --lock-env fruitcake_email_advanced/smtp/ssl none
-  # bin/magento config:set --lock-env fruitcake_email_advanced/smtp/host localhost
-  # bin/magento config:set --lock-env fruitcake_email_advanced/smtp/port 1025
+  # bin/magento config:set --lock-env system/smtp/transport smtp
+  # bin/magento config:set --lock-env system/smtp/host localhost
+  # bin/magento config:set --lock-env system/smtp/port 1025
+  #
+  # For Magento <2.4.6 refer to https://github.com/ho-nl/docker-development-box/blob/dc9b236695/docker-compose.yml#L129-L137
   mailhog:
     platform: linux/x86_64
     image: mailhog/mailhog:v1.0.0
