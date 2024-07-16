@@ -257,7 +257,7 @@ php bin/magento setup:config:set --session-save=redis --session-save-redis-db=2 
 How do I flush Redis directly when `bin/magento` is broken?
 `docker-compose exec redis redis-cli flushall`
 
-### How do I set up Elastic Search?
+### How do I set up ElasticSearch?
 
 ```
 bin/magento config:set --lock-config catalog/search/enable_eav_indexer 0
@@ -268,19 +268,20 @@ bin/magento config:set --lock-env catalog/search/elasticsearch6_server_hostname 
 
 ### How do I set up MailHog?
 
+As of Magento 2.4.6, a third party SMTP delivery module is no longer required. The following config changes will ensure
+that  emails are delivered to Mailhog:
+
 ```
-composer require fruitcake/magento2-email-advanced-config
-php bin/magento module:enable Fruitcake_EmailAdvancedConfig
-php bin/magento setup:upgrade
 bin/magento config:set --lock-env system/smtp/disable 0
-bin/magento config:set --lock-env fruitcake_email_advanced/smtp/transport smtp
-bin/magento config:set --lock-env fruitcake_email_advanced/smtp/auth none
-bin/magento config:set --lock-env fruitcake_email_advanced/smtp/ssl none
-bin/magento config:set --lock-env fruitcake_email_advanced/smtp/host localhost
-bin/magento config:set --lock-env fruitcake_email_advanced/smtp/port 1025
+bin/magento config:set --lock-env system/smtp/transport smtp
+bin/magento config:set --lock-env system/smtp/host localhost
+bin/magento config:set --lock-env system/smtp/port 1025
 ```
 
-Note that when trying to visit MailHog via your browser, use `http` instead of `https`.
+For Magento versions older than 2.4.6, see
+https://github.com/ho-nl/docker-development-box/tree/741d193a68200c976cd13987a986d7063a984b1d?tab=readme-ov-file#how-do-i-set-up-mailhog
+
+The Mailhog webinterface is available at http://localhost:8025/.
 
 ### How do I set up RabbitMQ?
 
