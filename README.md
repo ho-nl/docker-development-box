@@ -140,9 +140,10 @@ already has docker-devbox support added, please refer to the projects' own READM
 - Install this package in the project: `composer require reach-digital/docker-devbox ^4.0.0`  
 - Install `static-content-deploy` [patch](patch/static-content-deploy.md) and
   remove existing static symlinked content: `rm -rf pub/static/*/*`.
+- Copy the provided `docker-compose.example.yml` file to `docker-compose.yml`
 - Disable services you don't need in `docker-compose.yml` (required: `hitch`,
   `varnish`, `nginx`, `db` and `elasticsearch`).
-- Commit the `docker-compose.yml` file to prevent future accidental changes.
+- Commit the `docker-compose.yml` as part of your project.
 - Update or create an env.php file and with the following info
   ```
     'host' => '127.0.0.1',
