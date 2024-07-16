@@ -1,8 +1,5 @@
 # 🐳 Reach Digital Magento 2.4 Docker+local hybrid development environment. 🐳
 
-⚠  _For Magento 2.3, see the
-[2.x branch](https://github.com/ho-nl/docker-development-box/tree/2.x)._
-
 Docker for services, php locally. No sync, no mental overhead, no performance
 penalties.  
 `php`, `nginx`, `https`, `http/2`, `varnish`, `mysql` `elasticsearch`,
