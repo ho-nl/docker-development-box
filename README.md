@@ -74,7 +74,10 @@ any references to `$BREW_PREFIX/Cellar/php*`.
 ### Installing services for Magento 2.4
 
 Since we're running a hybrid docker+local system we need to set up PHP to run
-locally.
+locally. An `install.sh` script is provided for this, which you can run locally
+after cloning this repository.
+
+You can also run it directly from github (which has some security risks) using:
 
 ```bash
 # Cleans existing brew php (will not remove Valet stuff) + installs php on macOS
