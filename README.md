@@ -77,7 +77,7 @@ Since we're running a hybrid docker+local system we need to set up PHP to run
 locally.
 
 ```bash
-# Magento 2.4 (for 2.3, see the 2.x branch)
+# Magento 2.4
 # Cleans existing brew php (will not remove Valet stuff) + installs php on OSX!
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ho-nl/docker-development-box/master/install.sh)"
 ```
@@ -136,8 +136,7 @@ This covers initially adding docker-devbox support to a Magento project; if your
 already has docker-devbox support added, please refer to the projects' own README.md.
 
 - Install this in the project:
-  - Magento 2.3: [2.x branch](https://github.com/ho-nl/docker-development-box/tree/2.x)
-  - Magento 2.4: `composer require reach-digital/docker-devbox ^3.0.0`  
+  - Magento 2.4: `composer require reach-digital/docker-devbox ^4.0.0`  
 - Install `static-content-deploy` [patch](patch/static-content-deploy.md) and
   remove existing static symlinked content: `rm -rf pub/static/*/*`.
 - Disable services you don't need in `docker-compose.yml` (required: `hitch`,
