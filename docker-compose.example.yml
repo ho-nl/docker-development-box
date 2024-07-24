@@ -48,8 +48,8 @@ services:
       - ./vendor/reach-digital/docker-devbox/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - nginx-mount:/var/www/data
     environment:
-      FPM_PORT: 9074
-      FPM_XDEBUG: 9174
+      FPM_PORT: 9081
+      FPM_XDEBUG: 9181
       FPM_ROOT: $PWD/pub
       MAGE_RUN_TYPE: store #or set to website
     command: /bin/sh -c "envsubst '$$MAGE_RUN_TYPE $$FPM_PORT $$FPM_XDEBUG $$FPM_ROOT $$FPM_ROOT_ABS' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"

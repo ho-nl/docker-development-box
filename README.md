@@ -1,7 +1,7 @@
 # 🐳 Reach Digital Magento 2.4 Docker+local hybrid development environment. 🐳
 
 Docker for services, php locally. No sync, no mental overhead, no performance
-penalties.  
+penalties.
 `php`, `nginx`, `https`, `http/2`, `varnish`, `mysql` `elasticsearch`,
 `rabbitmq`, `mailhog`
 
@@ -27,8 +27,8 @@ cli? Why is my system slow? Sync is bad.
 
 ## Goals
 
-- It should be possible for a frontend developer without any backend skillsto
-  set up a development environment.
+- It should be possible for a frontend developer without any backend skills to
+  easily set up a development environment.
 - It should be possible for a backend developer to add or upgrade services.
 - It should be possible for a backend developer to propagate the changes to the
   rest of the team with version control.
@@ -71,7 +71,7 @@ You should not have any services running like.
 Take a look at `~/.bash_profile` or `~/.zshrc` and make sure it doesn't contain
 any references to `$BREW_PREFIX/Cellar/php*`.
 
-### Installing services for Magento 2.4
+### Installing PHP and php-fpm services
 
 Since we're running a hybrid docker+local system we need to set up PHP to run
 locally. An `install.sh` script is provided for this, which you can run locally
@@ -87,17 +87,25 @@ You can also run it directly from github (which has some security risks) using:
 It will (re)install multiple php-fpm services, one for each version (port: 9072,
 9073, 9074, etc.) and one for each version with xdebug (port: 9172, 9173, 9174, etc.).
 
-#### Switch PHP versions
+#### Switching between PHP versions
+
+You can switch between CLI PHP versions using `brew link`. For example to switch to 8.2:
 
 ```bash
-brew unlink php@7.3
-brew link php@7.4 --force
-php -v
+brew unlink php@8.2 && brew link --force --overwrite php@8.2
 ```
 
-Should now show the right version. If it doesn't there might be still be a
+Should now show the right version (check with `php -v`). If it doesn't there might be still be a
 version linked, or your ~/.bash_profile should be cleaned up, or you need to
 reopen your CLI.
+
+For easy switching between versions you can set up aliases like so:
+
+```shell
+alias link-php74='brew unlink php@7.4 && brew link --force --overwrite php@7.4'
+alias link-php81='brew unlink php@8.1 && brew link --force --overwrite php@8.1'
+alias link-php82='brew unlink php@8.2 && brew link --force --overwrite php@8.2'
+```
 
 ### Install docker
 
@@ -135,22 +143,19 @@ You are now done with the global installation 🎉
 ## Project installation
 
 This covers initially adding docker-devbox support to a Magento project; if your project
-already has docker-devbox support added, please refer to the projects' own README.md.
+already has docker-devbox support added, please refer to the projects' own README.
 
 - Install (and commit) this package in the project: `composer require reach-digital/docker-devbox ^4.0.0`  
 - Install `static-content-deploy` [patch](patch/static-content-deploy.md) and
   remove existing static symlinked content: `rm -rf pub/static/*/*`.
 - Copy the provided `docker-compose.example.yml` file to `docker-compose.yml`
   - When updating the docker-debox package in the future, you may want to check changes in the example file to include in your project's copy.
-- Change `docker-composer.yml` as required for your project (i.e. change `FPM_PORT` and `FPM_XDEBUG` for the correct PHP version) and commit this file as part of your project.
-- Update or create an env.php file and with the following info
-  ```
-    'host' => '127.0.0.1',
-    'dbname' => 'magento',
-    'username' => 'root',
-    'password' => 'magento',
-  ```
-- Create a setup script for the base-urls and run it.
+- Change `docker-composer.yml` as required for your project and commit this file as part of your project:
+  - Change the `FPM_PORT` and `FPM_XDEBUG` variables for the `nginx` service for the correct PHP version
+- You can use [env.php](magento/env.php) as a base for your local env.php, which is drop-in compatible with all docker
+  services:
+  - Change the `crypt.key` value (take this from an existing production environment, or from the initially generated `env.php` if this is an entirely new project)
+  - Change the base URLs (`system.default.web.*.base_url`) as desired
 
 ## Usage
 
