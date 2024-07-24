@@ -137,13 +137,12 @@ You are now done with the global installation 🎉
 This covers initially adding docker-devbox support to a Magento project; if your project
 already has docker-devbox support added, please refer to the projects' own README.md.
 
-- Install this package in the project: `composer require reach-digital/docker-devbox ^4.0.0`  
+- Install (and commit) this package in the project: `composer require reach-digital/docker-devbox ^4.0.0`  
 - Install `static-content-deploy` [patch](patch/static-content-deploy.md) and
   remove existing static symlinked content: `rm -rf pub/static/*/*`.
 - Copy the provided `docker-compose.example.yml` file to `docker-compose.yml`
-- Disable services you don't need in `docker-compose.yml` (required: `hitch`,
-  `varnish`, `nginx`, `db` and `elasticsearch`).
-- Commit the `docker-compose.yml` as part of your project.
+  - When updating the docker-debox package in the future, you may want to check changes in the example file to include in your project's copy.
+- Change `docker-composer.yml` as required for your project (i.e. change `FPM_PORT` and `FPM_XDEBUG` for the correct PHP version) and commit this file as part of your project.
 - Update or create an env.php file and with the following info
   ```
     'host' => '127.0.0.1',
