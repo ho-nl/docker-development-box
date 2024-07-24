@@ -2,6 +2,8 @@
 
 Makes the static content deploy use relative symlinks in developer mode. Does not affect production mode.
 
+Without this patch, nginx will not be able to directly read static content files, which causes them to be resolved through Magento/PHP, greatly reducing performance.
+
 # Installation
 
 1. Install https://github.com/vaimo/composer-patches
