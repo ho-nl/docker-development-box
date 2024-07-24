@@ -9,9 +9,6 @@ return [
         ]
     ],
     'cache' => [
-        'graphql' => [
-            'id_salt' => 'xgoyr9xumVDy2OWysIh6u3vqsT209AqC'
-        ],
         'frontend' => [
             'default' => [
                 'id_prefix' => 'a26_',
