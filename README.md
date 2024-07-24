@@ -149,7 +149,7 @@ already has docker-devbox support added, please refer to the projects' own READM
 - Install `static-content-deploy` [patch](patch/static-content-deploy.md) and
   remove existing static symlinked content: `rm -rf pub/static/*/*`.
 - Copy the provided `docker-compose.example.yml` file to `docker-compose.yml`
-  - When updating the docker-debox package in the future, you may want to check changes in the example file to include in your project's copy.
+  - When updating the docker-devbox package in the future, you may want to check changes in the example file to include in your project's copy.
 - Change `docker-composer.yml` as required for your project and commit this file as part of your project:
   - Change the `FPM_PORT` and `FPM_XDEBUG` variables for the `nginx` service for the correct PHP version
 - You can use [env.php](magento/env.php) as a base for your local env.php, which is drop-in compatible with all docker
