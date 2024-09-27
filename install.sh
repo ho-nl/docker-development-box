@@ -205,7 +205,7 @@ done
 
 echo "
 Installing mysql-client, gnu-sed, pv, jq, imagemagick, pkg-config"
-brew install gnu-sed mysql-client pv jq imagemagick pkg-config &>/dev/null
+brew install gnu-sed mysql-client@8.4 pv jq imagemagick pkg-config &>/dev/null
 
 brew link mysql-client --force &>/dev/null
 
