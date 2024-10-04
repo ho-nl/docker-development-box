@@ -134,12 +134,11 @@ services:
   # bin/magento config:set --lock-env system/smtp/port 1025
   #
   # For Magento <2.4.6 refer to https://github.com/ho-nl/docker-development-box/blob/dc9b236695/docker-compose.yml#L129-L137
-  mailhog:
-    platform: linux/x86_64
-    image: mailhog/mailhog:v1.0.0
+  mailcrab:
+    image: marlonb/mailcrab:latest
     ports:
       - 1025:1025
-      - 8025:8025
+      - 8025:1080
 
   # bin/magento setup:config:set --amqp-host=localhost --amqp-port=5672 --amqp-user=guest --amqp-password=guest
   # http://localhost:15672
