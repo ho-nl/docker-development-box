@@ -293,14 +293,16 @@ http://localhost:15672
 ```
 
 ### How do I set up Ngrok?
-Ngrok exposes local servers to the public internet over secure tunnels.
+Uncomment the ngrok service in your docker-compose.yml to use Ngrok. This exposes your local
+environment to the public internet over secure tunnels.
 
 ```
 http://localhost:4551
 Update base urls with tunnel url shown on webpage.
 ```
 
-By default an unregistered session is started, this will limit the connections per minute. Adding your authtoken using environment parameters will grant you access to more features and longer session times.
+You will need to register an account at https://ngrok.com/ and configure a token to make use of
+this service:
 ```
   - PARAMS=http -region=eu --authtoken=<token> nginx:80
 ```
