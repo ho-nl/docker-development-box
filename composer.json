@@ -16,8 +16,8 @@
   "extra": {
     "map": [
       [
-        "docker-compose.yml",
-        "docker-compose.yml"
+        "docker-compose.example.yml",
+        "docker-compose.example.yml"
       ],
       [
         ".gitignore",
