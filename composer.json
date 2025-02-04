@@ -16,8 +16,12 @@
   "extra": {
     "map": [
       [
-        "docker-compose.yml",
-        "docker-compose.yml"
+        "docker-compose.example.yml",
+        "docker-compose.example.yml"
+      ],
+      [
+        "nginx/conf.d/frontend.conf",
+        "nginx-frontend.conf"
       ],
       [
         ".gitignore",
@@ -26,10 +30,6 @@
       [
         ".gitignore",
         "var/.esdata/.gitignore"
-      ],
-      [
-        "nginx/conf.d/frontend.conf",
-        "nginx-frontend.conf"
       ]
     ],
     "chmod": [
