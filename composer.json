@@ -20,16 +20,16 @@
         "docker-compose.example.yml"
       ],
       [
+        "nginx/conf.d/frontend.conf",
+        "nginx-frontend.conf"
+      ],
+      [
         ".gitignore",
         "var/.mysqldata/.gitignore"
       ],
       [
         ".gitignore",
         "var/.esdata/.gitignore"
-      ],
-      [
-        "nginx/conf.d/frontend.conf",
-        "nginx-frontend.conf"
       ]
     ],
     "chmod": [
