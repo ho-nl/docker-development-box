@@ -94,14 +94,14 @@ services:
       - 6379:6379
 
   # bin/magento config:set --lock-config catalog/search/enable_eav_indexer 0
-  # bin/magento config:set --lock-config catalog/search/engine elasticsearch7
-  # bin/magento config:set --lock-env catalog/search/elasticsearch6_server_port 9200
-  # bin/magento config:set --lock-env catalog/search/elasticsearch6_server_hostname localhost
-  elasticsearch:
-    build: ./vendor/reach-digital/docker-devbox/elasticsearch
+  # bin/magento config:set --lock-config catalog/search/engine opensearch
+  # bin/magento config:set --lock-env catalog/search/opensearch_server_port 9200
+  # bin/magento config:set --lock-env catalog/search/opensearch_server_hostname localhost
+  opensearch:
+    image: opensearchproject/opensearch:3
     ports:
-      - 9200:9200
-      - 9300:9300
+      - 9200:9200 # REST API
+      - 9300:9300 # Performance Analyzer
     environment:
       - discovery.type=single-node
       - http.port=9200
@@ -113,18 +113,10 @@ services:
       - cluster.routing.allocation.disk.watermark.flood_stage=200mb
       - cluster.routing.allocation.disk.watermark.low=500mb
       - cluster.routing.allocation.disk.watermark.high=300mb
-      - "ES_JAVA_OPTS=-Xmx1g -Xms1g"
+      - DISABLE_SECURITY_PLUGIN=true
+      - "OPENSEARCH_JAVA_OPTS=-Xmx1g -Xms1g"
     volumes:
-      - elasticsearch-mount:/usr/share/elasticsearch/data
-
-  kibana:
-    image: kibana:7.17.9
-    ports:
-      - 5601:5601
-    environment:
-      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
-    depends_on:
-      - elasticsearch
+      - opensearch-mount:/usr/share/opensearch/data
 
   # Magento >=2.4.6 supports custom SMTP config uit of the box:
   #
@@ -164,7 +156,7 @@ volumes:
       type: nfs
       o: addr=host.docker.internal,rw,nolock,hard,nointr,wsize=32768,rsize=32768,nfsvers=3
       device: ":${PWD}/var/.mysqldata"
-  elasticsearch-mount:
+  opensearch-mount:
     driver: local
     driver_opts:
       type: nfs
