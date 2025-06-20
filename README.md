@@ -105,6 +105,8 @@ For easy switching between versions you can set up aliases like so:
 alias link-php74='brew unlink php@7.4 && brew link --force --overwrite php@7.4'
 alias link-php81='brew unlink php@8.1 && brew link --force --overwrite php@8.1'
 alias link-php82='brew unlink php@8.2 && brew link --force --overwrite php@8.2'
+alias link-php83='brew unlink php@8.3 && brew link --force --overwrite php@8.3'
+alias link-php84='brew unlink php@8.4 && brew link --force --overwrite php@8.4'
 ```
 
 ### Install docker
