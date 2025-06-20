@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # If you're adding a new version, you need an additional XDEBUG version, not retrieved dynamically.
-PHPS='php@8.2 php@8.1 php@7.4 php@7.3 php@7.2'
+PHPS='php@8.4 php@8.2 php@8.1 php@7.4 php@7.3 php@7.2'
 
 remove_php() {
   PHP=$1
@@ -71,6 +71,7 @@ install_php() {
   # Set correct xdebug version depending on PHP version. For PHP 8.2 and up, xdebug 3.2 is needed
   XDEBUG_VERSION='3.1.6'
   [ $PHPVERSION == '8.2' ] && XDEBUG_VERSION='3.2.1'
+  [ $PHPVERSION == '8.4' ] && XDEBUG_VERSION='3.4.4'
 
   brew unlink $PHP && brew link --force --overwrite $PHP > /dev/null
 
@@ -82,6 +83,8 @@ install_php() {
   [ $PHPVERSION = '7.4' ] && PHP_EXTENSION_API='20190902'
   [ $PHPVERSION = '8.1' ] && PHP_EXTENSION_API='20210902'
   [ $PHPVERSION = '8.2' ] && PHP_EXTENSION_API='20220829'
+  [ $PHPVERSION = '8.2' ] && PHP_EXTENSION_API='20220829'
+  [ $PHPVERSION = '8.4' ] && PHP_EXTENSION_API='20240924'
   echo "[$PHP] 🐞 Xdebug path: $PHPDIR/pecl/$PHP_EXTENSION_API/xdebug.so"
 
   # Set up separate ini, so we only load xdebug through the xdebug fpm-php instance
