@@ -161,17 +161,7 @@ volumes:
       o: addr=host.docker.internal,rw,nolock,hard,nointr,wsize=32768,rsize=32768,nfsvers=3
       device: ":${PWD}"
   mysql-mount:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=host.docker.internal,rw,nolock,hard,nointr,wsize=32768,rsize=32768,nfsvers=3
-      device: ":${PWD}/var/.mysqldata"
   elasticsearch-mount:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=host.docker.internal,rw,nolock,hard,nointr,wsize=32768,rsize=32768,nfsvers=3
-      device: ":${PWD}/var/.esdata"
   rabbitmq-mount:
   redis-mount:
   mysql-logs-mount:
