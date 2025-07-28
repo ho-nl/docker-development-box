@@ -68,7 +68,7 @@ services:
   #    - PARAMS=http -region=eu --authtoken=<token> nginx:80
 
   mysql:
-    image: perconalab/percona-server:8.0.33-25.1-multi
+    image: mysql:8.0
     ports:
       - 3306:3306
     environment:
