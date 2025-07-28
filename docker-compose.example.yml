@@ -68,7 +68,9 @@ services:
   #    - PARAMS=http -region=eu --authtoken=<token> nginx:80
 
   mysql:
-    image: perconalab/percona-server:8.0.33-25.1-multi
+    # You should match the MySQL version to your production environment when
+    # setting up your project's docker-compose.yml
+    image: mysql:8.0.35
     ports:
       - 3306:3306
     environment:
