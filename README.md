@@ -170,10 +170,15 @@ caches, etc.
 
 **Deleting data (mysql/elasticsearch):**
 
-- `docker-compose down`
-- `rm -rf var/.esdata/*`
-- `rm -rf var/.mysqldata/*`
-- `docker-compose up -d`
+To delete the data for (for example) MySQL, stop your containers and remove
+the associated docker volume:
+```sh
+docker-compose down
+docker volume rm ${PROJECT_NAME}_mysql-mount
+docker-compose up -d
+```
+
+You can use `docker-compose volumes` to see the volumes associated with your project.
 
 Be sure to give MySQL a minute or two to re-initialize the data directory - during
 this time it will not accept connections.
@@ -183,7 +188,7 @@ this time it will not accept connections.
 ### How do I use xdebug?
 
 - Web: Xdebug should work by default when you have the
-  [Xdebug helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc)
+  [Xdebug Helper](https://chromewebstore.google.com/detail/xdebug-helper-by-jetbrain/aoelhdemabeimdhedkidlnbkfhnhgnhm)
   installed + PHPStorm is listening to connections.
 - Command line: you can add the following alias to your `~/.bash_profile` or `~/.zshrc`, this will auto-detect
   your active PHP version, and let you debug using something like `phpd bin/magento ...`:
@@ -265,15 +270,15 @@ How do I flush Redis directly when `bin/magento` is broken?
 
 ```
 bin/magento config:set --lock-config catalog/search/enable_eav_indexer 0
-bin/magento config:set --lock-config catalog/search/engine [elasticsearch7 OR  elasticsuite]
-bin/magento config:set --lock-env catalog/search/elasticsearch6_server_port 9200
-bin/magento config:set --lock-env catalog/search/elasticsearch6_server_hostname localhost
+bin/magento config:set --lock-config catalog/search/engine elasticsearch7
+bin/magento config:set --lock-env catalog/search/elasticsearch7_server_port 9200
+bin/magento config:set --lock-env catalog/search/elasticsearch7_server_hostname localhost
 ```
 
 ### How do I set up MailHog?
 
 As of Magento 2.4.6, a third party SMTP delivery module is no longer required. The following config changes will ensure
-that  emails are delivered to Mailhog:
+that emails are delivered to Mailhog:
 
 ```
 bin/magento config:set --lock-env system/smtp/disable 0
