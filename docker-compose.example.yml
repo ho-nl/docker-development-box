@@ -134,7 +134,7 @@ services:
   # bin/magento config:set --lock-env system/smtp/transport smtp
   # bin/magento config:set --lock-env system/smtp/host localhost
   # bin/magento config:set --lock-env system/smtp/port 1025
-  # bin/magento config:set --lock-env system/smtp/auth NONE
+  # bin/magento config:set --lock-env system/smtp/auth none
   # bin/magento config:set --lock-env sales_email/general/async_sending 0
   #
   # For Magento <2.4.6 refer to https://github.com/ho-nl/docker-development-box/blob/dc9b236695/docker-compose.yml#L129-L137
