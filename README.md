@@ -133,6 +133,7 @@ already has docker-devbox support added, please refer to the projects' own READM
   - When updating the docker-devbox package in the future, you may want to check changes in the example file to include in your project's copy.
 - Change `docker-composer.yml` as required for your project and commit this file as part of your project:
   - Change the `FPM_PORT` and `FPM_XDEBUG` variables for the `nginx` service for the correct PHP version
+  - You should match the MySQL docker image version to that of your production environment
 - You can use [env.php](magento/env.php) as a base for your local env.php, which is drop-in compatible with all docker
   services:
   - Change the `crypt.key` value (take this from an existing production environment, or from the initially generated `env.php` if this is an entirely new project)
