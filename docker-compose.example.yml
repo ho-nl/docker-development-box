@@ -98,8 +98,8 @@ services:
 
   # bin/magento config:set --lock-config catalog/search/enable_eav_indexer 0
   # bin/magento config:set --lock-config catalog/search/engine elasticsearch7
-  # bin/magento config:set --lock-env catalog/search/elasticsearch6_server_port 9200
-  # bin/magento config:set --lock-env catalog/search/elasticsearch6_server_hostname localhost
+  # bin/magento config:set --lock-env catalog/search/elasticsearch7_server_port 9200
+  # bin/magento config:set --lock-env catalog/search/elasticsearch7_server_hostname localhost
   elasticsearch:
     build: ./vendor/reach-digital/docker-devbox/elasticsearch
     ports:
@@ -155,7 +155,6 @@ services:
     volumes:
       - rabbitmq-mount:/var/lib/rabbitmq
 
-# Create NFS mounts for the containers to access files on the host.
 volumes:
   mysql-mount:
   elasticsearch-mount:
