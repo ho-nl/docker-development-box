@@ -146,6 +146,11 @@ return [
                     'use_rewrites' => '1'
                 ]
             ],
+            'sales_email' => [
+                'general' => [
+                    'async_sending' => '0'
+                ]
+            ],
             'system' => [
                 'full_page_cache' => [
                     'caching_application' => '2'

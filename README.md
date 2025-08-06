@@ -1,29 +1,18 @@
 # 🐳 Reach Digital Magento 2.4 Docker+local hybrid development environment. 🐳
 
-Docker for services, php locally. No sync, no mental overhead, no performance
+Docker for services, PHP locally. No sync, no mental overhead, no performance
 penalties.
-`php`, `nginx`, `https`, `http/2`, `varnish`, `mysql` `elasticsearch`,
-`rabbitmq`, `mailhog`
 
-## Reasoning
+Services included: `php`, `nginx`, `https`, `http/2`, `varnish`, `mysql`,
+`elasticsearch`, `rabbitmq`, `mailcrab`.
 
-Docker is easy, docker scales, we love Docker, but docker's volume mounting is
-slow, we can't have slow.
+PHP runs outside of Docker for optimal performance and being able to just run
+your tooling (i.e. `bin/magento`) from your local terminal.
 
-The problem with all the docker devboxes is that they require running php inside
-a vm. The problem with php in a VM is that files need to be available in the VM,
-but it also needs to have files outside the VM, because programs like PHPStorm
-and others do not accept network drives.
-
-Sync is slower than no sync. [docker-sync](http://docker-sync.io/),
-[unison](https://www.cis.upenn.edu/~bcpierce/unison/),
-[mutagen](https://mutagen.io/) offer good sync solutions, but always slower than
-no sync.
-
-Hovever, syncs require additional HDD space and additional mental overhead: Are
-my files synced?, Is my sync broken? Are there sync conflicts? Why did that file
-appear here? Where should I execute my php cli scripts? Where should I run node
-cli? Why is my system slow? Sync is bad.
+Due to Docker VMM's improved performance, we use bind mounts to share files for
+the services that need it (`nginx`). We use guest-only volumes for services
+that don't need to share data for optimal performance (`mysql`, `elasticsearch`,
+etc.)
 
 ## Goals
 
@@ -44,7 +33,9 @@ cli? Why is my system slow? Sync is bad.
 
 ## Requirements
 
-- Recent OSX
+- Recent macOS
+- Recent Docker
+- Apple Silicon (for Docker VMM support)
 
 ## Global installation (only once)
 
@@ -64,7 +55,7 @@ You should not have any services running like.
 - `httpd`:
   [Disable apache](https://apple.stackexchange.com/questions/119674/disable-apache-autostart/119678)
   that is OSX native. http://localhost/ should not return anything.
-- `mysql`: uninstall or disable mysql, or at least make sure it doesnt run on
+- `mysql`: uninstall or disable mysql, or at least make sure it doesn't run on
   the default MySQL port.
 - `nginx`: uninstall
 
@@ -77,8 +68,7 @@ Since we're running a hybrid docker+local system we need to set up PHP to run
 locally. An `install.sh` script is provided for this, which you can run locally
 after cloning this repository.
 
-You can also run it directly from github (which has some security risks) using:
-
+For running the script directly, use:
 ```bash
 # Cleans existing brew php (will not remove Valet stuff) + installs php on macOS
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ho-nl/docker-development-box/master/install.sh)"
@@ -116,21 +106,9 @@ alias link-php84='brew unlink php@8.4 && brew link --force --overwrite php@8.4'
 2. Start Docker
 3. Exclude `~/Library/Containers` from your backups
 4. `brew install ctop`: can be used to show container metrics.
-5. Open Docker -> Preferences
-6. Set memory to 6-8 GB
-
-### Install nfs
-
-Note that the `-mapall=501:20` part below refers to your user ID (`501`) and
-the `staff` (`20`) user group ID. You may need to adjust your user ID if isn't
-`501`. You can check this by running `id`.
-
-1. `sudo nano /etc/exports` add:
-   `/System/Volumes/Data -alldirs -mapall=501:20 localhost`
-2. `sudo nano /etc/nfs.conf` add: `nfs.server.mount.require_resv_port = 0`
-3. `sudo nfsd restart`
-
-[Based on this article](https://www.jeffgeerling.com/blog/2020/revisiting-docker-macs-performance-nfs-volumes)
+5. Open Docker -> Settings -> Resources, set memory to 6-8 GB
+7. Open Docker -> Settings -> General, set virtual machine manager
+   to Docker VMM
 
 ### Install local certificate
 
@@ -138,7 +116,8 @@ the `staff` (`20`) user group ID. You may need to adjust your user ID if isn't
 - [./hitch/\*.localhost.reachdigital.io.pem](./hitch/*.localhost.reachdigital.io.pem)
 - Open keychain.app, add this file (you can drag and drop this file in the keychain
   app, under the `Login` tab).
-- Open certificate and trust the certificate (do this by right clicking on the entry, choosing 'Get Info', and choose 'Always trust' under the 'Trust' section)
+- Open certificate and trust the certificate (do this by right-clicking on the entry,
+  choosing 'Get Info', and choose 'Always trust' under the 'Trust' section)
 
 You are now done with the global installation 🎉
 
@@ -147,13 +126,14 @@ You are now done with the global installation 🎉
 This covers initially adding docker-devbox support to a Magento project; if your project
 already has docker-devbox support added, please refer to the projects' own README.
 
-- Install (and commit) this package in the project: `composer require reach-digital/docker-devbox ^4.0.0`  
+- Install (and commit) this package in the project: `composer require reach-digital/docker-devbox ^5.0.0`
 - Install `static-content-deploy` [patch](patch/static-content-deploy.md) and
   remove existing static symlinked content: `rm -rf pub/static/*/*`.
 - Copy the provided `docker-compose.example.yml` file to `docker-compose.yml`
   - When updating the docker-devbox package in the future, you may want to check changes in the example file to include in your project's copy.
 - Change `docker-composer.yml` as required for your project and commit this file as part of your project:
   - Change the `FPM_PORT` and `FPM_XDEBUG` variables for the `nginx` service for the correct PHP version
+  - You should match the MySQL docker image version to that of your production environment
 - You can use [env.php](magento/env.php) as a base for your local env.php, which is drop-in compatible with all docker
   services:
   - Change the `crypt.key` value (take this from an existing production environment, or from the initially generated `env.php` if this is an entirely new project)
@@ -183,7 +163,11 @@ You can use `docker-compose volumes` to see the volumes associated with your pro
 Be sure to give MySQL a minute or two to re-initialize the data directory - during
 this time it will not accept connections.
 
-## Settings for `mysql` `elasticsearch`, `rabbitmq`, `mailhog`, etc.
+## Usage and setup
+
+### Configuring Magento
+
+Configuration for all the services is included in the example [env.php](magento/env.php)
 
 ### How do I use xdebug?
 
@@ -222,10 +206,12 @@ bin/magento config:set --lock-env web/secure/base_url https://blabla.localhost.r
 ```
 ### How do I set up multiple websites?
 
-To allow our nginx setup to work with multiple websites we need change the nginx environment parameter `MAGE_RUN_TYPE` from `store` to `website`
+To allow our nginx setup to work with multiple websites we need change the
+nginx environment parameter `MAGE_RUN_TYPE` from `store` to `website`
 
-To define our website or storeview codes we have to add a new conf file, for example `nginx-map.conf`
-`$MAGE_RUN_CODE` is the relevant `website_code` or `storeview_code`
+To define our website or storeview codes we have to add a new configuration
+file, for example `nginx-map.conf`, to map`$MAGE_RUN_CODE` to the relevant
+`website_code` or `storeview_code`.
 
 ```
 map $http_host $MAGE_RUN_CODE {
@@ -241,84 +227,46 @@ Add the file path to the nginx volumes, for example:
 ```
 Your website or storeview should now be available.
 
-For more information check the magento docs: https://experienceleague.adobe.com/docs/commerce-operations/configuration-guide/multi-sites/ms-nginx.html
+For more information check the magento docs:
+https://experienceleague.adobe.com/docs/commerce-operations/configuration-guide/multi-sites/ms-nginx.html
 
-### How do I use and set up Varnish?
-
-Cache by default with https://www.varnish-software.com/
-
-```
-bin/magento setup:config:set --http-cache-hosts=127.0.0.1:6081
-bin/magento config:set --lock-config system/full_page_cache/caching_application 2
-```
+### Managing Varnish
 
 - You can use `bin/magento cache:clean` or `cache:flush` to flush Varnish.
 - You can use `CMD+SHIFT+R` to bypass Varnish for any page.
-- You can use port 6082 and `docker-devbox-varnish-secret` as shared secret to connect with the Varnish management interface.
+- You can use port 6082 and `docker-devbox-varnish-secret` as shared secret
+  to connect with the Varnish management interface.
 
-### How do I set up Redis?
+### Managing Redis
 
-```
-php bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-db=0 --cache-backend-redis-port=6379
-php bin/magento setup:config:set --session-save=redis --session-save-redis-db=2 --session-save-redis-port=6379
-```
+To flush Redis directly when `bin/magento` is broken, run
+`docker-compose exec redis redis-cli flushall`.
 
-How do I flush Redis directly when `bin/magento` is broken?
-`docker-compose exec redis redis-cli flushall`
+### Using Mailcrab
 
-### How do I set up ElasticSearch?
+The Mailcrab webinterface is available at http://localhost:8025/.
 
-```
-bin/magento config:set --lock-config catalog/search/enable_eav_indexer 0
-bin/magento config:set --lock-config catalog/search/engine elasticsearch7
-bin/magento config:set --lock-env catalog/search/elasticsearch7_server_port 9200
-bin/magento config:set --lock-env catalog/search/elasticsearch7_server_hostname localhost
-```
-
-### How do I set up MailHog?
-
-As of Magento 2.4.6, a third party SMTP delivery module is no longer required. The following config changes will ensure
-that emails are delivered to Mailhog:
-
-```
-bin/magento config:set --lock-env system/smtp/disable 0
-bin/magento config:set --lock-env system/smtp/transport smtp
-bin/magento config:set --lock-env system/smtp/host localhost
-bin/magento config:set --lock-env system/smtp/port 1025
-```
+As of Magento 2.4.6, a third party SMTP delivery module is no longer required.
 
 For Magento versions older than 2.4.6, see
 https://github.com/ho-nl/docker-development-box/tree/741d193a68200c976cd13987a986d7063a984b1d?tab=readme-ov-file#how-do-i-set-up-mailhog
 
-The Mailhog webinterface is available at http://localhost:8025/.
+### Using ngrok
 
-### How do I set up RabbitMQ?
-
-```
-bin/magento setup:config:set --amqp-host=localhost --amqp-port=5672 --amqp-user=guest --amqp-password=guest
-http://localhost:15672
-```
-
-### How do I set up Ngrok?
-Uncomment the ngrok service in your docker-compose.yml to use Ngrok. This exposes your local
-environment to the public internet over secure tunnels.
-
+Uncomment the ngrok service in your docker-compose.yml to use Ngrok. This
+exposes your local  environment to the public internet over secure tunnels.
 ```
 http://localhost:4551
 Update base urls with tunnel url shown on webpage.
 ```
 
-You will need to register an account at https://ngrok.com/ and configure a token to make use of
-this service:
+You will need to register an account at https://ngrok.com/ and configure a
+token to make use of this service:
 ```
   - PARAMS=http -region=eu --authtoken=<token> nginx:80
 ```
 
-### How do I set up Sphinx?
-
-No support yet.
-
-## How do I connect to my container over SSH directly?
+### Connecting to contains through SSH
 
 1. Open up `ctop`
 2. <key>⮐</key> on your service
@@ -327,20 +275,22 @@ No support yet.
 Please note that the containers are as minimal as possible, so not all common
 tools are available, but you should be able to get around.
 
-## I want to create a custom configuration for a service.
+### Customizing dockerized services
 
-Everything is set up via the docker-compose.yml file. You see paths to the
-configuration file there.
+Everything is set up via the `docker-compose.yml` file. You see paths to the
+configuration files used, various environment variables, and commandline
+options there and can change these as needed for your project.
 
 1. Change the path to your custom configuration file.
 2. Run `docker-compose down && docker-compose up -d`
 3. Changes should be applied, check `ctop` if your container is able to start.
 
-## How do I restart php-fpm?
+### Restarting the php-fpm service
 
-`pkill php-fpm`
+These run as macOS services (for each PHP version and with/without xdebug) on
+the host, and can all be restarted with: `pkill php-fpm`
 
-## Commits
+### Commits
 
 Commits are validated with https://github.com/conventional-changelog/commitlint
 
