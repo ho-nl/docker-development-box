@@ -1,4 +1,3 @@
-version: '3'
 # Reach Digital - Magento 2 Docker development environment
 
 services:
