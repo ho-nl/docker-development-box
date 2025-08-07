@@ -69,7 +69,7 @@ return [
         ]
     ],
     'x-frame-options' => 'SAMEORIGIN',
-    'MAGE_MODE' => 'default',
+    'MAGE_MODE' => 'developer',
     'http_cache_hosts' => [
         [
             'host' => '127.0.0.1',
