@@ -1,21 +1,19 @@
-diff --git a/magento/framework/Filesystem/Driver/File.php b/magento/framework/Filesystem/Driver/File.php
-index 59c9775d73a..76609e6023f 100644
---- a/magento/framework/Filesystem/Driver/File.php
-+++ b/magento/framework/Filesystem/Driver/File.php
-@@ -353,7 +353,7 @@ class File implements DriverInterface
+diff --git a/vendor/magento/framework/Filesystem/Driver/File.php b/vendor/magento/framework/Filesystem/Driver/File.php
+--- a/magento/framework/Filesystem/Driver/File.php	(date 1610053020000)
++++ b/magento/framework/Filesystem/Driver/File.php	(date 1610053020000)
+@@ -409,7 +409,7 @@
      {
          $result = false;
          if ($targetDriver === null || get_class($targetDriver) == get_class($this)) {
 -            $result = @symlink($this->getScheme() . $source, $destination);
 +            $result = symlink($this->relativePath($destination, $this->getScheme() . $source), $destination);
-         }
-         if (!$result) {
-             throw new FileSystemException(
-@@ -370,6 +370,37 @@ class File implements DriverInterface
+             if ($this->stateful) {
+                 clearstatcache(true, $destination);
+             }
+@@ -429,6 +429,37 @@
          return $result;
      }
  
-+
 +    private function relativePath($basePath, $targetPath)
 +    {
 +        if ($basePath === $targetPath) {
@@ -28,10 +26,10 @@ index 59c9775d73a..76609e6023f 100644
 +        $targetFile = array_pop($targetDirs);
 +
 +        foreach ($sourceDirs as $i => $dir) {
-+            if (isset($targetDirs[$i]) && $dir === $targetDirs[$i]) {
-+                unset($sourceDirs[$i], $targetDirs[$i]);
++                if (isset($targetDirs[$i]) && $dir === $targetDirs[$i]) {
++                        unset($sourceDirs[$i], $targetDirs[$i]);
 +            } else {
-+                break;
++                        break;
 +            }
 +        }
 +
@@ -46,6 +44,7 @@ index 59c9775d73a..76609e6023f 100644
 +        || false !== ($colonPos = strpos($path, ':')) && ($colonPos < ($slashPos = strpos($path, '/')) || false === $slashPos)
 +            ? "./$path" : $path;
 +    }
++
      /**
       * Delete file
       *
