@@ -2,15 +2,13 @@
 
 Makes the static content deploy use relative symlinks in developer mode. Does not affect production mode.
 
-Without this patch, nginx will not be able to directly read static content files, which causes them to be resolved through Magento/PHP, greatly reducing performance.
+Note that this patch requires Magento 2.4.2 or above. See
+https://github.com/ho-nl/docker-development-box/blob/321b50ab96dcf1a3d63b34b999dc401291e24132/patch/static-content-deploy.diff for older versions of Magento 2.
 
-# Installation
+## Installation
 
-1. Install https://github.com/vaimo/composer-patches
-
-2. Add the following to the patches area of your `composer.json`
-
-  ⚠  For Magento >=2.4.2, use `./vendor/reach-digital/docker-devbox/patch/2.4.2-static-content-deploy.diff`
+- Ensure `vaimo/composer-patches` is installed in your project.
+- Add the following to your projects' `composer.json`:
 
 ```
 {
@@ -25,6 +23,3 @@ Without this patch, nginx will not be able to directly read static content files
   }
 }
 ```
-
-
-
