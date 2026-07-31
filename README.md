@@ -127,8 +127,9 @@ This covers initially adding docker-devbox support to a Magento project; if your
 already has docker-devbox support added, please refer to the projects' own README.
 
 - Install (and commit) this package in the project: `composer require reach-digital/docker-devbox ^5.0.0`
-- Install `static-content-deploy` [patch](patch/static-content-deploy.md) and
-  remove existing static symlinked content: `rm -rf pub/static/*/*`.
+- Install the `static-content-deploy` [patch](patch/static-content-deploy.md) (this documents both
+  the Magento and the Mage-OS variant) and remove existing static symlinked content:
+  `rm -rf pub/static/*/*`.
 - Copy the provided `docker-compose.example.yml` file to `docker-compose.yml`
   - When updating the docker-devbox package in the future, you may want to check changes in the example file to include in your project's copy.
 - Change `docker-composer.yml` as required for your project and commit this file as part of your project:
