@@ -211,7 +211,7 @@ echo "
 Installing mysql-client, gnu-sed, pv, jq, imagemagick, pkg-config"
 brew install gnu-sed mysql-client@8.4 pv jq imagemagick pkg-config &>/dev/null
 
-brew link mysql-client --force &>/dev/null
+brew link mysql-client@8.4 --force --overwrite &>/dev/null
 
 echo "
 🚰 Adding shivammathur/php tap for legacy PHP support
